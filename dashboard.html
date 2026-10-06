@@ -28,7 +28,8 @@
       background: linear-gradient(135deg, #6366f1, #8b5cf6);
       color: white;
     }
-    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-primary:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
+    .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
     .btn-danger { background: #ef4444; color: white; }
     .btn-ghost {
       background: transparent; color: #6366f1;
@@ -57,6 +58,7 @@
       border: 1.5px solid #e5e7eb; border-radius: 10px;
       font-size: 0.95rem; transition: border 0.2s;
       background: #fafafa;
+      font-family: inherit;
     }
     .form-group input:focus,
     .form-group textarea:focus {
@@ -100,8 +102,11 @@
       font-size: 0.9rem; opacity: 0;
       transition: opacity 0.3s; pointer-events: none;
       z-index: 999;
+      max-width: 90vw; text-align: center;
     }
     .toast.show { opacity: 1; }
+    .toast.error { background: #dc2626; }
+    .toast.success { background: #16a34a; }
 
     .empty-state {
       text-align: center; padding: 40px 20px;
@@ -112,12 +117,20 @@
       object-fit: cover; margin-top: 8px;
       border: 2px solid #e5e7eb;
     }
+
+    /* Info banner shown after signup when confirmation is required */
+    .info-banner {
+      background: #eff6ff; border: 1px solid #bfdbfe;
+      color: #1e40af; padding: 14px 18px;
+      border-radius: 10px; font-size: 0.88rem;
+      margin-bottom: 18px; line-height: 1.5;
+    }
+    .info-banner strong { display: block; margin-bottom: 4px; }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <!-- HEADER -->
   <div class="header">
     <h1>🏪 Business Dashboard</h1>
     <button id="logoutBtn" class="btn btn-danger hidden">Log Out</button>
@@ -131,14 +144,24 @@
         <button class="auth-tab" data-tab="signup">Sign Up</button>
       </div>
 
+      <!-- Info banner: shown after signup if email confirmation is required -->
+      <div id="confirmBanner" class="info-banner hidden">
+        <strong>📧 Check your email</strong>
+        We sent a confirmation link to <span id="confirmEmail"></span>.
+        Click it to activate your account, then log in below.
+        <button id="resendBtn" class="btn btn-ghost" style="margin-top:10px; font-size:0.8rem; padding:6px 14px;">
+          Resend confirmation email
+        </button>
+      </div>
+
       <div id="loginForm">
         <div class="form-group">
           <label>Email</label>
-          <input type="email" id="loginEmail" placeholder="you@example.com" />
+          <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" />
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input type="password" id="loginPassword" placeholder="••••••••" />
+          <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password" />
         </div>
         <button class="btn btn-primary" id="loginBtn" style="width:100%;">Log In</button>
       </div>
@@ -150,11 +173,11 @@
         </div>
         <div class="form-group">
           <label>Email</label>
-          <input type="email" id="signupEmail" placeholder="you@example.com" />
+          <input type="email" id="signupEmail" placeholder="you@example.com" autocomplete="email" />
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input type="password" id="signupPassword" placeholder="Min. 6 characters" />
+          <input type="password" id="signupPassword" placeholder="Min. 6 characters" autocomplete="new-password" />
         </div>
         <button class="btn btn-primary" id="signupBtn" style="width:100%;">Create Account</button>
       </div>
@@ -163,7 +186,6 @@
 
   <!-- DASHBOARD SECTION -->
   <div id="dashboardSection" class="hidden">
-    <!-- Profile Info -->
     <div class="card">
       <h2>📋 Business Information</h2>
       <div class="form-group">
@@ -190,7 +212,6 @@
       <button class="btn btn-primary" id="saveProfileBtn">Save Information</button>
     </div>
 
-    <!-- Links -->
     <div class="card">
       <h2>🔗 Business Links</h2>
       <div id="linksContainer">
@@ -212,14 +233,31 @@ const authSection = document.getElementById('authSection');
 const dashboardSection = document.getElementById('dashboardSection');
 const logoutBtn = document.getElementById('logoutBtn');
 const toastEl = document.getElementById('toast');
+const confirmBanner = document.getElementById('confirmBanner');
+const confirmEmail = document.getElementById('confirmEmail');
+const resendBtn = document.getElementById('resendBtn');
 
 let currentUser = null;
+let lastSignupEmail = '';
 
 // --- Toast helper ---
-function showToast(msg, duration = 2500) {
+function showToast(msg, type = 'info', duration = 3200) {
   toastEl.textContent = msg;
-  toastEl.classList.add('show');
-  setTimeout(() => toastEl.classList.remove('show'), duration);
+  toastEl.className = 'toast show ' + (type === 'error' ? 'error' : type === 'success' ? 'success' : '');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => toastEl.classList.remove('show'), duration);
+}
+
+// --- Button loading state ---
+function setLoading(btn, loading, label) {
+  if (loading) {
+    btn.dataset.original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = label || 'Please wait…';
+  } else {
+    btn.disabled = false;
+    btn.textContent = btn.dataset.original || btn.textContent;
+  }
 }
 
 // --- Auth tab switching ---
@@ -230,17 +268,25 @@ document.querySelectorAll('.auth-tab').forEach(tab => {
     const target = tab.dataset.tab;
     document.getElementById('loginForm').classList.toggle('hidden', target !== 'login');
     document.getElementById('signupForm').classList.toggle('hidden', target !== 'signup');
+    confirmBanner.classList.add('hidden');
   });
 });
 
 // --- Sign Up ---
 document.getElementById('signupBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('signupBtn');
   const businessName = document.getElementById('signupBusinessName').value.trim();
-  const email = document.getElementById('signupEmail').value.trim();
+  const email = document.getElementById('signupEmail').value.trim().toLowerCase();
   const password = document.getElementById('signupPassword').value;
 
-  if (!businessName || !email || !password) return showToast('Please fill all fields');
-  if (password.length < 6) return showToast('Password must be at least 6 characters');
+  if (!businessName || !email || !password) {
+    return showToast('Please fill all fields', 'error');
+  }
+  if (password.length < 6) {
+    return showToast('Password must be at least 6 characters', 'error');
+  }
+
+  setLoading(btn, true, 'Creating account…');
 
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -248,20 +294,109 @@ document.getElementById('signupBtn').addEventListener('click', async () => {
     options: { data: { business_name: businessName } }
   });
 
-  if (error) return showToast('Signup failed: ' + error.message);
-  showToast('Account created! Check your email to confirm.');
+  setLoading(btn, false);
+
+  if (error) {
+    console.error('Signup error:', error);
+    // Specific, friendly messages
+    if (error.message.includes('already registered') || error.message.includes('already been registered')) {
+      return showToast('That email is already registered. Try logging in.', 'error');
+    }
+    if (error.message.includes('rate limit')) {
+      return showToast('Too many attempts. Please wait a few minutes.', 'error');
+    }
+    return showToast('Signup failed: ' + error.message, 'error');
+  }
+
+  // Case 1: Email confirmation is OFF → data.session exists → user is logged in
+  if (data.session) {
+    showToast('✅ Account created! Welcome.', 'success');
+    // onAuthStateChange will switch to dashboard
+    return;
+  }
+
+  // Case 2: Email confirmation is ON → data.user exists but data.session is null
+  if (data.user) {
+    lastSignupEmail = email;
+    confirmEmail.textContent = email;
+    confirmBanner.classList.remove('hidden');
+    // Switch to login tab so they can log in after confirming
+    document.querySelector('.auth-tab[data-tab="login"]').click();
+    document.getElementById('loginEmail').value = email;
+    showToast('Account created! Please confirm your email.', 'success', 4500);
+    return;
+  }
+
+  showToast('Unexpected response from server.', 'error');
+});
+
+// --- Resend confirmation email ---
+resendBtn.addEventListener('click', async () => {
+  if (!lastSignupEmail) return;
+  setLoading(resendBtn, true, 'Sending…');
+  const { error } = await supabase.auth.resend({
+    type: 'signup',
+    email: lastSignupEmail
+  });
+  setLoading(resendBtn, false);
+  if (error) {
+    console.error('Resend error:', error);
+    return showToast('Could not resend: ' + error.message, 'error');
+  }
+  showToast('📧 Confirmation email sent again', 'success');
 });
 
 // --- Log In ---
 document.getElementById('loginBtn').addEventListener('click', async () => {
-  const email = document.getElementById('loginEmail').value.trim();
+  const btn = document.getElementById('loginBtn');
+  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
   const password = document.getElementById('loginPassword').value;
 
-  if (!email || !password) return showToast('Please fill all fields');
+  if (!email || !password) {
+    return showToast('Please fill all fields', 'error');
+  }
+
+  setLoading(btn, true, 'Logging in…');
 
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) return showToast('Login failed: ' + error.message);
-  // onAuthStateChange will handle the rest
+
+  setLoading(btn, false);
+
+  if (error) {
+    // Always log the full object — this is what you check in DevTools
+    console.error('Login error:', error);
+
+    const msg = error.message || '';
+
+    if (msg.includes('Invalid login credentials')) {
+      return showToast(
+        'Wrong email or password. If you just signed up, confirm your email first.',
+        'error', 5000
+      );
+    }
+    if (msg.includes('Email not confirmed')) {
+      // Show the confirmation banner again
+      lastSignupEmail = email;
+      confirmEmail.textContent = email;
+      confirmBanner.classList.remove('hidden');
+      return showToast('Please confirm your email before logging in.', 'error', 4500);
+    }
+    if (msg.includes('rate limit')) {
+      return showToast('Too many attempts. Please wait a few minutes.', 'error');
+    }
+    return showToast('Login failed: ' + msg, 'error');
+  }
+
+  // Success — onAuthStateChange handles the transition
+  console.log('Login success:', data);
+});
+
+// --- Enter key submits the active form ---
+document.getElementById('loginPassword').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('loginBtn').click();
+});
+document.getElementById('signupPassword').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('signupBtn').click();
 });
 
 // --- Log Out ---
@@ -272,11 +407,14 @@ logoutBtn.addEventListener('click', async () => {
 
 // --- Auth state listener ---
 supabase.auth.onAuthStateChange(async (event, session) => {
+  console.log('Auth event:', event);
   currentUser = session?.user ?? null;
+
   if (currentUser) {
     authSection.classList.add('hidden');
     dashboardSection.classList.remove('hidden');
     logoutBtn.classList.remove('hidden');
+    confirmBanner.classList.add('hidden');
     await loadProfile();
   } else {
     authSection.classList.remove('hidden');
@@ -289,12 +427,13 @@ supabase.auth.onAuthStateChange(async (event, session) => {
 async function loadProfile() {
   if (!currentUser) return;
 
-  // Profile
-  const { data: profile } = await supabase
+  const { data: profile, error: pErr } = await supabase
     .from('profiles')
     .select('*')
     .eq('id', currentUser.id)
-    .single();
+    .maybeSingle();
+
+  if (pErr) console.error('Profile load error:', pErr);
 
   if (profile) {
     document.getElementById('bizName').value = profile.business_name || '';
@@ -305,18 +444,19 @@ async function loadProfile() {
     updateLogoPreview(profile.logo_url);
   }
 
-  // Links
-  const { data: links } = await supabase
+  const { data: links, error: lErr } = await supabase
     .from('business_links')
     .select('*')
     .eq('profile_id', currentUser.id)
     .order('sort_order');
 
+  if (lErr) console.error('Links load error:', lErr);
+
   renderLinks(links || []);
 }
 
 // --- Logo preview ---
-document.getElementById('bizLogo').addEventListener('input', (e) => updateLogoPreview(e.target.value));
+document.getElementById('bizLogo').addEventListener('input', e => updateLogoPreview(e.target.value));
 function updateLogoPreview(url) {
   const img = document.getElementById('logoPreview');
   if (url) { img.src = url; img.classList.remove('hidden'); }
@@ -325,6 +465,7 @@ function updateLogoPreview(url) {
 
 // --- Save profile ---
 document.getElementById('saveProfileBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('saveProfileBtn');
   const updates = {
     business_name: document.getElementById('bizName').value.trim(),
     description: document.getElementById('bizDescription').value.trim(),
@@ -334,13 +475,18 @@ document.getElementById('saveProfileBtn').addEventListener('click', async () => 
     updated_at: new Date().toISOString()
   };
 
+  setLoading(btn, true, 'Saving…');
   const { error } = await supabase
     .from('profiles')
     .update(updates)
     .eq('id', currentUser.id);
+  setLoading(btn, false);
 
-  if (error) return showToast('Save failed: ' + error.message);
-  showToast('✅ Information saved!');
+  if (error) {
+    console.error('Save profile error:', error);
+    return showToast('Save failed: ' + error.message, 'error');
+  }
+  showToast('✅ Information saved!', 'success');
 });
 
 // --- Links rendering ---
@@ -360,16 +506,21 @@ function linkRowHTML(id, label, url, order) {
     <div class="link-row" data-id="${id || ''}">
       <div class="form-group">
         <label>Label</label>
-        <input type="text" class="link-label" value="${label || ''}" placeholder="e.g. Website" />
+        <input type="text" class="link-label" value="${escapeAttr(label)}" placeholder="e.g. Website" />
       </div>
       <div class="form-group">
         <label>URL</label>
-        <input type="url" class="link-url" value="${url || ''}" placeholder="https://..." />
+        <input type="url" class="link-url" value="${escapeAttr(url)}" placeholder="https://..." />
       </div>
       <input type="hidden" class="link-order" value="${order || 0}" />
       <button class="btn-remove" title="Remove">✕</button>
     </div>
   `;
+}
+
+function escapeAttr(str) {
+  if (!str) return '';
+  return String(str).replace(/"/g, '&quot;').replace(/</g, '&lt;');
 }
 
 function attachLinkEvents() {
@@ -378,7 +529,6 @@ function attachLinkEvents() {
   });
 }
 
-// --- Add link row ---
 document.getElementById('addLinkBtn').addEventListener('click', () => {
   const container = document.getElementById('linksContainer');
   const empty = container.querySelector('.empty-state');
@@ -387,8 +537,8 @@ document.getElementById('addLinkBtn').addEventListener('click', () => {
   attachLinkEvents();
 });
 
-// --- Save links ---
 document.getElementById('saveLinksBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('saveLinksBtn');
   const rows = document.querySelectorAll('.link-row');
   const links = [];
   rows.forEach((row, i) => {
@@ -402,13 +552,30 @@ document.getElementById('saveLinksBtn').addEventListener('click', async () => {
     });
   });
 
-  // Delete all existing, then re-insert
-  await supabase.from('business_links').delete().eq('profile_id', currentUser.id);
-  if (links.length) {
-    const { error } = await supabase.from('business_links').insert(links);
-    if (error) return showToast('Save failed: ' + error.message);
+  setLoading(btn, true, 'Saving…');
+
+  const { error: delErr } = await supabase
+    .from('business_links')
+    .delete()
+    .eq('profile_id', currentUser.id);
+
+  if (delErr) {
+    setLoading(btn, false);
+    console.error('Delete links error:', delErr);
+    return showToast('Save failed: ' + delErr.message, 'error');
   }
-  showToast('✅ Links saved!');
+
+  if (links.length) {
+    const { error: insErr } = await supabase.from('business_links').insert(links);
+    if (insErr) {
+      setLoading(btn, false);
+      console.error('Insert links error:', insErr);
+      return showToast('Save failed: ' + insErr.message, 'error');
+    }
+  }
+
+  setLoading(btn, false);
+  showToast('✅ Links saved!', 'success');
   await loadProfile();
 });
 </script>
