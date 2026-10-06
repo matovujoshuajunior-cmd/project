@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Find a Service Provider</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #f8fafc; color: #1a1a2e;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+      padding: 64px 24px 80px;
+      text-align: center; color: white;
+    }
+    .hero h1 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 800; margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 1.05rem; opacity: 0.9;
+      max-width: 520px; margin: 0 auto 28px;
+    }
+    .search-box {
+      display: flex; max-width: 520px; margin: 0 auto;
+      background: white; border-radius: 14px;
+      overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    }
+    .search-box input {
+      flex: 1; padding: 16px 20px; border: none;
+      font-size: 0.95rem; outline: none;
+    }
+    .search-box button {
+      padding: 16px 28px; border: none;
+      background: #1a1a2e; color: white;
+      font-weight: 600; cursor: pointer;
+      font-size: 0.95rem; transition: background 0.2s;
+    }
+    .search-box button:hover { background: #2d2d4e; }
+
+    /* GRID */
+    .main { max-width: 1100px; margin: -40px auto 60px; padding: 0 24px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    /* CARD */
+    .biz-card {
+      background: white; border-radius: 16px;
+      padding: 24px; box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex; flex-direction: column;
+    }
+    .biz-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(99,102,241,0.15);
+    }
+
+    .biz-header {
+      display: flex; gap: 14px; align-items: center;
+      margin-bottom: 14px;
+    }
+    .biz-logo {
+      width: 52px; height: 52px; border-radius: 12px;
+      object-fit: cover; background: #f1f5f9;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+    .biz-name { font-size: 1.05rem; font-weight: 700; }
+    .biz-contact { font-size: 0.8rem; color: #6b7280; margin-top: 2px; }
+
+    .biz-desc {
+      font-size: 0.88rem; color: #4b5563;
+      line-height: 1.55; margin-bottom: 16px;
+      flex: 1;
+    }
+
+    .biz-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .link-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 7px 14px; border-radius: 20px;
+      font-size: 0.8rem; font-weight: 600;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .link-pill:hover { transform: translateY(-1px); opacity: 0.85; }
+    .link-pill.website { background: #eef2ff; color: #4f46e5; }
+    .link-pill.social { background: #fdf2f8; color: #db2777; }
+    .link-pill.contact { background: #f0fdf4; color: #16a34a; }
+    .link-pill.default { background: #f3f4f6; color: #4b5563; }
+
+    .loading, .empty {
+      text-align: center; padding: 80px 20px;
+      color: #9ca3af; font-size: 0.95rem;
+    }
+    .spinner {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 3px solid #e5e7eb; border-top-color: #6366f1;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .footer {
+      text-align: center; padding: 32px;
+      font-size: 0.8rem; color: #9ca3af;
+    }
+    .footer a { color: #6366f1; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <h1>Find the right service provider</h1>
+    <p>Browse trusted businesses and connect with them directly.</p>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search by business name..." />
+      <button id="searchBtn">Search</button>
+    </div>
+  </section>
+
+  <main class="main">
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+      Loading businesses...
+    </div>
+    <div id="grid" class="grid hidden"></div>
+    <div id="emptyState" class="empty hidden">No businesses found.</div>
+  </main>
+
+  <div class="footer">
+    <p>Are you a business owner? <a href="dashboard.html">List your business →</a></p>
+  </div>
+
+<script type="module">
+import { supabase } from './supabase-client.js';
+
+const grid = document.getElementById('grid');
+const loading = document.getElementById('loading');
+const emptyState = document.getElementById('emptyState');
+const searchInput = document.getElementById('searchInput');
+const searchBtn = document.getElementById('searchBtn');
+
+let allBusinesses = [];
+
+// --- Load from the public_directory view ---
+async function loadBusinesses() {
+  loading.classList.remove('hidden');
+  grid.classList.add('hidden');
+  emptyState.classList.add('hidden');
+
+  const { data, error } = await supabase
+    .from('public_directory')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  loading.classList.add('hidden');
+
+  if (error) {
+    console.error(error);
+    emptyState.classList.remove('hidden');
+    emptyState.textContent = 'Could not load businesses.';
+    return;
+  }
+
+  allBusinesses = data || [];
+  renderBusinesses(allBusinesses);
+}
+
+// --- Render ---
+function renderBusinesses(list) {
+  if (!list.length) {
+    emptyState.classList.remove('hidden');
+    grid.classList.add('hidden');
+    return;
+  }
+  emptyState.classList.add('hidden');
+  grid.classList.remove('hidden');
+  grid.innerHTML = list.map(bizCardHTML).join('');
+}
+
+function bizCardHTML(biz) {
+  const initial = (biz.business_name || '?')[0].toUpperCase();
+  const logo = biz.logo_url
+    ? `<img class="biz-logo" src="${escapeHtml(biz.logo_url)}" alt="${escapeHtml(biz.business_name)}" onerror="this.outerHTML='<div class=\\'biz-logo\\'>${initial}</div>'" />`
+    : `<div class="biz-logo">${initial}</div>`;
+
+  const links = (biz.links || []).map(link => {
+    const cls = linkClass(link.label);
+    return `<a class="link-pill ${cls}" href="${escapeHtml(link.url)}" target="_blank" rel="noopener">
+      ${escapeHtml(link.label)}
+    </a>`;
+  }).join('');
+
+  const contactLine = [biz.contact_email, biz.phone].filter(Boolean).join(' · ');
+
+  return `
+    <div class="biz-card">
+      <div class="biz-header">
+        ${logo}
+        <div>
+          <div class="biz-name">${escapeHtml(biz.business_name)}</div>
+          <div class="biz-contact">${escapeHtml(contactLine)}</div>
+        </div>
+      </div>
+      <div class="biz-desc">${escapeHtml(biz.description || 'No description provided.')}</div>
+      <div class="biz-links">${links || '<span style="font-size:0.8rem;color:#9ca3af;">No links yet</span>'}</div>
+    </div>
+  `;
+}
+
+function linkClass(label) {
+  const l = (label || '').toLowerCase();
+  if (l.includes('website') || l.includes('site')) return 'website';
+  if (l.includes('instagram') || l.includes('facebook') || l.includes('twitter') || l.includes('tiktok')) return 'social';
+  if (l.includes('whatsapp') || l.includes('phone') || l.includes('email') || l.includes('contact')) return 'contact';
+  return 'default';
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// --- Search ---
+function filterBusinesses(query) {
+  const q = query.toLowerCase().trim();
+  if (!q) return renderBusinesses(allBusinesses);
+  const filtered = allBusinesses.filter(b =>
+    b.business_name?.toLowerCase().includes(q) ||
+    b.description?.toLowerCase().includes(q)
+  );
+  renderBusinesses(filtered);
+}
+
+searchBtn.addEventListener('click', () => filterBusinesses(searchInput.value));
+searchInput.addEventListener('input', (e) => filterBusinesses(e.target.value));
+
+// --- Init ---
+loadBusinesses();
+</script>
+</body>
+</html>
