@@ -17,17 +17,18 @@
     .btn { padding: 10px 20px; border: none; border-radius: 10px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
     .btn-primary { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
     .btn-primary:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
-    .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+    .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
     .btn-danger { background: #ef4444; color: white; }
     .btn-ghost { background: transparent; color: #6366f1; border: 1.5px solid #6366f1; }
     .btn-ghost:hover { background: #6366f1; color: white; }
     .card { background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); margin-bottom: 24px; }
     .card h2 { font-size: 1.15rem; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb; }
+    .card .hint { font-size: 0.82rem; color: #9ca3af; margin: -8px 0 18px; line-height: 1.5; }
     .form-group { margin-bottom: 18px; }
     .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: #374151; }
     .form-group input, .form-group textarea {
       width: 100%; padding: 11px 14px; border: 1.5px solid #e5e7eb; border-radius: 10px;
-      font-size: 0.95rem; transition: border 0.2s; background: #fafafa; font-family: inherit;
+      font-size: 0.95rem; background: #fafafa; font-family: inherit;
     }
     .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #6366f1; background: white; }
     .form-group textarea { resize: vertical; min-height: 90px; }
@@ -38,20 +39,41 @@
       border: none; transition: all 0.2s;
     }
     .auth-tab.active { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
+
+    /* LINK ROWS */
     .link-row {
-      display: flex; gap: 10px; align-items: end; padding: 14px; background: #f9fafb;
-      border-radius: 12px; margin-bottom: 10px; flex-wrap: wrap;
+      display: flex; gap: 12px; align-items: flex-end;
+      padding: 16px; background: #f9fafb; border-radius: 12px;
+      margin-bottom: 12px; flex-wrap: wrap;
     }
-    .link-row .form-group { flex: 1; margin-bottom: 0; min-width: 140px; }
-    .link-row .form-group label { font-size: 0.75rem; }
-    .link-row .btn-remove {
-      background: #fee2e2; color: #ef4444; border: none; border-radius: 8px;
-      width: 38px; height: 38px; cursor: pointer; font-size: 1.1rem; flex-shrink: 0;
+    .link-fields { display: flex; gap: 10px; flex: 1; flex-wrap: wrap; min-width: 0; }
+    .link-fields .form-group { margin-bottom: 0; flex: 1; min-width: 140px; }
+    .link-fields .form-group label { font-size: 0.75rem; }
+    .link-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+    .icon-btn {
+      padding: 9px 13px; border: none; border-radius: 8px;
+      font-size: 0.78rem; font-weight: 700; cursor: pointer;
+      background: #e5e7eb; color: #374151;
+      transition: transform 0.15s;
+      white-space: nowrap;
     }
+    .icon-btn:hover { transform: translateY(-1px); }
+    .icon-btn.primary { background: #6366f1; color: white; }
+    .icon-btn.primary:hover { background: #4f46e5; }
+    .icon-btn.danger { background: #fee2e2; color: #dc2626; }
+    .icon-btn.danger:hover { background: #fecaca; }
     .link-preview {
       flex-basis: 100%; font-size: 0.75rem; color: #9ca3af;
-      margin-top: 6px; padding-left: 2px;
+      margin-top: 8px; padding-left: 2px; font-family: ui-monospace, monospace;
     }
+    .link-preview b { color: #6366f1; font-weight: 700; }
+    .link-id-badge {
+      display: inline-block; font-size: 0.65rem; font-weight: 700;
+      background: #d1fae5; color: #065f46;
+      padding: 2px 8px; border-radius: 10px; margin-left: 6px;
+    }
+    .link-id-badge.new { background: #fef3c7; color: #92400e; }
+
     .toast {
       position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
       background: #1a1a2e; color: white; padding: 12px 24px; border-radius: 10px;
@@ -62,6 +84,7 @@
     .toast.error { background: #dc2626; }
     .toast.success { background: #16a34a; }
     .toast.warn { background: #d97706; }
+
     .empty-state { text-align: center; padding: 40px 20px; color: #9ca3af; font-size: 0.9rem; }
     .logo-preview { width: 64px; height: 64px; border-radius: 12px; object-fit: cover; margin-top: 8px; border: 2px solid #e5e7eb; }
     .help-panel {
@@ -167,11 +190,16 @@
 
     <div class="card">
       <h2>🔗 Business Links</h2>
+      <p class="hint">
+        Add links to your website, YouTube, Instagram, WhatsApp, etc.
+        Visitors will be redirected to these links in a new tab when they click.
+        If you type <code>www.example.com</code> without <code>https://</code>,
+        we'll add it automatically.
+      </p>
       <div id="linksContainer">
-        <div class="empty-state">No links added yet.</div>
+        <div class="empty-state">No links added yet. Click "Add New Link" below.</div>
       </div>
-      <button class="btn btn-ghost" id="addLinkBtn" style="margin-top:12px;">+ Add Link</button>
-      <button class="btn btn-primary" id="saveLinksBtn" style="margin-top:12px; margin-left:8px;">Save Links</button>
+      <button class="btn btn-ghost" id="addLinkBtn" style="margin-top:16px;">+ Add New Link</button>
     </div>
   </div>
 </div>
@@ -179,7 +207,7 @@
 <div class="toast" id="toast"></div>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=4';
+import { supabase } from './supabase-client.js?v=5';
 
 const authSection = document.getElementById('authSection');
 const dashboardSection = document.getElementById('dashboardSection');
@@ -191,6 +219,7 @@ const helpEmail = document.getElementById('helpEmail');
 let currentUser = null;
 let lastSignupEmail = '';
 
+// ---------- Helpers ----------
 function showToast(msg, type = 'info', duration = 3500) {
   toastEl.textContent = msg;
   toastEl.className = 'toast show ' + (type === 'error' ? 'error' : type === 'success' ? 'success' : type === 'warn' ? 'warn' : '');
@@ -209,12 +238,22 @@ function setLoading(btn, loading, label) {
   }
 }
 
-// Display a URL nicely — strips protocol and trailing slash
+// THE FIX — auto-prepend https:// if missing
+function normalizeUrl(url) {
+  if (!url) return '';
+  url = url.trim();
+  if (!url) return '';
+  if (/^https?:\/\//i.test(url)) return url;
+  if (/^(mailto:|tel:|sms:|whatsapp:)/i.test(url)) return url;
+  return 'https://' + url;
+}
+
 function displayUrl(url) {
   if (!url) return '';
   return url.replace(/^https?:\/\//i, '').replace(/\/$/, '');
 }
 
+// ---------- Auth tabs ----------
 document.querySelectorAll('.auth-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
@@ -226,7 +265,7 @@ document.querySelectorAll('.auth-tab').forEach(tab => {
   });
 });
 
-// --- Sign Up ---
+// ---------- Sign Up ----------
 document.getElementById('signupBtn').addEventListener('click', async () => {
   const btn = document.getElementById('signupBtn');
   const businessName = document.getElementById('signupBusinessName').value.trim();
@@ -238,25 +277,20 @@ document.getElementById('signupBtn').addEventListener('click', async () => {
 
   setLoading(btn, true, 'Creating account…');
   const { data, error } = await supabase.auth.signUp({
-    email, password,
-    options: { data: { business_name: businessName } }
+    email, password, options: { data: { business_name: businessName } }
   });
   setLoading(btn, false);
   console.log('Signup response:', { data, error });
 
   if (error) {
-    if (error.message.toLowerCase().includes('already'))
-      return showToast('That email is already registered. Try logging in.', 'error');
-    if (error.message.toLowerCase().includes('rate'))
-      return showToast('Too many attempts. Please wait a few minutes.', 'error');
+    if (error.message.toLowerCase().includes('already')) return showToast('That email is already registered.', 'error');
+    if (error.message.toLowerCase().includes('rate')) return showToast('Too many attempts. Wait a few minutes.', 'error');
     return showToast('Signup failed: ' + error.message, 'error');
   }
-
   if (data?.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
-    lastSignupEmail = email;
-    helpEmail.textContent = email;
+    lastSignupEmail = email; helpEmail.textContent = email;
     helpPanel.classList.remove('hidden');
-    return showToast('That email already has an account. See the red help box.', 'warn', 6000);
+    return showToast('That email already has an account. See help box.', 'warn', 6000);
   }
   if (data?.session) return showToast('✅ Account created! Logging you in…', 'success');
   if (data?.user) {
@@ -266,10 +300,9 @@ document.getElementById('signupBtn').addEventListener('click', async () => {
     document.getElementById('loginEmail').value = email;
     return;
   }
-  showToast('Unexpected response. Check console.', 'error');
 });
 
-// --- Log In ---
+// ---------- Log In ----------
 document.getElementById('loginBtn').addEventListener('click', async () => {
   const btn = document.getElementById('loginBtn');
   const email = document.getElementById('loginEmail').value.trim().toLowerCase();
@@ -284,26 +317,21 @@ document.getElementById('loginBtn').addEventListener('click', async () => {
     console.error('Login error:', error);
     const msg = (error.message || '').toLowerCase();
     if (msg.includes('invalid login credentials')) {
-      helpEmail.textContent = email;
-      helpPanel.classList.remove('hidden');
-      return showToast('Wrong email or password — or account doesn\'t exist. See help box.', 'error', 6500);
+      helpEmail.textContent = email; helpPanel.classList.remove('hidden');
+      return showToast('Wrong email or password — or account doesn\'t exist.', 'error', 6500);
     }
-    if (msg.includes('email not confirmed'))
-      return showToast('Please confirm your email first.', 'error', 5000);
-    if (msg.includes('rate'))
-      return showToast('Too many attempts. Please wait a few minutes.', 'error');
+    if (msg.includes('email not confirmed')) return showToast('Please confirm your email first.', 'error', 5000);
+    if (msg.includes('rate')) return showToast('Too many attempts. Wait a few minutes.', 'error');
     return showToast('Login failed: ' + error.message, 'error');
   }
-  console.log('Login success:', data);
   helpPanel.classList.add('hidden');
 });
 
-// --- Forgot password ---
 document.getElementById('forgotBtn').addEventListener('click', async () => {
   const email = document.getElementById('loginEmail').value.trim().toLowerCase();
   if (!email) return showToast('Enter your email above first', 'error');
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.origin + window.location.pathname + '?type=recovery'
+    redirectTo: window.location.origin + window.location.pathname
   });
   if (error) return showToast('Could not send reset email: ' + error.message, 'error');
   showToast('📧 Password reset email sent. Check your inbox.', 'success', 6000);
@@ -339,16 +367,12 @@ supabase.auth.onAuthStateChange(async (event, session) => {
 
 async function loadProfile() {
   if (!currentUser) return;
-  const { data: profile, error: pErr } = await supabase
-    .from('profiles').select('*').eq('id', currentUser.id).maybeSingle();
-  if (pErr) console.error('Profile load error:', pErr);
+  const { data: profile } = await supabase.from('profiles').select('*').eq('id', currentUser.id).maybeSingle();
 
   if (!profile) {
     const fallbackName = currentUser.user_metadata?.business_name || 'My Business';
-    const { error: insErr } = await supabase
-      .from('profiles').insert({ id: currentUser.id, business_name: fallbackName });
-    if (insErr) console.error('Profile insert error:', insErr);
-    else document.getElementById('bizName').value = fallbackName;
+    await supabase.from('profiles').insert({ id: currentUser.id, business_name: fallbackName });
+    document.getElementById('bizName').value = fallbackName;
   } else {
     document.getElementById('bizName').value = profile.business_name || '';
     document.getElementById('bizLocation').value = profile.location || '';
@@ -359,10 +383,9 @@ async function loadProfile() {
     updateLogoPreview(profile.logo_url);
   }
 
-  const { data: links, error: lErr } = await supabase
+  const { data: links } = await supabase
     .from('business_links').select('*')
     .eq('profile_id', currentUser.id).order('sort_order');
-  if (lErr) console.error('Links load error:', lErr);
   renderLinks(links || []);
 }
 
@@ -387,35 +410,47 @@ document.getElementById('saveProfileBtn').addEventListener('click', async () => 
   setLoading(btn, true, 'Saving…');
   const { error } = await supabase.from('profiles').update(updates).eq('id', currentUser.id);
   setLoading(btn, false);
-  if (error) { console.error('Save profile error:', error); return showToast('Save failed: ' + error.message, 'error'); }
+  if (error) return showToast('Save failed: ' + error.message, 'error');
   showToast('✅ Information saved!', 'success');
 });
 
-let linkCounter = 0;
+// =========================================================
+// LINKS — per-row Save / Open / Delete
+// =========================================================
 function renderLinks(links) {
   const container = document.getElementById('linksContainer');
   if (!links.length) {
-    container.innerHTML = '<div class="empty-state">No links added yet.</div>';
+    container.innerHTML = '<div class="empty-state">No links added yet. Click "Add New Link" below.</div>';
     return;
   }
-  container.innerHTML = links.map(l => linkRowHTML(l.id, l.label, l.url, l.sort_order)).join('');
+  container.innerHTML = links.map(l => linkRowHTML(l.id, l.label, l.url)).join('');
   attachLinkEvents();
 }
 
-function linkRowHTML(id, label, url, order) {
-  const preview = url ? `Will display as: <b>${displayUrl(url)}</b>` : 'Enter a URL to see how it will appear';
+function linkRowHTML(id, label, url) {
+  const badge = id
+    ? '<span class="link-id-badge">saved</span>'
+    : '<span class="link-id-badge new">unsaved</span>';
+  const preview = url
+    ? `Visitors will go to: <b>${escapeHtml(normalizeUrl(url))}</b>`
+    : 'Enter a URL — we\'ll add https:// automatically if missing';
   return `
     <div class="link-row" data-id="${id || ''}">
-      <div class="form-group">
-        <label>Label</label>
-        <input type="text" class="link-label" value="${escapeAttr(label)}" placeholder="e.g. Website" />
+      <div class="link-fields">
+        <div class="form-group">
+          <label>Label ${badge}</label>
+          <input type="text" class="link-label" value="${escapeAttr(label)}" placeholder="e.g. Website, YouTube" />
+        </div>
+        <div class="form-group">
+          <label>URL</label>
+          <input type="text" class="link-url" value="${escapeAttr(url)}" placeholder="www.example.com or youtube.com/@channel" />
+        </div>
       </div>
-      <div class="form-group">
-        <label>URL</label>
-        <input type="url" class="link-url" value="${escapeAttr(url)}" placeholder="https://..." />
+      <div class="link-actions">
+        <button class="icon-btn" data-action="open" title="Open link in new tab">🔗 Open</button>
+        <button class="icon-btn primary" data-action="save" title="Save this link">💾 Save</button>
+        <button class="icon-btn danger" data-action="delete" title="Delete this link">🗑 Delete</button>
       </div>
-      <input type="hidden" class="link-order" value="${order || 0}" />
-      <button class="btn-remove" title="Remove">✕</button>
       <div class="link-preview">${preview}</div>
     </div>
   `;
@@ -425,49 +460,94 @@ function escapeAttr(str) {
   if (!str) return '';
   return String(str).replace(/"/g, '&quot;').replace(/</g, '&lt;');
 }
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 
 function attachLinkEvents() {
-  document.querySelectorAll('.btn-remove').forEach(btn => {
-    btn.addEventListener('click', () => btn.closest('.link-row').remove());
-  });
-  document.querySelectorAll('.link-url').forEach(inp => {
-    inp.addEventListener('input', () => {
-      const preview = inp.closest('.link-row').querySelector('.link-preview');
-      preview.innerHTML = inp.value
-        ? `Will display as: <b>${displayUrl(inp.value)}</b>`
-        : 'Enter a URL to see how it will appear';
+  document.querySelectorAll('.link-row').forEach(row => {
+    // Live preview on URL input
+    const urlInput = row.querySelector('.link-url');
+    const preview = row.querySelector('.link-preview');
+    urlInput.addEventListener('input', () => {
+      preview.innerHTML = urlInput.value.trim()
+        ? `Visitors will go to: <b>${escapeHtml(normalizeUrl(urlInput.value))}</b>`
+        : 'Enter a URL — we\'ll add https:// automatically if missing';
+    });
+    // Auto-normalize on blur
+    urlInput.addEventListener('blur', () => {
+      if (urlInput.value.trim()) urlInput.value = normalizeUrl(urlInput.value);
+    });
+
+    row.querySelectorAll('.icon-btn').forEach(btn => {
+      btn.addEventListener('click', () => handleLinkAction(row, btn.dataset.action));
     });
   });
+}
+
+async function handleLinkAction(row, action) {
+  const id = row.dataset.id || '';
+  const label = row.querySelector('.link-label').value.trim();
+  const urlRaw = row.querySelector('.link-url').value.trim();
+  const url = normalizeUrl(urlRaw);
+  const order = Array.from(document.querySelectorAll('.link-row')).indexOf(row);
+
+  // OPEN — always allowed, just previews the link
+  if (action === 'open') {
+    if (!url) return showToast('Enter a URL first', 'error');
+    window.open(url, '_blank', 'noopener');
+    return;
+  }
+
+  // SAVE
+  if (action === 'save') {
+    if (!label || !url) return showToast('Label and URL are both required', 'error');
+    const payload = { profile_id: currentUser.id, label, url, sort_order: order };
+    let error, data;
+    if (id) {
+      ({ error } = await supabase.from('business_links').update(payload).eq('id', id));
+    } else {
+      ({ data, error } = await supabase.from('business_links').insert(payload).select().single());
+    }
+    if (error) { console.error(error); return showToast('Save failed: ' + error.message, 'error'); }
+
+    if (!id && data) {
+      row.dataset.id = data.id;
+      const badge = row.querySelector('.link-id-badge');
+      badge.classList.remove('new');
+      badge.textContent = 'saved';
+    }
+    row.querySelector('.link-url').value = url; // reflect normalized value
+    showToast('✅ Link saved', 'success');
+    return;
+  }
+
+  // DELETE
+  if (action === 'delete') {
+    if (!confirm(id ? 'Delete this link permanently?' : 'Discard this unsaved link?')) return;
+    if (id) {
+      const { error } = await supabase.from('business_links').delete().eq('id', id);
+      if (error) { console.error(error); return showToast('Delete failed: ' + error.message, 'error'); }
+    }
+    row.remove();
+    if (!document.querySelector('.link-row')) {
+      document.getElementById('linksContainer').innerHTML =
+        '<div class="empty-state">No links added yet. Click "Add New Link" below.</div>';
+    }
+    showToast('🗑 Link deleted', 'success');
+    return;
+  }
 }
 
 document.getElementById('addLinkBtn').addEventListener('click', () => {
   const container = document.getElementById('linksContainer');
   const empty = container.querySelector('.empty-state');
   if (empty) empty.remove();
-  container.insertAdjacentHTML('beforeend', linkRowHTML(null, '', '', linkCounter++));
+  container.insertAdjacentHTML('beforeend', linkRowHTML(null, '', ''));
   attachLinkEvents();
-});
-
-document.getElementById('saveLinksBtn').addEventListener('click', async () => {
-  const btn = document.getElementById('saveLinksBtn');
-  const rows = document.querySelectorAll('.link-row');
-  const links = [];
-  rows.forEach((row, i) => {
-    const label = row.querySelector('.link-label').value.trim();
-    const url = row.querySelector('.link-url').value.trim();
-    if (label && url) links.push({ profile_id: currentUser.id, label, url, sort_order: i });
-  });
-
-  setLoading(btn, true, 'Saving…');
-  const { error: delErr } = await supabase.from('business_links').delete().eq('profile_id', currentUser.id);
-  if (delErr) { setLoading(btn, false); console.error(delErr); return showToast('Save failed: ' + delErr.message, 'error'); }
-  if (links.length) {
-    const { error: insErr } = await supabase.from('business_links').insert(links);
-    if (insErr) { setLoading(btn, false); console.error(insErr); return showToast('Save failed: ' + insErr.message, 'error'); }
-  }
-  setLoading(btn, false);
-  showToast('✅ Links saved!', 'success');
-  await loadProfile();
 });
 </script>
 </body>
