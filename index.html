@@ -46,54 +46,65 @@
     .main { max-width: 1100px; margin: -40px auto 60px; padding: 0 24px; }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 18px;
     }
 
-    /* CARD */
+    /* COMPACT CARD — whole thing is a link */
     .biz-card {
-      background: white; border-radius: 16px;
-      padding: 24px; box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-      transition: transform 0.2s, box-shadow 0.2s;
       display: flex; flex-direction: column;
+      background: white; border-radius: 14px;
+      padding: 20px; text-decoration: none; color: inherit;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+      border: 1.5px solid transparent;
+      min-height: 160px;
     }
     .biz-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 32px rgba(99,102,241,0.15);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(99,102,241,0.15);
+      border-color: #c7d2fe;
     }
 
-    .biz-header {
-      display: flex; gap: 14px; align-items: center;
-      margin-bottom: 14px;
+    .card-top {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 12px;
     }
     .biz-logo {
-      width: 52px; height: 52px; border-radius: 12px;
+      width: 48px; height: 48px; border-radius: 11px;
       object-fit: cover; background: #f1f5f9;
       flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem;
+      font-size: 1.2rem; font-weight: 700; color: #6366f1;
     }
-    .biz-name { font-size: 1.05rem; font-weight: 700; }
-    .biz-contact { font-size: 0.8rem; color: #6b7280; margin-top: 2px; }
+    .biz-name {
+      font-size: 1rem; font-weight: 700;
+      line-height: 1.3;
+      display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
 
-    .biz-desc {
-      font-size: 0.88rem; color: #4b5563;
-      line-height: 1.55; margin-bottom: 16px;
+    .biz-snippet {
+      font-size: 0.85rem; color: #6b7280;
+      line-height: 1.5; margin-bottom: 14px;
       flex: 1;
+      display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical; overflow: hidden;
     }
 
-    .biz-links { display: flex; flex-wrap: wrap; gap: 8px; }
-    .link-pill {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 7px 14px; border-radius: 20px;
-      font-size: 0.8rem; font-weight: 600;
-      text-decoration: none; transition: all 0.2s;
+    .card-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.8rem; color: #9ca3af;
+      padding-top: 12px; border-top: 1px solid #f1f5f9;
     }
-    .link-pill:hover { transform: translateY(-1px); opacity: 0.85; }
-    .link-pill.website { background: #eef2ff; color: #4f46e5; }
-    .link-pill.social { background: #fdf2f8; color: #db2777; }
-    .link-pill.contact { background: #f0fdf4; color: #16a34a; }
-    .link-pill.default { background: #f3f4f6; color: #4b5563; }
+    .link-count {
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .view-arrow {
+      color: #6366f1; font-weight: 600;
+      transition: transform 0.18s;
+    }
+    .biz-card:hover .view-arrow { transform: translateX(3px); }
 
     .loading, .empty {
       text-align: center; padding: 80px 20px;
@@ -120,7 +131,7 @@
     <h1>Find the right service provider</h1>
     <p>Browse trusted businesses and connect with them directly.</p>
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Search by business name..." />
+      <input type="text" id="searchInput" placeholder="Search by business name or keyword..." />
       <button id="searchBtn">Search</button>
     </div>
   </section>
@@ -149,7 +160,7 @@ const searchBtn = document.getElementById('searchBtn');
 
 let allBusinesses = [];
 
-// --- Load from the public_directory view ---
+// --- Load ---
 async function loadBusinesses() {
   loading.classList.remove('hidden');
   grid.classList.add('hidden');
@@ -188,39 +199,29 @@ function renderBusinesses(list) {
 function bizCardHTML(biz) {
   const initial = (biz.business_name || '?')[0].toUpperCase();
   const logo = biz.logo_url
-    ? `<img class="biz-logo" src="${escapeHtml(biz.logo_url)}" alt="${escapeHtml(biz.business_name)}" onerror="this.outerHTML='<div class=\\'biz-logo\\'>${initial}</div>'" />`
+    ? `<img class="biz-logo" src="${escapeHtml(biz.logo_url)}" alt="" onerror="this.outerHTML='<div class=\\'biz-logo\\'>${initial}</div>'" />`
     : `<div class="biz-logo">${initial}</div>`;
 
-  const links = (biz.links || []).map(link => {
-    const cls = linkClass(link.label);
-    return `<a class="link-pill ${cls}" href="${escapeHtml(link.url)}" target="_blank" rel="noopener">
-      ${escapeHtml(link.label)}
-    </a>`;
-  }).join('');
-
-  const contactLine = [biz.contact_email, biz.phone].filter(Boolean).join(' · ');
+  const linkCount = (biz.links || []).length;
+  const linkLabel = linkCount === 0
+    ? 'No links'
+    : linkCount === 1 ? '1 link' : `${linkCount} links`;
 
   return `
-    <div class="biz-card">
-      <div class="biz-header">
+    <a class="biz-card" href="profile.html?id=${encodeURIComponent(biz.id)}">
+      <div class="card-top">
         ${logo}
-        <div>
-          <div class="biz-name">${escapeHtml(biz.business_name)}</div>
-          <div class="biz-contact">${escapeHtml(contactLine)}</div>
-        </div>
+        <div class="biz-name">${escapeHtml(biz.business_name)}</div>
       </div>
-      <div class="biz-desc">${escapeHtml(biz.description || 'No description provided.')}</div>
-      <div class="biz-links">${links || '<span style="font-size:0.8rem;color:#9ca3af;">No links yet</span>'}</div>
-    </div>
+      <div class="biz-snippet">
+        ${escapeHtml(biz.description || 'No description provided.')}
+      </div>
+      <div class="card-footer">
+        <span class="link-count">🔗 ${linkLabel}</span>
+        <span class="view-arrow">View →</span>
+      </div>
+    </a>
   `;
-}
-
-function linkClass(label) {
-  const l = (label || '').toLowerCase();
-  if (l.includes('website') || l.includes('site')) return 'website';
-  if (l.includes('instagram') || l.includes('facebook') || l.includes('twitter') || l.includes('tiktok')) return 'social';
-  if (l.includes('whatsapp') || l.includes('phone') || l.includes('email') || l.includes('contact')) return 'contact';
-  return 'default';
 }
 
 function escapeHtml(str) {
@@ -246,7 +247,6 @@ function filterBusinesses(query) {
 searchBtn.addEventListener('click', () => filterBusinesses(searchInput.value));
 searchInput.addEventListener('input', (e) => filterBusinesses(e.target.value));
 
-// --- Init ---
 loadBusinesses();
 </script>
 </body>
