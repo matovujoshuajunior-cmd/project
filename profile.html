@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Business Profile</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #f8fafc; color: #1a1a2e;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: white;
+      padding: 16px 24px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: #6366f1; text-decoration: none;
+      font-size: 0.9rem; font-weight: 600;
+      transition: transform 0.15s;
+    }
+    .back-link:hover { transform: translateX(-3px); }
+
+    .main {
+      max-width: 720px; margin: 0 auto;
+      padding: 32px 24px 60px;
+    }
+
+    /* HERO */
+    .profile-hero {
+      background: white; border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      margin-bottom: 20px;
+    }
+    .hero-logo {
+      width: 96px; height: 96px; border-radius: 22px;
+      object-fit: cover; background: #f1f5f9;
+      margin: 0 auto 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.4rem; font-weight: 800; color: #6366f1;
+      box-shadow: 0 4px 16px rgba(99,102,241,0.15);
+    }
+    .hero-name {
+      font-size: 1.6rem; font-weight: 800;
+      margin-bottom: 10px; line-height: 1.25;
+    }
+    .hero-contact {
+      font-size: 0.9rem; color: #6b7280;
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 14px;
+    }
+    .hero-contact a {
+      color: #6366f1; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .hero-contact a:hover { text-decoration: underline; }
+
+    /* SECTIONS */
+    .section {
+      background: white; border-radius: 16px;
+      padding: 26px; margin-bottom: 18px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    .section h2 {
+      font-size: 1.05rem; font-weight: 700;
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-body {
+      font-size: 0.95rem; color: #4b5563;
+      line-height: 1.65; white-space: pre-wrap;
+    }
+
+    /* LINK BUTTONS */
+    .link-list {
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .link-btn {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600; font-size: 0.95rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+      border: 1.5px solid transparent;
+    }
+    .link-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    .link-btn .arrow { font-size: 1.1rem; opacity: 0.7; }
+
+    .link-btn.website { background: #eef2ff; color: #4f46e5; border-color: #c7d2fe; }
+    .link-btn.social  { background: #fdf2f8; color: #db2777; border-color: #fbcfe8; }
+    .link-btn.contact { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
+    .link-btn.default { background: #f3f4f6; color: #374151; border-color: #e5e7eb; }
+
+    .link-btn .label {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .link-icon { font-size: 1.15rem; }
+
+    /* STATES */
+    .state {
+      text-align: center; padding: 80px 20px;
+      color: #9ca3af;
+    }
+    .state h2 {
+      font-size: 1.3rem; color: #1a1a2e;
+      margin-bottom: 8px;
+    }
+    .state p { margin-bottom: 20px; font-size: 0.9rem; }
+    .state a {
+      display: inline-block; padding: 11px 24px;
+      background: #6366f1; color: white;
+      border-radius: 10px; text-decoration: none;
+      font-weight: 600; font-size: 0.9rem;
+    }
+    .state a:hover { opacity: 0.9; }
+
+    .spinner {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 3px solid #e5e7eb; border-top-color: #6366f1;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="back-link">← Back to directory</a>
+</div>
+
+<main class="main">
+
+  <!-- LOADING -->
+  <div id="loading" class="state">
+    <div class="spinner"></div>
+    Loading profile...
+  </div>
+
+  <!-- NOT FOUND -->
+  <div id="notFound" class="state hidden">
+    <h2>Business not found</h2>
+    <p>This profile may have been removed or the link is incorrect.</p>
+    <a href="index.html">Browse all businesses</a>
+  </div>
+
+  <!-- PROFILE -->
+  <div id="profile" class="hidden">
+    <div class="profile-hero">
+      <div id="heroLogoWrap"></div>
+      <h1 class="hero-name" id="heroName"></h1>
+      <div class="hero-contact" id="heroContact"></div>
+    </div>
+
+    <div class="section" id="aboutSection">
+      <h2>📄 About</h2>
+      <div class="section-body" id="aboutBody"></div>
+    </div>
+
+    <div class="section" id="linksSection">
+      <h2>🔗 Connect</h2>
+      <div class="link-list" id="linkList"></div>
+    </div>
+  </div>
+
+</main>
+
+<script type="module">
+import { supabase } from './supabase-client.js';
+
+const loadingEl   = document.getElementById('loading');
+const notFoundEl  = document.getElementById('notFound');
+const profileEl   = document.getElementById('profile');
+
+const heroLogoWrap = document.getElementById('heroLogoWrap');
+const heroName     = document.getElementById('heroName');
+const heroContact  = document.getElementById('heroContact');
+const aboutBody    = document.getElementById('aboutBody');
+const aboutSection = document.getElementById('aboutSection');
+const linksSection = document.getElementById('linksSection');
+const linkList     = document.getElementById('linkList');
+
+// --- Get id from URL ---
+const params = new URLSearchParams(window.location.search);
+const bizId = params.get('id');
+
+async function init() {
+  if (!bizId) return showNotFound();
+
+  const { data, error } = await supabase
+    .from('public_directory')
+    .select('*')
+    .eq('id', bizId)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Load error:', error);
+    return showNotFound();
+  }
+  if (!data) return showNotFound();
+
+  renderProfile(data);
+}
+
+function showNotFound() {
+  loadingEl.classList.add('hidden');
+  notFoundEl.classList.remove('hidden');
+}
+
+function renderProfile(biz) {
+  loadingEl.classList.add('hidden');
+  profileEl.classList.remove('hidden');
+
+  // Update page title for sharing/SEO
+  document.title = `${biz.business_name} — Business Profile`;
+
+  // Hero logo
+  const initial = (biz.business_name || '?')[0].toUpperCase();
+  if (biz.logo_url) {
+    heroLogoWrap.innerHTML = `
+      <img class="hero-logo" src="${escapeHtml(biz.logo_url)}" alt="${escapeHtml(biz.business_name)}"
+           onerror="this.outerHTML='<div class=\\'hero-logo\\'>${initial}</div>'" />
+    `;
+  } else {
+    heroLogoWrap.innerHTML = `<div class="hero-logo">${initial}</div>`;
+  }
+
+  // Name
+  heroName.textContent = biz.business_name || 'Unnamed Business';
+
+  // Contact line
+  const contactParts = [];
+  if (biz.contact_email) {
+    contactParts.push(
+      `<a href="mailto:${escapeHtml(biz.contact_email)}">✉️ ${escapeHtml(biz.contact_email)}</a>`
+    );
+  }
+  if (biz.phone) {
+    contactParts.push(
+      `<a href="tel:${escapeHtml(biz.phone)}">📞 ${escapeHtml(biz.phone)}</a>`
+    );
+  }
+  heroContact.innerHTML = contactParts.join('');
+
+  // About
+  if (biz.description && biz.description.trim()) {
+    aboutBody.textContent = biz.description;
+  } else {
+    aboutBody.textContent = 'This business hasn\'t added a description yet.';
+    aboutBody.style.color = '#9ca3af';
+    aboutBody.style.fontStyle = 'italic';
+  }
+
+  // Links
+  const links = biz.links || [];
+  if (links.length) {
+    linkList.innerHTML = links.map(linkButtonHTML).join('');
+  } else {
+    linksSection.querySelector('h2').textContent = '🔗 No links yet';
+    linkList.innerHTML = `<p style="font-size:0.9rem;color:#9ca3af;font-style:italic;">This business hasn't added any links yet.</p>`;
+  }
+}
+
+function linkButtonHTML(link) {
+  const cls = linkClass(link.label);
+  const icon = linkIcon(link.label);
+  return `
+    <a class="link-btn ${cls}"
+       href="${escapeHtml(link.url)}"
+       target="_blank"
+       rel="noopener noreferrer">
+      <span class="label">
+        <span class="link-icon">${icon}</span>
+        ${escapeHtml(link.label)}
+      </span>
+      <span class="arrow">↗</span>
+    </a>
+  `;
+}
+
+function linkClass(label) {
+  const l = (label || '').toLowerCase();
+  if (l.includes('website') || l.includes('site')) return 'website';
+  if (l.includes('instagram') || l.includes('facebook') || l.includes('twitter') || l.includes('tiktok') || l.includes('linkedin')) return 'social';
+  if (l.includes('whatsapp') || l.includes('phone') || l.includes('email') || l.includes('contact')) return 'contact';
+  return 'default';
+}
+
+function linkIcon(label) {
+  const l = (label || '').toLowerCase();
+  if (l.includes('website') || l.includes('site')) return '🌐';
+  if (l.includes('instagram')) return '📸';
+  if (l.includes('facebook')) return '📘';
+  if (l.includes('twitter') || l.includes('x')) return '🐦';
+  if (l.includes('tiktok')) return '🎵';
+  if (l.includes('linkedin')) return '💼';
+  if (l.includes('whatsapp')) return '💬';
+  if (l.includes('youtube')) return '▶️';
+  if (l.includes('email') || l.includes('mail')) return '✉️';
+  if (l.includes('phone') || l.includes('call')) return '📞';
+  if (l.includes('booking') || l.includes('appointment')) return '📅';
+  return '🔗';
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+init();
+</script>
+</body>
+</html>
