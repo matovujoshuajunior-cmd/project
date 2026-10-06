@@ -103,10 +103,12 @@
       transition: opacity 0.3s; pointer-events: none;
       z-index: 999;
       max-width: 90vw; text-align: center;
+      line-height: 1.5;
     }
     .toast.show { opacity: 1; }
     .toast.error { background: #dc2626; }
     .toast.success { background: #16a34a; }
+    .toast.warn { background: #d97706; }
 
     .empty-state {
       text-align: center; padding: 40px 20px;
@@ -118,14 +120,27 @@
       border: 2px solid #e5e7eb;
     }
 
-    /* Info banner shown after signup when confirmation is required */
-    .info-banner {
-      background: #eff6ff; border: 1px solid #bfdbfe;
-      color: #1e40af; padding: 14px 18px;
-      border-radius: 10px; font-size: 0.88rem;
-      margin-bottom: 18px; line-height: 1.5;
+    /* Diagnostic panel — visible only when needed */
+    .diag {
+      background: #fef9c3; border: 1px solid #fde047;
+      color: #713f12; padding: 14px 18px;
+      border-radius: 10px; font-size: 0.82rem;
+      margin-top: 16px; line-height: 1.55;
+      font-family: ui-monospace, monospace;
+      white-space: pre-wrap; word-break: break-all;
     }
-    .info-banner strong { display: block; margin-bottom: 4px; }
+    .diag strong { display: block; margin-bottom: 6px; font-family: inherit; }
+
+    /* Help panel shown after "already exists" detection */
+    .help-panel {
+      background: #fef2f2; border: 1px solid #fecaca;
+      color: #7f1d1d; padding: 16px 18px;
+      border-radius: 10px; font-size: 0.87rem;
+      margin-bottom: 18px; line-height: 1.6;
+    }
+    .help-panel strong { display: block; margin-bottom: 6px; }
+    .help-panel ol { padding-left: 20px; margin-top: 8px; }
+    .help-panel li { margin-bottom: 4px; }
   </style>
 </head>
 <body>
@@ -144,14 +159,18 @@
         <button class="auth-tab" data-tab="signup">Sign Up</button>
       </div>
 
-      <!-- Info banner: shown after signup if email confirmation is required -->
-      <div id="confirmBanner" class="info-banner hidden">
-        <strong>📧 Check your email</strong>
-        We sent a confirmation link to <span id="confirmEmail"></span>.
-        Click it to activate your account, then log in below.
-        <button id="resendBtn" class="btn btn-ghost" style="margin-top:10px; font-size:0.8rem; padding:6px 14px;">
-          Resend confirmation email
-        </button>
+      <!-- Help panel — shown when signup detects an existing user -->
+      <div id="helpPanel" class="help-panel hidden">
+        <strong>⚠️ That email already has an account</strong>
+        Supabase doesn't reveal whether an email exists (to prevent email enumeration).
+        If you're sure you want a fresh start, delete the old user from the
+        Supabase dashboard and try signing up again:
+        <ol>
+          <li>Open <b>Authentication → Users</b> in your Supabase dashboard</li>
+          <li>Find <span id="helpEmail"></span> and delete it</li>
+          <li>Come back here and sign up again</li>
+        </ol>
+        Or, if you remember your old password, switch to the <b>Log In</b> tab.
       </div>
 
       <div id="loginForm">
@@ -233,22 +252,21 @@ const authSection = document.getElementById('authSection');
 const dashboardSection = document.getElementById('dashboardSection');
 const logoutBtn = document.getElementById('logoutBtn');
 const toastEl = document.getElementById('toast');
-const confirmBanner = document.getElementById('confirmBanner');
-const confirmEmail = document.getElementById('confirmEmail');
-const resendBtn = document.getElementById('resendBtn');
+const helpPanel = document.getElementById('helpPanel');
+const helpEmail = document.getElementById('helpEmail');
 
 let currentUser = null;
 let lastSignupEmail = '';
 
-// --- Toast helper ---
-function showToast(msg, type = 'info', duration = 3200) {
+// --- Toast ---
+function showToast(msg, type = 'info', duration = 3500) {
   toastEl.textContent = msg;
-  toastEl.className = 'toast show ' + (type === 'error' ? 'error' : type === 'success' ? 'success' : '');
+  toastEl.className = 'toast show ' + (type === 'error' ? 'error' : type === 'success' ? 'success' : type === 'warn' ? 'warn' : '');
   clearTimeout(showToast._t);
   showToast._t = setTimeout(() => toastEl.classList.remove('show'), duration);
 }
 
-// --- Button loading state ---
+// --- Button loading ---
 function setLoading(btn, loading, label) {
   if (loading) {
     btn.dataset.original = btn.textContent;
@@ -260,7 +278,7 @@ function setLoading(btn, loading, label) {
   }
 }
 
-// --- Auth tab switching ---
+// --- Tab switching ---
 document.querySelectorAll('.auth-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
@@ -268,11 +286,13 @@ document.querySelectorAll('.auth-tab').forEach(tab => {
     const target = tab.dataset.tab;
     document.getElementById('loginForm').classList.toggle('hidden', target !== 'login');
     document.getElementById('signupForm').classList.toggle('hidden', target !== 'signup');
-    confirmBanner.classList.add('hidden');
+    helpPanel.classList.add('hidden');
   });
 });
 
-// --- Sign Up ---
+// ---------------------------------------------------------------
+// SIGN UP
+// ---------------------------------------------------------------
 document.getElementById('signupBtn').addEventListener('click', async () => {
   const btn = document.getElementById('signupBtn');
   const businessName = document.getElementById('signupBusinessName').value.trim();
@@ -296,57 +316,52 @@ document.getElementById('signupBtn').addEventListener('click', async () => {
 
   setLoading(btn, false);
 
+  console.log('Signup response:', { data, error });
+
   if (error) {
     console.error('Signup error:', error);
-    // Specific, friendly messages
-    if (error.message.includes('already registered') || error.message.includes('already been registered')) {
+    if (error.message.toLowerCase().includes('already')) {
       return showToast('That email is already registered. Try logging in.', 'error');
     }
-    if (error.message.includes('rate limit')) {
+    if (error.message.toLowerCase().includes('rate')) {
       return showToast('Too many attempts. Please wait a few minutes.', 'error');
     }
     return showToast('Signup failed: ' + error.message, 'error');
   }
 
-  // Case 1: Email confirmation is OFF → data.session exists → user is logged in
-  if (data.session) {
-    showToast('✅ Account created! Welcome.', 'success');
+  // -------- Detect the "already exists" silent case --------
+  // When email confirmation is OFF and the email already exists, Supabase
+  // returns a user object with an EMPTY identities array (to prevent
+  // email enumeration). We check for that here.
+  if (data?.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+    lastSignupEmail = email;
+    helpEmail.textContent = email;
+    helpPanel.classList.remove('hidden');
+    return showToast('That email already has an account. See the red help box.', 'warn', 6000);
+  }
+
+  // -------- Fresh signup, confirmation OFF --------
+  if (data?.session) {
+    showToast('✅ Account created! Logging you in…', 'success');
     // onAuthStateChange will switch to dashboard
     return;
   }
 
-  // Case 2: Email confirmation is ON → data.user exists but data.session is null
-  if (data.user) {
+  // -------- Fresh signup, confirmation ON --------
+  if (data?.user) {
     lastSignupEmail = email;
-    confirmEmail.textContent = email;
-    confirmBanner.classList.remove('hidden');
-    // Switch to login tab so they can log in after confirming
+    showToast('📧 Account created. Check your email to confirm.', 'success', 6000);
     document.querySelector('.auth-tab[data-tab="login"]').click();
     document.getElementById('loginEmail').value = email;
-    showToast('Account created! Please confirm your email.', 'success', 4500);
     return;
   }
 
-  showToast('Unexpected response from server.', 'error');
+  showToast('Unexpected response from server. Check console.', 'error');
 });
 
-// --- Resend confirmation email ---
-resendBtn.addEventListener('click', async () => {
-  if (!lastSignupEmail) return;
-  setLoading(resendBtn, true, 'Sending…');
-  const { error } = await supabase.auth.resend({
-    type: 'signup',
-    email: lastSignupEmail
-  });
-  setLoading(resendBtn, false);
-  if (error) {
-    console.error('Resend error:', error);
-    return showToast('Could not resend: ' + error.message, 'error');
-  }
-  showToast('📧 Confirmation email sent again', 'success');
-});
-
-// --- Log In ---
+// ---------------------------------------------------------------
+// LOG IN
+// ---------------------------------------------------------------
 document.getElementById('loginBtn').addEventListener('click', async () => {
   const btn = document.getElementById('loginBtn');
   const email = document.getElementById('loginEmail').value.trim().toLowerCase();
@@ -363,35 +378,33 @@ document.getElementById('loginBtn').addEventListener('click', async () => {
   setLoading(btn, false);
 
   if (error) {
-    // Always log the full object — this is what you check in DevTools
     console.error('Login error:', error);
+    const msg = (error.message || '').toLowerCase();
 
-    const msg = error.message || '';
-
-    if (msg.includes('Invalid login credentials')) {
+    if (msg.includes('invalid login credentials')) {
+      // This means: either the user doesn't exist, or the password is wrong.
+      // Supabase intentionally doesn't tell us which, to prevent email enumeration.
+      helpEmail.textContent = email;
+      helpPanel.classList.remove('hidden');
       return showToast(
-        'Wrong email or password. If you just signed up, confirm your email first.',
-        'error', 5000
+        'Wrong email or password — or the account doesn\'t exist yet. See the help box.',
+        'error', 6500
       );
     }
-    if (msg.includes('Email not confirmed')) {
-      // Show the confirmation banner again
-      lastSignupEmail = email;
-      confirmEmail.textContent = email;
-      confirmBanner.classList.remove('hidden');
-      return showToast('Please confirm your email before logging in.', 'error', 4500);
+    if (msg.includes('email not confirmed')) {
+      return showToast('Please confirm your email first (check your inbox).', 'error', 5000);
     }
-    if (msg.includes('rate limit')) {
+    if (msg.includes('rate')) {
       return showToast('Too many attempts. Please wait a few minutes.', 'error');
     }
-    return showToast('Login failed: ' + msg, 'error');
+    return showToast('Login failed: ' + error.message, 'error');
   }
 
-  // Success — onAuthStateChange handles the transition
   console.log('Login success:', data);
+  helpPanel.classList.add('hidden');
 });
 
-// --- Enter key submits the active form ---
+// --- Enter key submits ---
 document.getElementById('loginPassword').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('loginBtn').click();
 });
@@ -399,22 +412,26 @@ document.getElementById('signupPassword').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('signupBtn').click();
 });
 
-// --- Log Out ---
+// ---------------------------------------------------------------
+// LOG OUT
+// ---------------------------------------------------------------
 logoutBtn.addEventListener('click', async () => {
   await supabase.auth.signOut();
   showToast('Logged out');
 });
 
-// --- Auth state listener ---
+// ---------------------------------------------------------------
+// AUTH STATE
+// ---------------------------------------------------------------
 supabase.auth.onAuthStateChange(async (event, session) => {
-  console.log('Auth event:', event);
+  console.log('Auth event:', event, session?.user?.email || '(no user)');
   currentUser = session?.user ?? null;
 
   if (currentUser) {
     authSection.classList.add('hidden');
     dashboardSection.classList.remove('hidden');
     logoutBtn.classList.remove('hidden');
-    confirmBanner.classList.add('hidden');
+    helpPanel.classList.add('hidden');
     await loadProfile();
   } else {
     authSection.classList.remove('hidden');
@@ -423,10 +440,13 @@ supabase.auth.onAuthStateChange(async (event, session) => {
   }
 });
 
-// --- Load profile + links ---
+// ---------------------------------------------------------------
+// LOAD PROFILE + LINKS
+// ---------------------------------------------------------------
 async function loadProfile() {
   if (!currentUser) return;
 
+  // If the trigger hasn't created the profile row yet, upsert it
   const { data: profile, error: pErr } = await supabase
     .from('profiles')
     .select('*')
@@ -435,7 +455,18 @@ async function loadProfile() {
 
   if (pErr) console.error('Profile load error:', pErr);
 
-  if (profile) {
+  if (!profile) {
+    // Fallback: create the profile row client-side
+    const fallbackName =
+      currentUser.user_metadata?.business_name || 'My Business';
+    const { error: insErr } = await supabase
+      .from('profiles')
+      .insert({ id: currentUser.id, business_name: fallbackName });
+    if (insErr) console.error('Profile insert error:', insErr);
+    else {
+      document.getElementById('bizName').value = fallbackName;
+    }
+  } else {
     document.getElementById('bizName').value = profile.business_name || '';
     document.getElementById('bizDescription').value = profile.description || '';
     document.getElementById('bizEmail').value = profile.contact_email || '';
@@ -451,7 +482,6 @@ async function loadProfile() {
     .order('sort_order');
 
   if (lErr) console.error('Links load error:', lErr);
-
   renderLinks(links || []);
 }
 
@@ -489,7 +519,7 @@ document.getElementById('saveProfileBtn').addEventListener('click', async () => 
   showToast('✅ Information saved!', 'success');
 });
 
-// --- Links rendering ---
+// --- Links ---
 let linkCounter = 0;
 function renderLinks(links) {
   const container = document.getElementById('linksContainer');
