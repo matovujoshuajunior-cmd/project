@@ -9,7 +9,6 @@
     .hidden { display: none !important; }
     body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f8fafc; color: #1a1a2e; }
 
-    /* HERO */
     .hero {
       background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
       padding: 64px 24px 80px; text-align: center; color: white;
@@ -27,18 +26,26 @@
     }
     .search-box button:hover { background: #2d2d4e; }
 
-    /* CONSPICUOUS CTA BANNER */
+    /* CTA BANNER — animated in after page load */
     .cta-banner {
       background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-      color: #1a1a2e; padding: 22px 28px;
+      color: #1a1a2e;
+      padding: 22px 28px;
       display: flex; align-items: center; justify-content: space-between;
       gap: 20px; flex-wrap: wrap;
       max-width: 1100px; margin: -40px auto 32px;
       border-radius: 18px;
       box-shadow: 0 12px 32px rgba(245,158,11,0.35);
       position: relative; z-index: 2;
+      opacity: 0;
+      transform: translateY(-12px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
-    .cta-banner .cta-text { display: flex; align-items: center; gap: 14px; font-size: 0.95rem; }
+    .cta-banner.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .cta-banner .cta-text { display: flex; align-items: center; gap: 14px; font-size: 0.95rem; flex: 1; min-width: 220px; }
     .cta-banner .cta-icon { font-size: 2rem; }
     .cta-banner strong { display: block; font-size: 1.1rem; font-weight: 800; margin-bottom: 2px; }
     .cta-banner .cta-sub { opacity: 0.75; font-size: 0.85rem; }
@@ -50,15 +57,22 @@
       white-space: nowrap;
     }
     .cta-banner .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+    .cta-close {
+      position: absolute; top: 8px; right: 10px;
+      background: rgba(26,26,46,0.15);
+      border: none; width: 28px; height: 28px;
+      border-radius: 50%; cursor: pointer;
+      color: #1a1a2e; font-size: 0.9rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
+    }
+    .cta-close:hover { background: rgba(26,26,46,0.3); }
 
-    /* MAIN + GRID */
     .main { max-width: 1100px; margin: 0 auto 60px; padding: 0 24px; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
 
-    /* RANKED CARD */
     .biz-card {
-      position: relative;
-      display: flex; flex-direction: column;
+      position: relative; display: flex; flex-direction: column;
       background: white; border-radius: 16px; padding: 22px;
       text-decoration: none; color: inherit;
       box-shadow: 0 2px 12px rgba(0,0,0,0.05);
@@ -66,18 +80,13 @@
       border: 1.5px solid transparent;
       min-height: 210px;
     }
-    .biz-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(99,102,241,0.15);
-      border-color: #c7d2fe;
-    }
+    .biz-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(99,102,241,0.15); border-color: #c7d2fe; }
 
-    /* Rank badge (top-right corner) */
     .rank-badge {
       position: absolute; top: 12px; right: 12px;
       display: inline-flex; align-items: center; gap: 4px;
       padding: 5px 11px; border-radius: 20px;
-      font-size: 0.72rem; font-weight: 800; letter-spacing: 0.3px;
+      font-size: 0.72rem; font-weight: 800;
     }
     .rank-badge.gold   { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #1a1a2e; }
     .rank-badge.silver { background: linear-gradient(135deg, #e5e7eb, #9ca3af); color: #1a1a2e; }
@@ -91,24 +100,16 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 1.3rem; font-weight: 700; color: #6366f1;
     }
-    .biz-name {
-      font-size: 1rem; font-weight: 700; line-height: 1.3;
-      display: -webkit-box; -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical; overflow: hidden;
-    }
-    .biz-location {
-      font-size: 0.78rem; color: #6b7280; margin-top: 3px;
-      display: flex; align-items: center; gap: 4px;
-    }
+    .biz-name { font-size: 1rem; font-weight: 700; line-height: 1.3;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .biz-location { font-size: 0.78rem; color: #6b7280; margin-top: 3px; }
 
     .biz-snippet {
       font-size: 0.85rem; color: #6b7280; line-height: 1.5;
       margin-bottom: 16px; flex: 1;
-      display: -webkit-box; -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical; overflow: hidden;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
     }
 
-    /* Website URL row — displayed as the clickable clean URL */
     .website-row {
       display: flex; align-items: center; gap: 8px;
       padding: 10px 14px; background: #eef2ff; border-radius: 10px;
@@ -116,7 +117,6 @@
       margin-bottom: 10px;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
-    .website-row .globe { flex-shrink: 0; }
     .website-row .url-text { overflow: hidden; text-overflow: ellipsis; }
 
     .card-footer {
@@ -150,8 +150,9 @@
     </div>
   </section>
 
-  <!-- CONSPICUOUS CTA -->
-  <div class="cta-banner">
+  <!-- CTA — starts hidden, fades in after landing -->
+  <div class="cta-banner" id="ctaBanner">
+    <button class="cta-close" id="ctaClose" title="Dismiss">✕</button>
     <div class="cta-text">
       <div class="cta-icon">🏪</div>
       <div>
@@ -176,28 +177,57 @@
   </div>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=4';
+import { supabase } from './supabase-client.js?v=5';
 
 const grid        = document.getElementById('grid');
 const loading     = document.getElementById('loading');
 const emptyState  = document.getElementById('emptyState');
 const searchInput = document.getElementById('searchInput');
 const searchBtn   = document.getElementById('searchBtn');
+const ctaBanner   = document.getElementById('ctaBanner');
+const ctaClose    = document.getElementById('ctaClose');
 
 let allBusinesses = [];
 
-// Strip protocol + trailing slash for display
+// ---------- CTA banner: fade in after landing, dismissible ----------
+const CTA_DISMISS_KEY = 'ctaBannerDismissedUntil';
+const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
+
+function shouldShowCTA() {
+  const until = localStorage.getItem(CTA_DISMISS_KEY);
+  if (!until) return true;
+  return Date.now() > parseInt(until, 10);
+}
+
+// Show after a short delay (feels like it "arrives" after landing)
+if (shouldShowCTA()) {
+  setTimeout(() => ctaBanner.classList.add('visible'), 900);
+}
+
+ctaClose.addEventListener('click', () => {
+  ctaBanner.classList.remove('visible');
+  // Hide completely after the transition ends
+  setTimeout(() => ctaBanner.style.display = 'none', 500);
+  localStorage.setItem(CTA_DISMISS_KEY, String(Date.now() + ONE_WEEK));
+});
+
+// ---------- URL helpers ----------
+function normalizeUrl(url) {
+  if (!url) return '';
+  url = url.trim();
+  if (!url) return '';
+  if (/^https?:\/\//i.test(url)) return url;
+  if (/^(mailto:|tel:|sms:|whatsapp:)/i.test(url)) return url;
+  return 'https://' + url;
+}
 function displayUrl(url) {
   if (!url) return '';
   return url.replace(/^https?:\/\//i, '').replace(/\/$/, '');
 }
 
-// Identify the "website" link — first one labelled website/site, else first link
 function findWebsite(links) {
   if (!links || !links.length) return null;
-  const byLabel = links.find(l =>
-    /website|site|homepage/i.test(l.label || '')
-  );
+  const byLabel = links.find(l => /website|site|homepage/i.test(l.label || ''));
   return byLabel || links[0];
 }
 
@@ -206,10 +236,8 @@ async function loadBusinesses() {
   grid.classList.add('hidden');
   emptyState.classList.add('hidden');
 
-  // Sort by rank desc so featured businesses come first
   const { data, error } = await supabase
-    .from('public_directory')
-    .select('*')
+    .from('public_directory').select('*')
     .order('rank', { ascending: false })
     .order('created_at', { ascending: false });
 
@@ -238,7 +266,6 @@ function renderBusinesses(list) {
 }
 
 function rankBadgeHTML(rank, position) {
-  // position = index in the already-sorted list. Top 3 positions get medals.
   if (position === 0) return `<div class="rank-badge gold">🥇 #1</div>`;
   if (position === 1) return `<div class="rank-badge silver">🥈 #2</div>`;
   if (position === 2) return `<div class="rank-badge bronze">🥉 #3</div>`;
@@ -256,14 +283,13 @@ function bizCardHTML(biz, position) {
   const website = findWebsite(biz.links);
   const websiteRow = website
     ? `<div class="website-row">
-         <span class="globe">🌐</span>
-         <span class="url-text">${escapeHtml(displayUrl(website.url))}</span>
+         <span>🌐</span>
+         <span class="url-text">${escapeHtml(displayUrl(normalizeUrl(website.url)))}</span>
        </div>`
     : '';
 
   const locationHTML = biz.location
-    ? `<div class="biz-location">📍 ${escapeHtml(biz.location)}</div>`
-    : '';
+    ? `<div class="biz-location">📍 ${escapeHtml(biz.location)}</div>` : '';
 
   const linkCount = (biz.links || []).length;
   const linkLabel = linkCount === 0 ? 'No links'
