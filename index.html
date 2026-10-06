@@ -6,12 +6,15 @@
   <title>Find a Service Provider</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ⬇️ THIS WAS MISSING — do not remove */
+    .hidden { display: none !important; }
+
     body {
       font-family: 'Segoe UI', system-ui, sans-serif;
       background: #f8fafc; color: #1a1a2e;
     }
 
-    /* HERO */
     .hero {
       background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
       padding: 64px 24px 80px;
@@ -42,15 +45,14 @@
     }
     .search-box button:hover { background: #2d2d4e; }
 
-    /* GRID */
     .main { max-width: 1100px; margin: -40px auto 60px; padding: 0 24px; }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 18px;
     }
 
-    /* COMPACT CARD — whole thing is a link */
     .biz-card {
       display: flex; flex-direction: column;
       background: white; border-radius: 14px;
@@ -78,16 +80,14 @@
       font-size: 1.2rem; font-weight: 700; color: #6366f1;
     }
     .biz-name {
-      font-size: 1rem; font-weight: 700;
-      line-height: 1.3;
+      font-size: 1rem; font-weight: 700; line-height: 1.3;
       display: -webkit-box; -webkit-line-clamp: 2;
       -webkit-box-orient: vertical; overflow: hidden;
     }
 
     .biz-snippet {
       font-size: 0.85rem; color: #6b7280;
-      line-height: 1.5; margin-bottom: 14px;
-      flex: 1;
+      line-height: 1.5; margin-bottom: 14px; flex: 1;
       display: -webkit-box; -webkit-line-clamp: 2;
       -webkit-box-orient: vertical; overflow: hidden;
     }
@@ -96,9 +96,6 @@
       display: flex; justify-content: space-between; align-items: center;
       font-size: 0.8rem; color: #9ca3af;
       padding-top: 12px; border-top: 1px solid #f1f5f9;
-    }
-    .link-count {
-      display: inline-flex; align-items: center; gap: 4px;
     }
     .view-arrow {
       color: #6366f1; font-weight: 600;
@@ -150,17 +147,16 @@
   </div>
 
 <script type="module">
-import { supabase } from './supabase-client.js';
+import { supabase } from './supabase-client.js?v=3';
 
-const grid = document.getElementById('grid');
-const loading = document.getElementById('loading');
-const emptyState = document.getElementById('emptyState');
+const grid        = document.getElementById('grid');
+const loading     = document.getElementById('loading');
+const emptyState  = document.getElementById('emptyState');
 const searchInput = document.getElementById('searchInput');
-const searchBtn = document.getElementById('searchBtn');
+const searchBtn   = document.getElementById('searchBtn');
 
 let allBusinesses = [];
 
-// --- Load ---
 async function loadBusinesses() {
   loading.classList.remove('hidden');
   grid.classList.add('hidden');
@@ -171,12 +167,14 @@ async function loadBusinesses() {
     .select('*')
     .order('created_at', { ascending: false });
 
+  console.log('Directory fetch:', { data, error });
+
   loading.classList.add('hidden');
 
   if (error) {
     console.error(error);
     emptyState.classList.remove('hidden');
-    emptyState.textContent = 'Could not load businesses.';
+    emptyState.textContent = 'Could not load businesses. Check console.';
     return;
   }
 
@@ -184,7 +182,6 @@ async function loadBusinesses() {
   renderBusinesses(allBusinesses);
 }
 
-// --- Render ---
 function renderBusinesses(list) {
   if (!list.length) {
     emptyState.classList.remove('hidden');
@@ -199,13 +196,14 @@ function renderBusinesses(list) {
 function bizCardHTML(biz) {
   const initial = (biz.business_name || '?')[0].toUpperCase();
   const logo = biz.logo_url
-    ? `<img class="biz-logo" src="${escapeHtml(biz.logo_url)}" alt="" onerror="this.outerHTML='<div class=\\'biz-logo\\'>${initial}</div>'" />`
+    ? `<img class="biz-logo" src="${escapeHtml(biz.logo_url)}" alt=""
+            onerror="this.outerHTML='<div class=\\'biz-logo\\'>${initial}</div>'" />`
     : `<div class="biz-logo">${initial}</div>`;
 
   const linkCount = (biz.links || []).length;
-  const linkLabel = linkCount === 0
-    ? 'No links'
-    : linkCount === 1 ? '1 link' : `${linkCount} links`;
+  const linkLabel = linkCount === 0 ? 'No links'
+                  : linkCount === 1 ? '1 link'
+                  : `${linkCount} links`;
 
   return `
     <a class="biz-card" href="profile.html?id=${encodeURIComponent(biz.id)}">
@@ -213,11 +211,9 @@ function bizCardHTML(biz) {
         ${logo}
         <div class="biz-name">${escapeHtml(biz.business_name)}</div>
       </div>
-      <div class="biz-snippet">
-        ${escapeHtml(biz.description || 'No description provided.')}
-      </div>
+      <div class="biz-snippet">${escapeHtml(biz.description || 'No description provided.')}</div>
       <div class="card-footer">
-        <span class="link-count">🔗 ${linkLabel}</span>
+        <span>🔗 ${linkLabel}</span>
         <span class="view-arrow">View →</span>
       </div>
     </a>
@@ -227,13 +223,10 @@ function bizCardHTML(biz) {
 function escapeHtml(str) {
   if (!str) return '';
   return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-// --- Search ---
 function filterBusinesses(query) {
   const q = query.toLowerCase().trim();
   if (!q) return renderBusinesses(allBusinesses);
@@ -245,7 +238,7 @@ function filterBusinesses(query) {
 }
 
 searchBtn.addEventListener('click', () => filterBusinesses(searchInput.value));
-searchInput.addEventListener('input', (e) => filterBusinesses(e.target.value));
+searchInput.addEventListener('input', e => filterBusinesses(e.target.value));
 
 loadBusinesses();
 </script>
