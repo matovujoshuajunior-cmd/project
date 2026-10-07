@@ -3,27 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache" />
   <title>Business Profile</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     .hidden { display: none !important; }
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: #f8fafc; color: #1a1a2e; min-height: 100vh;
-    }
-    .topbar {
-      background: white; padding: 16px 24px;
-      border-bottom: 1px solid #e5e7eb;
-    }
-    .back-link {
-      display: inline-flex; align-items: center; gap: 6px;
-      color: #6366f1; text-decoration: none;
-      font-size: 0.9rem; font-weight: 600;
-    }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f8fafc; color: #1a1a2e; min-height: 100vh; }
+
+    .topbar { background: white; padding: 16px 24px; border-bottom: 1px solid #e5e7eb; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: #6366f1; text-decoration: none; font-size: 0.9rem; font-weight: 600; }
     .back-link:hover { text-decoration: underline; }
 
-    .main { max-width: 720px; margin: 0 auto; padding: 32px 24px 60px; }
+    .main { max-width: 900px; margin: 0 auto; padding: 28px 24px 60px; }
 
+    /* ===== HERO ===== */
     .profile-hero {
       background: white; border-radius: 20px;
       padding: 36px 28px; text-align: center;
@@ -31,50 +24,129 @@
       margin-bottom: 20px;
     }
     .hero-logo {
-      width: 96px; height: 96px; border-radius: 22px;
+      width: 100px; height: 100px; border-radius: 24px;
       object-fit: cover; background: #f1f5f9;
       margin: 0 auto 18px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 2.4rem; font-weight: 800; color: #6366f1;
+      font-size: 2.5rem; font-weight: 800; color: #6366f1;
       box-shadow: 0 4px 16px rgba(99,102,241,0.15);
     }
-    .hero-name { font-size: 1.6rem; font-weight: 800; margin-bottom: 10px; line-height: 1.25; }
-    .hero-contact {
-      font-size: 0.9rem; color: #6b7280;
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 14px;
+    .hero-name { font-size: 1.7rem; font-weight: 800; margin-bottom: 8px; line-height: 1.25; }
+    .hero-meta {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 10px; margin-bottom: 4px;
     }
-    .hero-contact a { color: #6366f1; text-decoration: none; }
-    .hero-contact a:hover { text-decoration: underline; }
+    .meta-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 14px; border-radius: 20px;
+      font-size: 0.82rem; font-weight: 600;
+      background: #f3f4f6; color: #4b5563;
+    }
+    .meta-pill.industry {
+      background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+      color: #4f46e5;
+    }
+    .meta-pill.location { background: #fef3c7; color: #92400e; }
 
-    .section {
-      background: white; border-radius: 16px;
-      padding: 26px; margin-bottom: 18px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    /* ===== CONTACT BAR (prominent) ===== */
+    .contact-bar {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin-bottom: 22px;
     }
-    .section h2 {
-      font-size: 1.05rem; font-weight: 700;
-      margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+    .contact-card {
+      display: flex; align-items: center; gap: 12px;
+      padding: 16px 18px; background: white;
+      border-radius: 14px; text-decoration: none; color: inherit;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      border: 1.5px solid #f1f5f9;
+      transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
     }
-    .section-body { font-size: 0.95rem; color: #4b5563; line-height: 1.65; white-space: pre-wrap; }
+    .contact-card:hover {
+      transform: translateY(-2px);
+      border-color: #c7d2fe;
+      box-shadow: 0 8px 24px rgba(99,102,241,0.12);
+    }
+    .contact-card .cc-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: #eef2ff; color: #4f46e5;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.15rem; flex-shrink: 0;
+    }
+    .contact-card .cc-body { min-width: 0; }
+    .contact-card .cc-label {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      color: #9ca3af; letter-spacing: 0.4px;
+    }
+    .contact-card .cc-value {
+      font-size: 0.9rem; font-weight: 600; color: #1a1a2e;
+      margin-top: 2px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
 
-    .link-list { display: flex; flex-direction: column; gap: 10px; }
-    .link-btn {
+    /* ===== LINKS GRID (prominent) ===== */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px; margin-bottom: 24px;
+    }
+    .link-tile {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px; border-radius: 12px;
-      text-decoration: none; font-weight: 600; font-size: 0.95rem;
+      gap: 12px; padding: 16px 18px;
+      border-radius: 14px; text-decoration: none;
+      font-weight: 700; font-size: 0.9rem;
       transition: transform 0.15s, box-shadow 0.15s;
       border: 1.5px solid transparent;
-      cursor: pointer;
     }
-    .link-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
-    .link-btn.website { background: #eef2ff; color: #4f46e5; border-color: #c7d2fe; }
-    .link-btn.social  { background: #fdf2f8; color: #db2777; border-color: #fbcfe8; }
-    .link-btn.contact { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
-    .link-btn.default { background: #f3f4f6; color: #374151; border-color: #e5e7eb; }
-    .link-btn .label { display: flex; align-items: center; gap: 10px; }
-    .link-icon { font-size: 1.15rem; }
-    .link-btn .arrow { font-size: 1.1rem; opacity: 0.7; }
+    .link-tile:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .link-tile.website { background: #eef2ff; color: #4f46e5; border-color: #c7d2fe; }
+    .link-tile.social  { background: #fdf2f8; color: #db2777; border-color: #fbcfe8; }
+    .link-tile.contact { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
+    .link-tile.default { background: #f3f4f6; color: #374151; border-color: #e5e7eb; }
+    .link-tile .lt-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .link-tile .lt-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .link-tile .lt-text { min-width: 0; }
+    .link-tile .lt-label { font-weight: 700; }
+    .link-tile .lt-url {
+      font-size: 0.72rem; font-weight: 500; opacity: 0.75;
+      margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      max-width: 160px;
+    }
+    .link-tile .lt-arrow { font-size: 1.1rem; opacity: 0.6; flex-shrink: 0; }
 
+    /* ===== TWO COLUMN: SERVICES | ABOUT ===== */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .info-card {
+      background: white; border-radius: 16px;
+      padding: 26px; box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    .info-card h2 {
+      font-size: 1rem; font-weight: 800;
+      margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+      padding-bottom: 12px; border-bottom: 1px solid #f1f5f9;
+    }
+    .info-card .body {
+      font-size: 0.92rem; color: #4b5563;
+      line-height: 1.7; white-space: pre-wrap;
+    }
+    .services-list {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .service-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 12px; border-radius: 10px;
+      background: #f8fafc; font-size: 0.88rem;
+      color: #374151; font-weight: 500;
+      border-left: 3px solid #6366f1;
+    }
+    .service-item .dot {
+      color: #6366f1; font-weight: 800; flex-shrink: 0;
+    }
+
+    /* ===== STATES ===== */
     .state { text-align: center; padding: 80px 20px; color: #9ca3af; }
     .state h2 { font-size: 1.3rem; color: #1a1a2e; margin-bottom: 8px; }
     .state p { margin-bottom: 20px; font-size: 0.9rem; }
@@ -90,6 +162,16 @@
       animation: spin 0.7s linear infinite; margin: 0 auto 16px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 720px) {
+      .two-col { grid-template-columns: 1fr; }
+      .contact-bar { grid-template-columns: 1fr; }
+      .hero-name { font-size: 1.4rem; }
+      .hero-logo { width: 84px; height: 84px; font-size: 2rem; }
+      .main { padding: 20px 16px 40px; }
+      .links-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -111,180 +193,71 @@
   </div>
 
   <div id="profile" class="hidden">
+    <!-- HERO -->
     <div class="profile-hero">
       <div id="heroLogoWrap"></div>
       <h1 class="hero-name" id="heroName"></h1>
-      <div class="hero-contact" id="heroContact"></div>
+      <div class="hero-meta" id="heroMeta"></div>
     </div>
 
-    <div class="section" id="aboutSection">
-      <h2>📄 About</h2>
-      <div class="section-body" id="aboutBody"></div>
-    </div>
+    <!-- CONTACTS -->
+    <div class="contact-bar" id="contactBar"></div>
 
-    <div class="section" id="linksSection">
-      <h2>🔗 Connect</h2>
-      <div class="link-list" id="linkList"></div>
+    <!-- LINKS -->
+    <div class="links-grid" id="linksGrid"></div>
+
+    <!-- TWO COLUMN -->
+    <div class="two-col">
+      <div class="info-card" id="servicesCard">
+        <h2>🛠 Services</h2>
+        <div class="services-list" id="servicesList"></div>
+      </div>
+      <div class="info-card" id="aboutCard">
+        <h2>📄 About</h2>
+        <div class="body" id="aboutBody"></div>
+      </div>
     </div>
   </div>
 </main>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=6';
+import { supabase } from './supabase-client.js?v=8';
 
-const loadingEl    = document.getElementById('loading');
-const notFoundEl   = document.getElementById('notFound');
-const profileEl    = document.getElementById('profile');
+const loadingEl  = document.getElementById('loading');
+const notFoundEl = document.getElementById('notFound');
+const profileEl  = document.getElementById('profile');
+
 const heroLogoWrap = document.getElementById('heroLogoWrap');
 const heroName     = document.getElementById('heroName');
-const heroContact  = document.getElementById('heroContact');
+const heroMeta     = document.getElementById('heroMeta');
+const contactBar   = document.getElementById('contactBar');
+const linksGrid    = document.getElementById('linksGrid');
+const servicesCard = document.getElementById('servicesCard');
+const servicesList = document.getElementById('servicesList');
 const aboutBody    = document.getElementById('aboutBody');
-const linksSection = document.getElementById('linksSection');
-const linkList     = document.getElementById('linkList');
 
 const params = new URLSearchParams(window.location.search);
 const bizId  = params.get('id');
 
-// =========================================================
-// URL NORMALIZATION — the key to making links work
-// =========================================================
+// ---------- URL helpers ----------
 function normalizeUrl(raw) {
   if (!raw) return '';
   let url = String(raw).trim();
   if (!url) return '';
-
-  // Already has an explicit scheme — leave it alone
   if (/^[a-z][a-z0-9+.-]*:\/\//i.test(url)) return url;
-
-  // Special schemes that don't need //
   if (/^(mailto:|tel:|sms:|whatsapp:)/i.test(url)) return url;
-
-  // Otherwise, prepend https://
   return 'https://' + url;
 }
-
 function displayUrl(url) {
   if (!url) return '';
   return String(url).replace(/^https?:\/\//i, '').replace(/\/$/, '');
 }
-
-async function init() {
-  if (!bizId) return showNotFound();
-
-  const { data, error } = await supabase
-    .from('public_directory')
-    .select('*')
-    .eq('id', bizId)
-    .maybeSingle();
-
-  console.log('Profile fetch:', { data, error });
-
-  if (error || !data) return showNotFound();
-  renderProfile(data);
+function escapeHtml(s) {
+  if (s === null || s === undefined) return '';
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-function showNotFound() {
-  loadingEl.classList.add('hidden');
-  notFoundEl.classList.remove('hidden');
-}
-
-function renderProfile(biz) {
-  loadingEl.classList.add('hidden');
-  profileEl.classList.remove('hidden');
-  document.title = `${biz.business_name} — Business Profile`;
-
-  // ---- Hero logo ----
-  const initial = (biz.business_name || '?')[0].toUpperCase();
-  if (biz.logo_url) {
-    const img = document.createElement('img');
-    img.className = 'hero-logo';
-    img.src = biz.logo_url;
-    img.alt = biz.business_name || '';
-    img.onerror = () => {
-      img.outerHTML = `<div class="hero-logo">${initial}</div>`;
-    };
-    heroLogoWrap.innerHTML = '';
-    heroLogoWrap.appendChild(img);
-  } else {
-    heroLogoWrap.innerHTML = `<div class="hero-logo">${initial}</div>`;
-  }
-
-  // ---- Name ----
-  heroName.textContent = biz.business_name || 'Unnamed Business';
-
-  // ---- Contact row ----
-  const contactParts = [];
-  if (biz.location) {
-    contactParts.push(`<span>📍 ${escapeHtml(biz.location)}</span>`);
-  }
-  if (biz.contact_email) {
-    contactParts.push(`<a href="mailto:${escapeHtml(biz.contact_email)}">✉️ ${escapeHtml(biz.contact_email)}</a>`);
-  }
-  if (biz.phone) {
-    contactParts.push(`<a href="tel:${escapeHtml(biz.phone)}">📞 ${escapeHtml(biz.phone)}</a>`);
-  }
-  heroContact.innerHTML = contactParts.join('');
-
-  // ---- About ----
-  if (biz.description && biz.description.trim()) {
-    aboutBody.textContent = biz.description;
-  } else {
-    aboutBody.textContent = "This business hasn't added a description yet.";
-    aboutBody.style.color = '#9ca3af';
-    aboutBody.style.fontStyle = 'italic';
-  }
-
-  // ---- Links ----
-  const links = biz.links || [];
-  console.log('Raw links from DB:', links);
-
-  if (links.length) {
-    linkList.innerHTML = '';
-    links.forEach(link => {
-      const a = buildLinkAnchor(link);
-      linkList.appendChild(a);
-    });
-  } else {
-    linksSection.querySelector('h2').textContent = '🔗 No links yet';
-    linkList.innerHTML = `<p style="font-size:0.9rem;color:#9ca3af;font-style:italic;">
-      This business hasn't added any links yet.</p>`;
-  }
-}
-
-function buildLinkAnchor(link) {
-  const finalUrl = normalizeUrl(link.url);
-  console.log('Link:', link.label, '| stored:', link.url, '| final:', finalUrl);
-
-  const a = document.createElement('a');
-  a.className = 'link-btn ' + linkClass(link.label);
-  a.href = finalUrl;
-  a.target = '_blank';
-  a.rel = 'noopener noreferrer';
-  a.innerHTML = `
-    <span class="label">
-      <span class="link-icon">${linkIcon(link.label)}</span>
-      <span>
-        <div style="font-weight:700;">${escapeHtml(link.label)}</div>
-        <div style="font-size:0.75rem;opacity:0.75;font-weight:500;margin-top:2px;">
-          ${escapeHtml(displayUrl(finalUrl))}
-        </div>
-      </span>
-    </span>
-    <span class="arrow">↗</span>
-  `;
-  return a;
-}
-
-function linkClass(label) {
-  const l = (label || '').toLowerCase();
-  if (l.includes('website') || l.includes('site')) return 'website';
-  if (l.includes('instagram') || l.includes('facebook') || l.includes('twitter')
-      || l.includes('tiktok') || l.includes('linkedin') || l.includes('youtube')) return 'social';
-  if (l.includes('whatsapp') || l.includes('phone') || l.includes('email')
-      || l.includes('contact')) return 'contact';
-  return 'default';
-}
-
+// ---------- Icons ----------
 function linkIcon(label) {
   const l = (label || '').toLowerCase();
   if (l.includes('website') || l.includes('site')) return '🌐';
@@ -297,15 +270,125 @@ function linkIcon(label) {
   if (l.includes('youtube'))   return '▶️';
   if (l.includes('email') || l.includes('mail')) return '✉️';
   if (l.includes('phone') || l.includes('call')) return '📞';
-  if (l.includes('booking') || l.includes('appointment')) return '📅';
+  if (l.includes('booking'))   return '📅';
   return '🔗';
 }
+function linkClass(label) {
+  const l = (label || '').toLowerCase();
+  if (l.includes('website') || l.includes('site')) return 'website';
+  if (l.includes('instagram') || l.includes('facebook') || l.includes('twitter')
+      || l.includes('tiktok') || l.includes('linkedin') || l.includes('youtube')) return 'social';
+  if (l.includes('whatsapp') || l.includes('phone') || l.includes('email') || l.includes('contact')) return 'contact';
+  return 'default';
+}
 
-function escapeHtml(str) {
-  if (str === null || str === undefined) return '';
-  return String(str)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+// ---------- Load ----------
+async function init() {
+  if (!bizId) return showNotFound();
+  const { data, error } = await supabase
+    .from('public_directory').select('*').eq('id', bizId).maybeSingle();
+  if (error || !data) return showNotFound();
+  render(data);
+}
+
+function showNotFound() {
+  loadingEl.classList.add('hidden');
+  notFoundEl.classList.remove('hidden');
+}
+
+function render(biz) {
+  loadingEl.classList.add('hidden');
+  profileEl.classList.remove('hidden');
+  document.title = `${biz.business_name} — Business Profile`;
+
+  // Hero logo
+  const initial = (biz.business_name || '?')[0].toUpperCase();
+  heroLogoWrap.innerHTML = biz.logo_url
+    ? `<img class="hero-logo" src="${escapeHtml(biz.logo_url)}" alt=""
+            onerror="this.outerHTML='<div class=\\'hero-logo\\'>${initial}</div>'" />`
+    : `<div class="hero-logo">${initial}</div>`;
+
+  // Hero name + meta pills
+  heroName.textContent = biz.business_name || 'Unnamed Business';
+  const metaParts = [];
+  if (biz.industry) metaParts.push(`<span class="meta-pill industry">🏷 ${escapeHtml(biz.industry)}</span>`);
+  if (biz.location) metaParts.push(`<span class="meta-pill location">📍 ${escapeHtml(biz.location)}</span>`);
+  heroMeta.innerHTML = metaParts.join('');
+
+  // Contact bar
+  const contacts = [];
+  if (biz.contact_email) {
+    contacts.push(`
+      <a class="contact-card" href="mailto:${escapeHtml(biz.contact_email)}">
+        <div class="cc-icon">✉️</div>
+        <div class="cc-body">
+          <div class="cc-label">Email</div>
+          <div class="cc-value">${escapeHtml(biz.contact_email)}</div>
+        </div>
+      </a>
+    `);
+  }
+  if (biz.phone) {
+    contacts.push(`
+      <a class="contact-card" href="tel:${escapeHtml(biz.phone)}">
+        <div class="cc-icon">📞</div>
+        <div class="cc-body">
+          <div class="cc-label">Phone</div>
+          <div class="cc-value">${escapeHtml(biz.phone)}</div>
+        </div>
+      </a>
+    `);
+  }
+  contactBar.innerHTML = contacts.join('');
+  contactBar.style.display = contacts.length ? 'grid' : 'none';
+
+  // Links grid
+  const links = biz.links || [];
+  if (links.length) {
+    linksGrid.innerHTML = links.map(l => {
+      const safe = normalizeUrl(l.url);
+      return `
+        <a class="link-tile ${linkClass(l.label)}"
+           href="${escapeHtml(safe)}" target="_blank" rel="noopener noreferrer">
+          <span class="lt-left">
+            <span class="lt-icon">${linkIcon(l.label)}</span>
+            <span class="lt-text">
+              <div class="lt-label">${escapeHtml(l.label)}</div>
+              <div class="lt-url">${escapeHtml(displayUrl(safe))}</div>
+            </span>
+          </span>
+          <span class="lt-arrow">↗</span>
+        </a>
+      `;
+    }).join('');
+  } else {
+    linksGrid.style.display = 'none';
+  }
+
+  // Services
+  const services = (biz.services || '')
+    .split('\n').map(s => s.trim()).filter(Boolean);
+  if (services.length) {
+    servicesList.innerHTML = services.map(s =>
+      `<div class="service-item"><span class="dot">•</span><span>${escapeHtml(s)}</span></div>`
+    ).join('');
+  } else {
+    servicesCard.style.display = 'none';
+  }
+
+  // About
+  if (biz.description?.trim()) {
+    aboutBody.textContent = biz.description;
+  } else {
+    aboutBody.textContent = "This business hasn't added a description yet.";
+    aboutBody.style.color = '#9ca3af';
+    aboutBody.style.fontStyle = 'italic';
+  }
+
+  // If services is hidden, expand About to full width
+  if (!services.length) {
+    document.querySelector('.two-col').style.gridTemplateColumns = '1fr';
+  }
 }
 
 init();
