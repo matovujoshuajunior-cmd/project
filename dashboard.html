@@ -98,14 +98,10 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 </head>
 <body>
 
-<div class="container">
-  <div class="header">
-    <h1>🏪 Business Dashboard</h1>
-    <div style="display:flex;gap:8px;">
-      <a href="admin.html" id="adminLink" class="btn btn-ghost" style="display:none">Admin</a>
-      <button id="logoutBtn" class="btn btn-danger hidden">Log Out</button>
-    </div>
-  </div>
+<div class="header">
+  <h1>🏪 Business Dashboard</h1>
+  <button id="logoutBtn" class="btn btn-danger hidden">Log Out</button>
+</div>
 
   <div id="authSection">
     <div class="card">
@@ -212,7 +208,6 @@ import { supabase } from './supabase-client.js?v=9';
 const $ = id => document.getElementById(id);
 const authSection = $('authSection'), dashboardSection = $('dashboardSection');
 const logoutBtn = $('logoutBtn'), toastEl = $('toast'), helpPanel = $('helpPanel');
-const adminLink = $('adminLink');
 let currentUser = null;
 
 // ---------- Helpers ----------
@@ -376,8 +371,6 @@ async function loadProfile(){
   $('bizLogo').value = profile.logo_url || '';
   updateLogoPreview(profile.logo_url);
 
-  // Show admin button ONLY when is_admin is strictly true
-adminLink.style.display = (profile.is_admin === true) ? 'inline-block' : 'none';
 }
 
 $('bizLogo').addEventListener('input', e=>updateLogoPreview(e.target.value));
