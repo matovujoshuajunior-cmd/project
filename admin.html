@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-cache" />
 <title>Admin — Service Directory</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -58,9 +59,12 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
 .toast.show{opacity:1}
 .toast.error{background:#dc2626}
 .toast.success{background:#16a34a}
-.access-denied{text-align:center;padding:80px 20px}
+.access-denied{text-align:center;padding:60px 20px;max-width:600px;margin:0 auto}
 .access-denied h2{font-size:1.5rem;color:#dc2626;margin-bottom:12px}
-.access-denied p{color:#6b7280;margin-bottom:24px}
+.access-denied p{color:#6b7280;margin-bottom:20px;font-size:.9rem;line-height:1.6}
+.diag-box{background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:12px;padding:16px;text-align:left;font-family:ui-monospace,monospace;font-size:.78rem;color:#374151;line-height:1.7;margin-bottom:20px;word-break:break-all}
+.diag-box .ok{color:#16a34a;font-weight:700}
+.diag-box .fail{color:#dc2626;font-weight:700}
 
 /* Ad form */
 .ad-form{background:#f9fafb;border-radius:12px;padding:20px;margin-bottom:20px;border:1.5px solid #e5e7eb}
@@ -74,15 +78,13 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
 .ad-form .checkbox-row{display:flex;align-items:center;gap:8px;margin-bottom:14px}
 .ad-form .checkbox-row label{margin:0;text-transform:none;font-size:.85rem}
 .ad-form .checkbox-row input{width:auto}
-
 .ad-preview{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-radius:10px;padding:14px;margin-top:14px;border:1.5px dashed #c7d2fe}
 .ad-preview .adp-label{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#6366f1;margin-bottom:8px}
-.ad-preview .adp-card{background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.ad-preview .adp-card{background:#fff;border-radius:10px;padding:14px}
 .ad-preview .adp-img{width:100%;height:100px;border-radius:8px;object-fit:cover;background:#eef2ff;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:10px}
 .ad-preview .adp-title{font-weight:800;font-size:.9rem;margin-bottom:4px}
 .ad-preview .adp-body{font-size:.78rem;color:#6b7280;line-height:1.5}
 .ad-preview .adp-cta{display:inline-block;margin-top:8px;font-size:.78rem;font-weight:700;color:#6366f1}
-
 @media(max-width:720px){
   .ad-form .row2{grid-template-columns:1fr}
   th:nth-child(4),td:nth-child(4){display:none}
@@ -101,12 +103,18 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
     </div>
   </div>
 
-  <div id="loading" style="text-align:center;padding:60px;color:#9ca3af;">Loading...</div>
+  <div id="loading" style="text-align:center;padding:60px;color:#9ca3af;">Loading…</div>
 
   <div id="accessDenied" class="hidden access-denied">
     <h2>🚫 Access Denied</h2>
-    <p>This page is for platform administrators only.</p>
-    <a href="index.html" class="btn btn-primary">Back to site</a>
+    <p>Your account does not have admin privileges.</p>
+    <div class="diag-box" id="diagBox"></div>
+    <p style="font-size:.82rem;color:#9ca3af">
+      If you're sure you should be admin, run the SQL fix in Supabase to set
+      <code style="background:#eef2ff;padding:2px 6px;border-radius:4px;color:#4f46e5">is_admin = true</code>
+      on your profile row.
+    </p>
+    <a href="index.html" class="btn btn-primary" style="margin-top:20px">Back to site</a>
   </div>
 
   <div id="content" class="hidden">
@@ -128,7 +136,6 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
         <button class="btn btn-primary btn-sm" id="newAdBtn">+ New Ad</button>
       </h2>
 
-      <!-- Ad form -->
       <div class="ad-form hidden" id="adForm">
         <h3 id="adFormTitle">New Ad</h3>
         <input type="hidden" id="adId" />
@@ -166,7 +173,6 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
             </div>
           </div>
         </div>
-
         <div class="ad-preview">
           <div class="adp-label">Live Preview</div>
           <div class="adp-card">
@@ -176,14 +182,12 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
             <span class="adp-cta" id="adpCta">Learn more →</span>
           </div>
         </div>
-
         <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
           <button class="btn btn-primary" id="saveAdBtn">💾 Save Ad</button>
           <button class="btn btn-ghost" id="cancelAdBtn">Cancel</button>
         </div>
       </div>
 
-      <!-- Ads table -->
       <div class="table-wrap">
         <table>
           <thead>
@@ -230,14 +234,13 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
 <div class="toast" id="toast"></div>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=11';
+import { supabase } from './supabase-client.js?v=13';
 
 const $ = id => document.getElementById(id);
 let allBiz = [];
 let allAds = [];
 let isAdmin = false;
 
-// ---------- Toast ----------
 function showToast(msg, type='info', d=3000){
   const t = $('toast');
   t.textContent = msg;
@@ -252,28 +255,55 @@ function escapeHtml(s){
 function escapeAttr(s){
   return s == null ? '' : String(s).replace(/"/g,'&quot;').replace(/</g,'&lt;');
 }
-function normalizeUrl(raw){
-  if(!raw) return '';
-  let u = String(raw).trim();
-  if(!u) return '';
-  if(/^[a-z][a-z0-9+.-]*:\/\//i.test(u)) return u;
-  if(/^(mailto:|tel:|sms:|whatsapp:)/i.test(u)) return u;
-  return 'https://' + u;
-}
 
-// ---------- Auth gate ----------
+// =========================================================
+// AUTH GATE — with full diagnostics
+// =========================================================
 supabase.auth.onAuthStateChange(async (_, session) => {
   const user = session?.user;
-  if(!user){ window.location.href = 'dashboard.html'; return; }
+  console.log('Admin auth event — user:', user?.email || '(none)');
 
-  const { data: prof } = await supabase.from('profiles').select('is_admin').eq('id', user.id).maybeSingle();
+  if(!user){
+    console.log('No user — redirecting to dashboard');
+    window.location.href = 'dashboard.html';
+    return;
+  }
+
+  // Query the profile row
+  const { data: prof, error: profErr } = await supabase
+    .from('profiles')
+    .select('id, is_admin')
+    .eq('id', user.id)
+    .maybeSingle();
+
+  console.log('Admin check — profile:', prof, 'error:', profErr);
+
   isAdmin = prof?.is_admin === true;
+  console.log('Admin check — isAdmin:', isAdmin);
 
   $('loading').classList.add('hidden');
+
   if(!isAdmin){
+    // Show detailed diagnostic panel
+    const diag = $('diagBox');
+    const rows = [];
+    rows.push(`Signed in as: <b>${escapeHtml(user.email || '')}</b>`);
+    rows.push(`User ID: ${user.id}`);
+    if(profErr){
+      rows.push(`Profile query error: <span class="fail">${escapeHtml(profErr.message)}</span>`);
+    }
+    if(prof){
+      rows.push(`Profile row exists: <span class="ok">yes</span>`);
+      rows.push(`<b>is_admin</b> value: <span class="${prof.is_admin ? 'ok' : 'fail'}">${prof.is_admin}</span>`);
+    } else {
+      rows.push(`Profile row: <span class="fail">not found</span>`);
+    }
+    diag.innerHTML = rows.join('<br>');
+
     $('accessDenied').classList.remove('hidden');
     return;
   }
+
   $('content').classList.remove('hidden');
   await loadAll();
 });
@@ -287,7 +317,9 @@ async function loadAll(){
   await Promise.all([loadStats(), loadBiz(), loadAds()]);
 }
 
-// ---------- Stats ----------
+// =========================================================
+// STATS
+// =========================================================
 async function loadStats(){
   const since = new Date(Date.now() - 7*24*60*60*1000).toISOString();
 
@@ -304,7 +336,9 @@ async function loadStats(){
   $('sClicks7').textContent  = clickC.count || 0;
 }
 
-// ---------- Businesses ----------
+// =========================================================
+// BUSINESSES
+// =========================================================
 async function loadBiz(){
   const { data, error } = await supabase
     .from('profiles').select('*')
@@ -387,7 +421,7 @@ $('searchBiz').addEventListener('input', e => {
 $('refreshBtn').addEventListener('click', loadAll);
 
 // =========================================================
-// ADS MANAGER
+// ADS
 // =========================================================
 async function loadAds(){
   const { data, error } = await supabase
@@ -471,7 +505,6 @@ async function handleAdAction(action, ad){
   }
 }
 
-// ---------- Ad form ----------
 function openAdForm(ad){
   $('adForm').classList.remove('hidden');
   $('adFormTitle').textContent = ad ? 'Edit Ad' : 'New Ad';
