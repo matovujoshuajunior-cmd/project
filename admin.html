@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin — Service Directory</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+.hidden{display:none!important}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2e;min-height:100vh}
+.container{max-width:1200px;margin:0 auto;padding:24px}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.header h1{font-size:1.4rem;font-weight:700}
+.badge-admin{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:.7rem;font-weight:800;padding:4px 10px;border-radius:20px;margin-left:8px;letter-spacing:.5px}
+.btn{padding:10px 20px;border:none;border-radius:10px;font-size:.9rem;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
+.btn-danger{background:#ef4444;color:#fff}
+.btn-ghost{background:transparent;color:#6366f1;border:1.5px solid #6366f1}
+.btn-ghost:hover{background:#6366f1;color:#fff}
+.card{background:#fff;border-radius:16px;padding:24px;box-shadow:0 4px 24px rgba(0,0,0,.06);margin-bottom:20px}
+.card h2{font-size:1.05rem;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #e5e7eb}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:8px}
+.stat-card{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-radius:14px;padding:20px;text-align:center}
+.stat-card.alt{background:linear-gradient(135deg,#fdf2f8,#fce7f3)}
+.stat-card.alt .num{color:#db2777}
+.stat-card.alt .lbl{color:#ec4899}
+.stat-card.green{background:linear-gradient(135deg,#f0fdf4,#dcfce7)}
+.stat-card.green .num{color:#16a34a}
+.stat-card.green .lbl{color:#22c55e}
+.stat-card.amber{background:linear-gradient(135deg,#fef3c7,#fde68a)}
+.stat-card.amber .num{color:#d97706}
+.stat-card.amber .lbl{color:#f59e0b}
+.stat-card .num{font-size:2rem;font-weight:800;color:#4f46e5;line-height:1}
+.stat-card .lbl{font-size:.75rem;font-weight:700;color:#6366f1;text-transform:uppercase;letter-spacing:.5px;margin-top:8px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{padding:12px 10px;text-align:left;border-bottom:1px solid #f1f5f9}
+th{background:#f9fafb;font-size:.75rem;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;position:sticky;top:0}
+td .biz-cell{display:flex;align-items:center;gap:10px;min-width:180px}
+td .biz-mini-logo{width:34px;height:34px;border-radius:8px;background:#eef2ff;color:#4f46e5;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;flex-shrink:0}
+td .biz-mini-name{font-weight:700}
+td .biz-mini-slug{font-size:.72rem;color:#9ca3af}
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:700;background:#f3f4f6;color:#6b7280}
+.tag.verified{background:#dcfce7;color:#16a34a}
+.tag.unverified{background:#fef3c7;color:#92400e}
+input[type="number"].rank-input{width:60px;padding:6px 8px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:.85rem;text-align:center}
+input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-color:#10b981}
+.mini-btn{padding:6px 10px;border:none;border-radius:7px;font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block}
+.mini-btn.view{background:#dbeafe;color:#1d4ed8}
+.mini-btn.danger{background:#fee2e2;color:#dc2626}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;padding:12px 24px;border-radius:10px;font-size:.9rem;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+.toast.error{background:#dc2626}
+.toast.success{background:#16a34a}
+.access-denied{text-align:center;padding:80px 20px}
+.access-denied h2{font-size:1.5rem;color:#dc2626;margin-bottom:12px}
+.access-denied p{color:#6b7280;margin-bottom:24px}
+@media(max-width:720px){th:nth-child(4),td:nth-child(4){display:none}}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>⚙️ Admin Dashboard <span class="badge-admin">ADMIN</span></h1>
+    <div style="display:flex;gap:8px;">
+      <a href="dashboard.html" class="btn btn-ghost">My Business</a>
+      <a href="index.html" class="btn btn-ghost">Public Site</a>
+      <button class="btn btn-danger" id="logoutBtn">Log Out</button>
+    </div>
+  </div>
+
+  <div id="loading" style="text-align:center;padding:60px;color:#9ca3af;">Loading...</div>
+
+  <div id="accessDenied" class="hidden access-denied">
+    <h2>🚫 Access Denied</h2>
+    <p>This page is for platform administrators only.</p>
+    <a href="index.html" class="btn btn-primary">Back to site</a>
+  </div>
+
+  <div id="content" class="hidden">
+    <!-- PLATFORM STATS -->
+    <div class="card">
+      <h2>📈 Platform Overview</h2>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="num" id="sTotalBiz">0</div><div class="lbl">Businesses</div></div>
+        <div class="stat-card alt"><div class="num" id="sVerified">0</div><div class="lbl">Verified</div></div>
+        <div class="stat-card green"><div class="num" id="sViews7">0</div><div class="lbl">Views (7d)</div></div>
+        <div class="stat-card amber"><div class="num" id="sClicks7">0</div><div class="lbl">Clicks (7d)</div></div>
+      </div>
+    </div>
+
+    <!-- BUSINESS MANAGEMENT -->
+    <div class="card">
+      <h2>🏪 Manage Businesses</h2>
+      <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+        <input type="text" id="searchBiz" placeholder="Search by name, email, industry..." style="flex:1;min-width:200px;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:.9rem;font-family:inherit" />
+        <button class="btn btn-ghost" id="refreshBtn">Refresh</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Business</th>
+              <th>Industry</th>
+              <th>Contact</th>
+              <th style="text-align:center">Verified</th>
+              <th style="text-align:center">Rank</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="bizTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { supabase } from './supabase-client.js?v=9';
+
+const $ = id => document.getElementById(id);
+let allBiz = [];
+let isAdmin = false;
+
+function showToast(msg, type='info', d=3000){
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type==='error'?' error':type==='success'?' success':'');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>t.classList.remove('show'), d);
+}
+function escapeHtml(s){ return s==null?'':String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// Auth gate
+supabase.auth.onAuthStateChange(async (_, session)=>{
+  const user = session?.user;
+  if(!user){ window.location.href = 'dashboard.html'; return; }
+
+  const { data: prof } = await supabase.from('profiles').select('is_admin').eq('id', user.id).maybeSingle();
+  isAdmin = prof?.is_admin === true;
+
+  $('loading').classList.add('hidden');
+  if(!isAdmin){
+    $('accessDenied').classList.remove('hidden');
+    return;
+  }
+  $('content').classList.remove('hidden');
+  await loadAll();
+});
+
+$('logoutBtn').addEventListener('click', async ()=>{
+  await supabase.auth.signOut();
+  window.location.href = 'dashboard.html';
+});
+
+async function loadAll(){
+  await Promise.all([loadStats(), loadBiz()]);
+}
+
+async function loadStats(){
+  const since = new Date(Date.now() - 7*24*60*60*1000).toISOString();
+
+  const [{ count: totalBiz }, { count: verified }, { count: views7 }, { count: clicks7 }] = await Promise.all([
+    supabase.from('profiles').select('*', { count:'exact', head:true }),
+    supabase.from('profiles').select('*', { count:'exact', head:true }).eq('verified', true),
+    supabase.from('profile_views').select('*', { count:'exact', head:true }).gte('viewed_at', since),
+    supabase.from('link_clicks').select('*', { count:'exact', head:true }).gte('clicked_at', since)
+  ]);
+
+  $('sTotalBiz').textContent = totalBiz || 0;
+  $('sVerified').textContent = verified || 0;
+  $('sViews7').textContent = views7 || 0;
+  $('sClicks7').textContent = clicks7 || 0;
+}
+
+async function loadBiz(){
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .order('rank', { ascending: false })
+    .order('created_at', { ascending: false });
+
+  if(error){ showToast('Load failed: '+error.message, 'error'); return; }
+  allBiz = data || [];
+  renderBiz(allBiz);
+}
+
+function renderBiz(list){
+  const tbody = $('bizTable');
+  if(!list.length){
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:#9ca3af">No businesses found.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map(b => {
+    const initial = (b.business_name || '?')[0].toUpperCase();
+    return `
+      <tr data-id="${b.id}">
+        <td>
+          <div class="biz-cell">
+            <div class="biz-mini-logo">${initial}</div>
+            <div>
+              <div class="biz-mini-name">${escapeHtml(b.business_name)}</div>
+              <div class="biz-mini-slug">/${escapeHtml(b.slug || b.id.slice(0,8))}</div>
+            </div>
+          </div>
+        </td>
+        <td><span class="tag">${escapeHtml(b.industry || '—')}</span></td>
+        <td style="font-size:.8rem;color:#6b7280">
+          ${b.contact_email ? escapeHtml(b.contact_email) : ''}
+          ${b.phone ? '<br>' + escapeHtml(b.phone) : ''}
+        </td>
+        <td style="text-align:center">
+          <input type="checkbox" class="verify-cb" data-field="verified" ${b.verified?'checked':''} />
+        </td>
+        <td style="text-align:center">
+          <input type="number" class="rank-input" data-field="rank" value="${b.rank || 0}" />
+        </td>
+        <td style="text-align:right;white-space:nowrap">
+          <a class="mini-btn view" href="profile.html?b=${encodeURIComponent(b.slug||'')}" target="_blank">View</a>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  // Wire changes
+  tbody.querySelectorAll('tr').forEach(row => {
+    const id = row.dataset.id;
+    const vcb = row.querySelector('[data-field="verified"]');
+    const rin = row.querySelector('[data-field="rank"]');
+
+    vcb.addEventListener('change', async ()=>{
+      const { error } = await supabase.from('profiles').update({ verified: vcb.checked }).eq('id', id);
+      if(error) return showToast('Failed: '+error.message,'error');
+      showToast(vcb.checked ? '✅ Verified' : 'Unverified', 'success');
+    });
+
+    rin.addEventListener('change', async ()=>{
+      const rank = parseInt(rin.value, 10) || 0;
+      const { error } = await supabase.from('profiles').update({ rank }).eq('id', id);
+      if(error) return showToast('Failed: '+error.message,'error');
+      showToast('Rank = ' + rank, 'success');
+    });
+  });
+}
+
+$('searchBiz').addEventListener('input', e=>{
+  const q = e.target.value.toLowerCase().trim();
+  if(!q) return renderBiz(allBiz);
+  renderBiz(allBiz.filter(b =>
+    b.business_name?.toLowerCase().includes(q) ||
+    b.contact_email?.toLowerCase().includes(q) ||
+    b.industry?.toLowerCase().includes(q) ||
+    b.location?.toLowerCase().includes(q)
+  ));
+});
+
+$('refreshBtn').addEventListener('click', loadAll);
+</script>
+</body>
+</html>
