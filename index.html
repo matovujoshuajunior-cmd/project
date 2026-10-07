@@ -206,6 +206,10 @@
       .ads-col .ads-label { display: none; }
       .ad-slot { min-width: 260px; flex-shrink: 0; }
     }
+    .chips-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.chip{padding:8px 16px;border-radius:20px;background:#fff;color:#4b5563;border:1.5px solid #e5e7eb;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap}
+.chip:hover{border-color:#c7d2fe;color:#4f46e5}
+.chip.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-color:transparent}
     @media (max-width: 640px) {
       .biz-item { flex-wrap: wrap; padding: 16px; gap: 12px; }
       .biz-action { width: 100%; }
@@ -290,6 +294,7 @@
 
     <!-- BUSINESS LIST -->
     <main class="list-col">
+      <div class="chips-row" id="chipsRow"></div>
       <div id="loading" class="loading">
         <div class="spinner"></div>
         Loading businesses...
@@ -362,6 +367,27 @@ function findWebsite(links) {
   return byLabel || links[0];
 }
 
+  // Build industry chips after data loads
+function buildChips(){
+  const industries = [...new Set(allBusinesses.map(b => b.industry).filter(Boolean))].sort();
+  const row = document.getElementById('chipsRow');
+  if(!industries.length){ row.style.display = 'none'; return; }
+  row.innerHTML = `<button class="chip active" data-ind="">All</button>` +
+    industries.map(i => `<button class="chip" data-ind="${escapeHtml(i)}">${escapeHtml(i)}</button>`).join('');
+  row.querySelectorAll('.chip').forEach(c => {
+    c.addEventListener('click', () => {
+      row.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+      c.classList.add('active');
+      industryFilter.value = c.dataset.ind;
+      applyFilters();
+    });
+  });
+}
+
+// Patch: call buildChips when data loads
+// In loadBusinesses, replace `allBusinesses = data || []; applyFilters();`
+// with:
+// allBusinesses = data || []; buildChips(); applyFilters();
 // Load
 async function loadBusinesses() {
   const { data, error } = await supabase
@@ -442,8 +468,10 @@ function bizRowHTML(biz, position) {
   if (biz.location) subrow.push(`<span>📍 ${escapeHtml(biz.location)}</span>`);
 
   return `
-    <a class="biz-item ${featured ? 'featured' : ''}"
-       href="profile.html?id=${encodeURIComponent(biz.id)}">
+    <a class="biz-item ${featured ? 'featured' : ''}
+// New:
+const profileUrl = biz.slug ? `profile.html?b=${encodeURIComponent(biz.slug)}` : `profile.html?id=${encodeURIComponent(biz.id)}`;
+// then use href="${profileUrl}"
       ${logo}
       <div class="biz-body">
         <div class="biz-name-row">
