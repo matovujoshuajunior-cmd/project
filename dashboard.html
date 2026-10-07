@@ -1,147 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Business Dashboard</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    .hidden { display: none !important; }
-    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f5f7fa; color: #1a1a2e; min-height: 100vh; }
-    .container { max-width: 760px; margin: 0 auto; padding: 24px; }
-    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
-    .header h1 { font-size: 1.5rem; font-weight: 700; }
-    .btn { padding: 10px 20px; border: none; border-radius: 10px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-    .btn-primary { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
-    .btn-primary:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
-    .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
-    .btn-danger { background: #ef4444; color: white; }
-    .btn-ghost { background: transparent; color: #6366f1; border: 1.5px solid #6366f1; }
-    .btn-ghost:hover { background: #6366f1; color: white; }
-    .btn-full { width: 100%; margin-top: 14px; padding: 13px; font-size: 0.92rem; }
-    .card { background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); margin-bottom: 24px; }
-    .card h2 { font-size: 1.15rem; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb; }
-    .card .hint { font-size: 0.82rem; color: #9ca3af; margin: 12px 0 18px; line-height: 1.55; }
-    .form-group { margin-bottom: 18px; }
-    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: #374151; }
-    .form-group input, .form-group textarea {
-      width: 100%; padding: 11px 14px; border: 1.5px solid #e5e7eb; border-radius: 10px;
-      font-size: 0.95rem; background: #fafafa; font-family: inherit;
-    }
-    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #6366f1; background: white; }
-    .form-group textarea { resize: vertical; min-height: 90px; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Business Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+.hidden{display:none!important}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2e;min-height:100vh}
+.container{max-width:900px;margin:0 auto;padding:24px}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.header h1{font-size:1.4rem;font-weight:700}
+.btn{padding:10px 20px;border:none;border-radius:10px;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-primary{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
+.btn-primary:hover:not(:disabled){opacity:.9;transform:translateY(-1px)}
+.btn-primary:disabled{opacity:.55;cursor:not-allowed}
+.btn-danger{background:#ef4444;color:#fff}
+.btn-ghost{background:transparent;color:#6366f1;border:1.5px solid #6366f1}
+.btn-ghost:hover{background:#6366f1;color:#fff}
+.btn-full{width:100%;margin-top:14px;padding:13px}
+.card{background:#fff;border-radius:16px;padding:26px;box-shadow:0 4px 24px rgba(0,0,0,.06);margin-bottom:20px}
+.card h2{font-size:1.1rem;padding-bottom:12px;border-bottom:1px solid #e5e7eb;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.card .hint{font-size:.82rem;color:#9ca3af;margin:-8px 0 16px;line-height:1.55}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px;color:#374151}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:11px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:.95rem;background:#fafafa;font-family:inherit}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:#6366f1;background:#fff}
+.form-group textarea{resize:vertical;min-height:90px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 
-    /* auth */
-    .auth-tabs { display: flex; gap: 8px; margin-bottom: 24px; }
-    .auth-tab {
-      flex: 1; padding: 12px; text-align: center; border-radius: 10px; cursor: pointer;
-      font-weight: 600; font-size: 0.9rem; background: #e5e7eb; color: #6b7280;
-      border: none; transition: all 0.2s;
-    }
-    .auth-tab.active { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
-    .help-panel {
-      background: #fef2f2; border: 1px solid #fecaca; color: #7f1d1d;
-      padding: 16px 18px; border-radius: 10px; font-size: 0.87rem;
-      margin-bottom: 18px; line-height: 1.6;
-    }
-    .help-panel strong { display: block; margin-bottom: 6px; }
+/* auth */
+.auth-tabs{display:flex;gap:8px;margin-bottom:20px}
+.auth-tab{flex:1;padding:12px;text-align:center;border-radius:10px;cursor:pointer;font-weight:600;font-size:.9rem;background:#e5e7eb;color:#6b7280;border:none}
+.auth-tab.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
+.help-panel{background:#fef2f2;border:1px solid #fecaca;color:#7f1d1d;padding:16px;border-radius:10px;font-size:.87rem;margin-bottom:16px;line-height:1.6}
 
-    /* LINKS HEADER */
-    .links-head {
-      display: flex; justify-content: space-between; align-items: center;
-      padding-bottom: 14px; border-bottom: 1px solid #e5e7eb; margin-bottom: 6px;
-    }
-    .links-head h2 { border: none; padding: 0; }
-    .links-count {
-      font-size: 0.75rem; font-weight: 700;
-      padding: 4px 12px; border-radius: 20px;
-      background: #eef2ff; color: #4f46e5;
-    }
-    .links-count.empty { background: #f3f4f6; color: #9ca3af; }
+/* link rows */
+.links-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid #e5e7eb;margin-bottom:12px}
+.links-head h2{border:none;padding:0;margin:0}
+.links-count{font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:20px;background:#eef2ff;color:#4f46e5}
+.links-count.empty{background:#f3f4f6;color:#9ca3af}
+.link-item{display:grid;grid-template-columns:40px 1fr auto;gap:14px;align-items:center;padding:14px 4px;border-bottom:1px solid #f1f5f9}
+.link-item:last-child{border-bottom:none}
+.link-item.editing{background:#eef2ff;border-radius:12px;padding:16px;border-bottom:none;margin:6px 0;grid-template-columns:1fr}
+.link-icon-box{width:40px;height:40px;border-radius:10px;background:#eef2ff;color:#4f46e5;display:flex;align-items:center;justify-content:center;font-size:1.15rem}
+.link-body{min-width:0}
+.link-label{font-size:.95rem;font-weight:700}
+.link-url{font-size:.8rem;color:#6366f1;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.link-actions{display:flex;gap:6px;flex-wrap:wrap}
+.mini-btn{padding:8px 12px;border:none;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.mini-btn:hover{transform:translateY(-1px)}
+.mini-btn.open{background:#dbeafe;color:#1d4ed8}
+.mini-btn.edit{background:#fef3c7;color:#92400e}
+.mini-btn.save{background:#6366f1;color:#fff}
+.mini-btn.cancel{background:#e5e7eb;color:#374151}
+.mini-btn.delete{background:#fee2e2;color:#dc2626}
+.link-edit-grid{display:grid;grid-template-columns:1fr 2fr;gap:12px;margin-bottom:12px}
 
-    /* LINK ITEM */
-    .link-item {
-      display: grid;
-      grid-template-columns: 40px 1fr auto;
-      gap: 14px; align-items: center;
-      padding: 16px 4px;
-      border-bottom: 1px solid #f1f5f9;
-      transition: background 0.15s;
-    }
-    .link-item:last-child { border-bottom: none; }
-    .link-item.editing {
-      background: #eef2ff;
-      border-radius: 12px;
-      padding: 16px;
-      border-bottom: none;
-      margin: 6px 0;
-    }
-    .link-icon-box {
-      width: 40px; height: 40px; border-radius: 10px;
-      background: #eef2ff; color: #4f46e5;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.15rem;
-    }
-    .link-body { min-width: 0; }
-    .link-label { font-size: 0.95rem; font-weight: 700; color: #1a1a2e; }
-    .link-url {
-      font-size: 0.8rem; color: #6366f1; margin-top: 2px;
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    }
-    .link-actions { display: flex; gap: 6px; flex-wrap: wrap; }
-    .mini-btn {
-      padding: 8px 12px; border: none; border-radius: 8px;
-      font-size: 0.78rem; font-weight: 700; cursor: pointer;
-      transition: transform 0.15s;
-      display: inline-flex; align-items: center; gap: 4px;
-      white-space: nowrap;
-    }
-    .mini-btn:hover { transform: translateY(-1px); }
-    .mini-btn.open   { background: #dbeafe; color: #1d4ed8; }
-    .mini-btn.edit   { background: #fef3c7; color: #92400e; }
-    .mini-btn.save   { background: #6366f1; color: white; }
-    .mini-btn.cancel { background: #e5e7eb; color: #374151; }
-    .mini-btn.delete { background: #fee2e2; color: #dc2626; }
-    .mini-btn.delete:hover { background: #fecaca; }
+/* hours */
+.hours-grid{display:flex;flex-direction:column;gap:8px}
+.hour-row{display:grid;grid-template-columns:70px 90px 1fr 1fr;gap:10px;align-items:center;padding:8px 12px;background:#f9fafb;border-radius:10px}
+.hour-row .day{font-weight:700;font-size:.85rem;text-transform:capitalize}
+.hour-row input[type="time"]{padding:8px 10px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:.85rem;background:#fff;font-family:inherit;width:100%}
+.hour-row .closed-label{font-size:.82rem;display:flex;align-items:center;gap:6px;color:#6b7280;font-weight:600}
+.hour-row.is-closed input[type="time"]{opacity:.3;pointer-events:none}
 
-    .link-edit-grid {
-      grid-column: 1 / -1;
-      display: grid; grid-template-columns: 1fr 2fr; gap: 12px;
-      margin-bottom: 12px;
-    }
-    .link-edit-grid .form-group { margin-bottom: 0; }
-    .link-edit-grid .form-group label { font-size: 0.72rem; }
-    .link-edit-grid input {
-      padding: 9px 12px; font-size: 0.88rem;
-    }
-
-    .empty-state { text-align: center; padding: 36px 20px; color: #9ca3af; font-size: 0.9rem; }
-    .logo-preview { width: 64px; height: 64px; border-radius: 12px; object-fit: cover; margin-top: 8px; border: 2px solid #e5e7eb; }
-
-    .toast {
-      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-      background: #1a1a2e; color: white; padding: 12px 24px; border-radius: 10px;
-      font-size: 0.9rem; opacity: 0; transition: opacity 0.3s; pointer-events: none;
-      z-index: 999; max-width: 90vw; text-align: center;
-    }
-    .toast.show { opacity: 1; }
-    .toast.error { background: #dc2626; }
-    .toast.success { background: #16a34a; }
-    .toast.warn { background: #d97706; }
-
-    @media (max-width: 520px) {
-      .link-item { grid-template-columns: 40px 1fr; }
-      .link-actions { grid-column: 2; margin-top: 4px; }
-      .link-edit-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+/* analytics */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px}
+.stat-card{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-radius:14px;padding:18px;text-align:center}
+.stat-card .num{font-size:1.8rem;font-weight:800;color:#4f46e5;line-height:1}
+.stat-card .lbl{font-size:.75rem;font-weight:700;color:#6366f1;text-transform:uppercase;letter-spacing:.5px;margin-top:6px}
+.chart{display:flex;align-items:flex-end;gap:4px;height:140px;padding:12px 4px;background:#f9fafb;border-radius:12px;margin-bottom:16px}
+.chart .bar{flex:1;background:linear-gradient(180deg,#8b5cf6,#6366f1);border-radius:4px 4px 0 0;min-height:3px;transition:opacity .2s;position:relative}
+.chart .bar:hover{opacity:.7}
+.chart .bar[data-count]:hover::after{content:attr(data-count);position:absolute;top:-24px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;font-size:.7rem;padding:3px 8px;border-radius:6px;white-space:nowrap}
+.chart-labels{display:flex;justify-content:space-between;font-size:.7rem;color:#9ca3af;padding:0 4px;margin-bottom:12px}
+.top-links{list-style:none}
+.top-links li{display:flex;justify-content:space-between;padding:10px 14px;background:#f9fafb;border-radius:10px;margin-bottom:8px;font-size:.85rem}
+.top-links .tl-label{font-weight:600}
+.top-links .tl-count{color:#6366f1;font-weight:700}
+.empty-state{text-align:center;padding:32px 20px;color:#9ca3af;font-size:.9rem}
+.logo-preview{width:64px;height:64px;border-radius:12px;object-fit:cover;margin-top:8px;border:2px solid #e5e7eb}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;padding:12px 24px;border-radius:10px;font-size:.9rem;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999;max-width:90vw;text-align:center}
+.toast.show{opacity:1}
+.toast.error{background:#dc2626}
+.toast.success{background:#16a34a}
+.toast.warn{background:#d97706}
+@media(max-width:640px){
+  .row2{grid-template-columns:1fr}
+  .hour-row{grid-template-columns:70px 1fr 1fr;grid-template-areas:"day open close" ". closed closed"}
+  .hour-row .closed-label{grid-area:closed}
+  .stats-grid{grid-template-columns:1fr}
+  .link-item{grid-template-columns:40px 1fr}
+  .link-actions{grid-column:2}
+}
+</style>
 </head>
 <body>
 
 <div class="container">
   <div class="header">
     <h1>🏪 Business Dashboard</h1>
-    <button id="logoutBtn" class="btn btn-danger hidden">Log Out</button>
+    <div style="display:flex;gap:8px;">
+      <a href="admin.html" id="adminLink" class="btn btn-ghost hidden">Admin</a>
+      <button id="logoutBtn" class="btn btn-danger hidden">Log Out</button>
+    </div>
   </div>
 
   <div id="authSection">
@@ -150,87 +113,91 @@
         <button class="auth-tab active" data-tab="login">Log In</button>
         <button class="auth-tab" data-tab="signup">Sign Up</button>
       </div>
-
       <div id="helpPanel" class="help-panel hidden">
-        <strong>⚠️ That email already has an account</strong>
-        Delete the old user from the Supabase dashboard (Authentication → Users) and try again, or log in with your old password.
+        <strong>⚠️ That email already has an account.</strong> Delete the old user from Supabase (Authentication → Users), or log in with your old password.
       </div>
-
       <div id="loginForm">
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" />
-        </div>
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password" />
-        </div>
-        <button class="btn btn-primary" id="loginBtn" style="width:100%;">Log In</button>
-        <button type="button" id="forgotBtn" style="background:none;border:none;color:#6366f1;font-size:0.85rem;cursor:pointer;padding:12px 0 0;text-decoration:underline;width:100%;">
-          Forgot password?
-        </button>
+        <div class="form-group"><label>Email</label><input type="email" id="loginEmail" autocomplete="email" /></div>
+        <div class="form-group"><label>Password</label><input type="password" id="loginPassword" autocomplete="current-password" /></div>
+        <button class="btn btn-primary" id="loginBtn" style="width:100%">Log In</button>
+        <button type="button" id="forgotBtn" style="background:none;border:none;color:#6366f1;font-size:.85rem;cursor:pointer;padding:12px 0 0;text-decoration:underline;width:100%">Forgot password?</button>
       </div>
-
       <div id="signupForm" class="hidden">
-        <div class="form-group">
-          <label>Business Name</label>
-          <input type="text" id="signupBusinessName" placeholder="My Awesome Business" />
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="signupEmail" placeholder="you@example.com" autocomplete="email" />
-        </div>
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" id="signupPassword" placeholder="Min. 6 characters" autocomplete="new-password" />
-        </div>
-        <button class="btn btn-primary" id="signupBtn" style="width:100%;">Create Account</button>
+        <div class="form-group"><label>Business Name</label><input type="text" id="signupBusinessName" placeholder="My Awesome Business" /></div>
+        <div class="form-group"><label>Email</label><input type="email" id="signupEmail" autocomplete="email" /></div>
+        <div class="form-group"><label>Password</label><input type="password" id="signupPassword" autocomplete="new-password" placeholder="Min. 6 characters" /></div>
+        <button class="btn btn-primary" id="signupBtn" style="width:100%">Create Account</button>
       </div>
     </div>
   </div>
 
   <div id="dashboardSection" class="hidden">
+    <!-- ANALYTICS -->
+    <div class="card">
+      <h2>📊 Your Analytics <span style="font-size:.72rem;color:#9ca3af;font-weight:500">Last 30 days</span></h2>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="num" id="statViews">0</div><div class="lbl">Profile Views</div></div>
+        <div class="stat-card"><div class="num" id="statClicks">0</div><div class="lbl">Link Clicks</div></div>
+        <div class="stat-card"><div class="num" id="statCtr">0%</div><div class="lbl">Click Rate</div></div>
+      </div>
+      <div class="chart" id="viewsChart"></div>
+      <div class="chart-labels"><span>30 days ago</span><span>Today</span></div>
+      <div id="topLinksWrap">
+        <h3 style="font-size:.85rem;font-weight:700;margin-bottom:10px;color:#374151;">Top Performing Links</h3>
+        <ul class="top-links" id="topLinks"></ul>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
     <div class="card">
       <h2>📋 Business Information</h2>
-      <div class="form-group" style="margin-top:16px;">
-        <label>Business Name</label>
-        <input type="text" id="bizName" />
+      <div class="row2">
+        <div class="form-group"><label>Business Name</label><input type="text" id="bizName" /></div>
+        <div class="form-group"><label>Industry / Category</label>
+          <select id="bizIndustry">
+            <option value="">Select…</option>
+            <option>Construction</option><option>Real Estate</option><option>IT &amp; Technology</option>
+            <option>Marketing &amp; Advertising</option><option>Legal Services</option><option>Accounting &amp; Finance</option>
+            <option>Healthcare</option><option>Education &amp; Training</option><option>Hospitality &amp; Tourism</option>
+            <option>Retail &amp; E-commerce</option><option>Transportation &amp; Logistics</option><option>Manufacturing</option>
+            <option>Agriculture</option><option>Beauty &amp; Wellness</option><option>Fitness &amp; Sports</option>
+            <option>Media &amp; Entertainment</option><option>Home Services</option><option>Other</option>
+          </select>
+        </div>
       </div>
-      <div class="form-group">
-        <label>Location</label>
-        <input type="text" id="bizLocation" placeholder="e.g. Kampala, Uganda" />
+      <div class="form-group"><label>Your Public URL (slug)</label>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span style="font-size:.8rem;color:#9ca3af;white-space:nowrap;">profile.html?b=</span>
+          <input type="text" id="bizSlug" placeholder="my-business" />
+        </div>
       </div>
-      <div class="form-group">
-        <label>Description</label>
-        <textarea id="bizDescription" placeholder="Tell visitors what you do..."></textarea>
+      <div class="form-group"><label>Location</label><input type="text" id="bizLocation" placeholder="e.g. Kampala, Uganda" /></div>
+      <div class="form-group"><label>Description (About)</label><textarea id="bizDescription" placeholder="Tell visitors who you are and what makes you different..."></textarea></div>
+      <div class="form-group"><label>Services Offered</label><textarea id="bizServices" placeholder="One service per line, e.g.&#10;Residential construction&#10;Commercial renovation&#10;Roofing"></textarea></div>
+      <div class="row2">
+        <div class="form-group"><label>Contact Email</label><input type="email" id="bizEmail" /></div>
+        <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" id="bizPhone" placeholder="+256..." /></div>
       </div>
-      <div class="form-group">
-        <label>Contact Email</label>
-        <input type="email" id="bizEmail" />
-      </div>
-      <div class="form-group">
-        <label>Phone</label>
-        <input type="tel" id="bizPhone" />
-      </div>
-      <div class="form-group">
-        <label>Logo URL</label>
-        <input type="url" id="bizLogo" placeholder="https://..." />
-        <img id="logoPreview" class="logo-preview hidden" alt="Logo preview" />
-      </div>
+      <div class="form-group"><label>Logo URL</label><input type="url" id="bizLogo" placeholder="https://..." /><img id="logoPreview" class="logo-preview hidden" alt="" /></div>
       <button class="btn btn-primary" id="saveProfileBtn">Save Information</button>
     </div>
 
+    <!-- HOURS -->
+    <div class="card">
+      <h2>🕐 Business Hours</h2>
+      <p class="hint">Uncheck "Open" for days you're closed.</p>
+      <div class="hours-grid" id="hoursGrid"></div>
+      <button class="btn btn-primary" id="saveHoursBtn" style="margin-top:16px;">Save Hours</button>
+    </div>
+
+    <!-- LINKS -->
     <div class="card">
       <div class="links-head">
         <h2>🔗 Your Active Links</h2>
         <span id="linksCount" class="links-count empty">0 active</span>
       </div>
-      <p class="hint">
-        These links appear on your public profile. Visitors click them to reach your site, YouTube, socials, etc.
-      </p>
-      <div id="linksContainer">
-        <div class="empty-state">No links yet. Add your first one below.</div>
-      </div>
+      <p class="hint">Visitors click these to reach your site, YouTube, socials. Auto-https:// added if missing.</p>
+      <div id="linksContainer"><div class="empty-state">No links yet.</div></div>
       <button class="btn btn-ghost btn-full" id="addLinkBtn">+ Add New Link</button>
     </div>
   </div>
@@ -239,261 +206,298 @@
 <div class="toast" id="toast"></div>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=7';
+import { supabase } from './supabase-client.js?v=9';
 
-const authSection = document.getElementById('authSection');
-const dashboardSection = document.getElementById('dashboardSection');
-const logoutBtn = document.getElementById('logoutBtn');
-const toastEl = document.getElementById('toast');
-const helpPanel = document.getElementById('helpPanel');
-const linksContainer = document.getElementById('linksContainer');
-const linksCount = document.getElementById('linksCount');
-
+// ---------- DOM ----------
+const $ = id => document.getElementById(id);
+const authSection = $('authSection'), dashboardSection = $('dashboardSection');
+const logoutBtn = $('logoutBtn'), toastEl = $('toast'), helpPanel = $('helpPanel');
+const adminLink = $('adminLink');
 let currentUser = null;
 
-// =========================================================
-// HELPERS
-// =========================================================
-function showToast(msg, type = 'info', duration = 3200) {
+// ---------- Helpers ----------
+function showToast(msg, type='info', d=3200){
   toastEl.textContent = msg;
-  toastEl.className = 'toast show ' + (type === 'error' ? 'error' : type === 'success' ? 'success' : type === 'warn' ? 'warn' : '');
+  toastEl.className = 'toast show ' + (type==='error'?'error':type==='success'?'success':type==='warn'?'warn':'');
   clearTimeout(showToast._t);
-  showToast._t = setTimeout(() => toastEl.classList.remove('show'), duration);
+  showToast._t = setTimeout(()=>toastEl.classList.remove('show'), d);
 }
-
-function setLoading(btn, loading, label) {
-  if (loading) {
-    btn.dataset.original = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = label || 'Please wait…';
-  } else {
-    btn.disabled = false;
-    btn.textContent = btn.dataset.original || btn.textContent;
-  }
+function setLoading(btn, loading, label){
+  if(loading){ btn.dataset.orig = btn.textContent; btn.disabled = true; btn.textContent = label || 'Please wait…'; }
+  else { btn.disabled = false; btn.textContent = btn.dataset.orig || btn.textContent; }
 }
-
-function normalizeUrl(raw) {
-  if (!raw) return '';
-  let url = String(raw).trim();
-  if (!url) return '';
-  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(url)) return url;
-  if (/^(mailto:|tel:|sms:|whatsapp:)/i.test(url)) return url;
-  return 'https://' + url;
+function normalizeUrl(raw){
+  if(!raw) return '';
+  let u = String(raw).trim(); if(!u) return '';
+  if(/^[a-z][a-z0-9+.-]*:\/\//i.test(u)) return u;
+  if(/^(mailto:|tel:|sms:|whatsapp:)/i.test(u)) return u;
+  return 'https://' + u;
 }
-
-function displayUrl(url) {
-  if (!url) return '';
-  return String(url).replace(/^https?:\/\//i, '').replace(/\/$/, '');
+function displayUrl(u){ return u ? String(u).replace(/^https?:\/\//i,'').replace(/\/$/,'') : ''; }
+function escapeHtml(s){ return s==null?'':String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escapeAttr(s){ return s==null?'':String(s).replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+function slugify(s){
+  return String(s||'').toLowerCase().trim()
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,50);
 }
-
-function escapeHtml(s) {
-  if (s === null || s === undefined) return '';
-  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-function escapeAttr(s) {
-  if (s === null || s === undefined) return '';
-  return String(s).replace(/"/g, '&quot;').replace(/</g, '&lt;');
-}
-
-function linkIcon(label) {
-  const l = (label || '').toLowerCase();
-  if (l.includes('website') || l.includes('site')) return '🌐';
-  if (l.includes('instagram')) return '📸';
-  if (l.includes('facebook'))  return '📘';
-  if (l.includes('twitter') || l === 'x') return '🐦';
-  if (l.includes('tiktok'))    return '🎵';
-  if (l.includes('linkedin'))  return '💼';
-  if (l.includes('whatsapp'))  return '💬';
-  if (l.includes('youtube'))   return '▶️';
-  if (l.includes('email') || l.includes('mail')) return '✉️';
-  if (l.includes('phone') || l.includes('call')) return '📞';
-  if (l.includes('booking'))   return '📅';
+function linkIcon(label){
+  const l = (label||'').toLowerCase();
+  if(l.includes('website')||l.includes('site')) return '🌐';
+  if(l.includes('instagram')) return '📸';
+  if(l.includes('facebook')) return '📘';
+  if(l.includes('twitter')||l==='x') return '🐦';
+  if(l.includes('tiktok')) return '🎵';
+  if(l.includes('linkedin')) return '💼';
+  if(l.includes('whatsapp')) return '💬';
+  if(l.includes('youtube')) return '▶️';
+  if(l.includes('email')||l.includes('mail')) return '✉️';
+  if(l.includes('phone')||l.includes('call')) return '📞';
   return '🔗';
 }
+const DAYS = ['mon','tue','wed','thu','fri','sat','sun'];
+const DAY_LABELS = { mon:'Monday', tue:'Tuesday', wed:'Wednesday', thu:'Thursday', fri:'Friday', sat:'Saturday', sun:'Sunday' };
 
-// =========================================================
-// AUTH (unchanged)
-// =========================================================
-document.querySelectorAll('.auth-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    const target = tab.dataset.tab;
-    document.getElementById('loginForm').classList.toggle('hidden', target !== 'login');
-    document.getElementById('signupForm').classList.toggle('hidden', target !== 'signup');
+// ---------- Auth ----------
+document.querySelectorAll('.auth-tab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('.auth-tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    const target = t.dataset.tab;
+    $('loginForm').classList.toggle('hidden', target !== 'login');
+    $('signupForm').classList.toggle('hidden', target !== 'signup');
     helpPanel.classList.add('hidden');
   });
 });
 
-document.getElementById('signupBtn').addEventListener('click', async () => {
-  const btn = document.getElementById('signupBtn');
-  const businessName = document.getElementById('signupBusinessName').value.trim();
-  const email = document.getElementById('signupEmail').value.trim().toLowerCase();
-  const password = document.getElementById('signupPassword').value;
-  if (!businessName || !email || !password) return showToast('Please fill all fields', 'error');
-  if (password.length < 6) return showToast('Password must be at least 6 characters', 'error');
-  setLoading(btn, true, 'Creating account…');
-  const { data, error } = await supabase.auth.signUp({
-    email, password, options: { data: { business_name: businessName } }
-  });
+$('signupBtn').addEventListener('click', async ()=>{
+  const btn = $('signupBtn');
+  const businessName = $('signupBusinessName').value.trim();
+  const email = $('signupEmail').value.trim().toLowerCase();
+  const password = $('signupPassword').value;
+  if(!businessName||!email||!password) return showToast('Fill all fields','error');
+  if(password.length<6) return showToast('Password too short','error');
+  setLoading(btn, true, 'Creating…');
+  const { data, error } = await supabase.auth.signUp({ email, password, options:{ data:{ business_name: businessName } } });
   setLoading(btn, false);
-  if (error) return showToast('Signup failed: ' + error.message, 'error');
-  if (data?.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+  if(error) return showToast('Signup failed: '+error.message,'error');
+  if(data?.user && Array.isArray(data.user.identities) && data.user.identities.length===0){
     helpPanel.classList.remove('hidden');
-    return showToast('That email already has an account.', 'warn', 6000);
+    return showToast('Email already registered','warn',6000);
   }
-  if (data?.session) return showToast('✅ Account created!', 'success');
-  if (data?.user) {
-    showToast('📧 Account created. Check your email.', 'success', 6000);
+  if(data?.session) return showToast('✅ Account created!','success');
+  if(data?.user){
+    showToast('📧 Check your email to confirm','success',6000);
     document.querySelector('.auth-tab[data-tab="login"]').click();
-    document.getElementById('loginEmail').value = email;
+    $('loginEmail').value = email;
   }
 });
 
-document.getElementById('loginBtn').addEventListener('click', async () => {
-  const btn = document.getElementById('loginBtn');
-  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-  const password = document.getElementById('loginPassword').value;
-  if (!email || !password) return showToast('Please fill all fields', 'error');
+$('loginBtn').addEventListener('click', async ()=>{
+  const btn = $('loginBtn');
+  const email = $('loginEmail').value.trim().toLowerCase();
+  const password = $('loginPassword').value;
+  if(!email||!password) return showToast('Fill all fields','error');
   setLoading(btn, true, 'Logging in…');
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   setLoading(btn, false);
-  if (error) {
-    if ((error.message || '').toLowerCase().includes('invalid')) {
+  if(error){
+    if((error.message||'').toLowerCase().includes('invalid')){
       helpPanel.classList.remove('hidden');
-      return showToast('Wrong email or password.', 'error', 5000);
+      return showToast('Wrong email or password','error',5000);
     }
-    return showToast('Login failed: ' + error.message, 'error');
+    return showToast('Login failed: '+error.message,'error');
   }
 });
 
-document.getElementById('forgotBtn').addEventListener('click', async () => {
-  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-  if (!email) return showToast('Enter your email above first', 'error');
+$('forgotBtn').addEventListener('click', async ()=>{
+  const email = $('loginEmail').value.trim().toLowerCase();
+  if(!email) return showToast('Enter your email first','error');
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: window.location.origin + window.location.pathname
   });
-  if (error) return showToast('Could not send reset email: ' + error.message, 'error');
-  showToast('📧 Password reset email sent.', 'success', 6000);
+  if(error) return showToast('Failed: '+error.message,'error');
+  showToast('📧 Reset email sent','success',6000);
 });
 
-document.getElementById('loginPassword').addEventListener('keydown', e => {
-  if (e.key === 'Enter') document.getElementById('loginBtn').click();
-});
-document.getElementById('signupPassword').addEventListener('keydown', e => {
-  if (e.key === 'Enter') document.getElementById('signupBtn').click();
-});
+$('loginPassword').addEventListener('keydown', e=>{ if(e.key==='Enter') $('loginBtn').click(); });
+$('signupPassword').addEventListener('keydown', e=>{ if(e.key==='Enter') $('signupBtn').click(); });
 
-logoutBtn.addEventListener('click', async () => {
+$('logoutBtn').addEventListener('click', async ()=>{
   await supabase.auth.signOut();
   showToast('Logged out');
 });
 
-supabase.auth.onAuthStateChange(async (event, session) => {
+supabase.auth.onAuthStateChange(async (_, session)=>{
   currentUser = session?.user ?? null;
-  if (currentUser) {
+  if(currentUser){
     authSection.classList.add('hidden');
     dashboardSection.classList.remove('hidden');
     logoutBtn.classList.remove('hidden');
     helpPanel.classList.add('hidden');
-    await loadProfile();
+    await loadAll();
   } else {
-    authSection.classList.remove('hidden');
+    authSection.classList.add('hidden');
     dashboardSection.classList.add('hidden');
     logoutBtn.classList.add('hidden');
+    adminLink.classList.add('hidden');
+    authSection.classList.remove('hidden');
   }
 });
 
-// =========================================================
-// PROFILE
-// =========================================================
-async function loadProfile() {
-  if (!currentUser) return;
+// ---------- Load everything ----------
+async function loadAll(){
+  await loadProfile();
+  await loadLinks();
+  await loadHours();
+  await loadAnalytics();
+}
 
-  const { data: profile } = await supabase
-    .from('profiles').select('*').eq('id', currentUser.id).maybeSingle();
+async function loadProfile(){
+  if(!currentUser) return;
+  let { data: profile } = await supabase.from('profiles').select('*').eq('id', currentUser.id).maybeSingle();
 
-  if (!profile) {
-    const fallbackName = currentUser.user_metadata?.business_name || 'My Business';
-    await supabase.from('profiles').insert({ id: currentUser.id, business_name: fallbackName });
-    document.getElementById('bizName').value = fallbackName;
-  } else {
-    document.getElementById('bizName').value = profile.business_name || '';
-    document.getElementById('bizLocation').value = profile.location || '';
-    document.getElementById('bizDescription').value = profile.description || '';
-    document.getElementById('bizEmail').value = profile.contact_email || '';
-    document.getElementById('bizPhone').value = profile.phone || '';
-    document.getElementById('bizLogo').value = profile.logo_url || '';
-    updateLogoPreview(profile.logo_url);
+  if(!profile){
+    const fallback = currentUser.user_metadata?.business_name || 'My Business';
+    const slug = slugify(fallback) + '-' + currentUser.id.substring(0,4);
+    const { data } = await supabase.from('profiles').insert({
+      id: currentUser.id, business_name: fallback, slug
+    }).select().single();
+    profile = data;
   }
 
-  await loadLinks();
+  $('bizName').value = profile.business_name || '';
+  $('bizIndustry').value = profile.industry || '';
+  $('bizSlug').value = profile.slug || '';
+  $('bizLocation').value = profile.location || '';
+  $('bizDescription').value = profile.description || '';
+  $('bizServices').value = profile.services || '';
+  $('bizEmail').value = profile.contact_email || '';
+  $('bizPhone').value = profile.phone || '';
+  $('bizLogo').value = profile.logo_url || '';
+  updateLogoPreview(profile.logo_url);
+
+  if(profile.is_admin) adminLink.classList.remove('hidden');
 }
 
-async function loadLinks() {
-  const { data: links, error } = await supabase
-    .from('business_links').select('*')
-    .eq('profile_id', currentUser.id).order('sort_order');
-
-  if (error) console.error('Load links error:', error);
-  renderLinks(links || []);
-}
-
-document.getElementById('bizLogo').addEventListener('input', e => updateLogoPreview(e.target.value));
-function updateLogoPreview(url) {
-  const img = document.getElementById('logoPreview');
-  if (url) { img.src = url; img.classList.remove('hidden'); }
+$('bizLogo').addEventListener('input', e=>updateLogoPreview(e.target.value));
+function updateLogoPreview(url){
+  const img = $('logoPreview');
+  if(url){ img.src = url; img.classList.remove('hidden'); }
   else img.classList.add('hidden');
 }
 
-document.getElementById('saveProfileBtn').addEventListener('click', async () => {
-  const btn = document.getElementById('saveProfileBtn');
+$('saveProfileBtn').addEventListener('click', async ()=>{
+  const btn = $('saveProfileBtn');
+  let slug = $('bizSlug').value.trim();
+  if(!slug) slug = slugify($('bizName').value) + '-' + currentUser.id.substring(0,4);
+  slug = slugify(slug);
+
+  // Check collision
+  const { data: existing } = await supabase.from('profiles').select('id').eq('slug', slug).neq('id', currentUser.id).maybeSingle();
+  if(existing){
+    slug = slug + '-' + Math.random().toString(36).substring(2,6);
+    showToast('Slug was taken — using '+slug, 'warn', 4000);
+  }
+
   const updates = {
-    business_name: document.getElementById('bizName').value.trim(),
-    location: document.getElementById('bizLocation').value.trim(),
-    description: document.getElementById('bizDescription').value.trim(),
-    contact_email: document.getElementById('bizEmail').value.trim(),
-    phone: document.getElementById('bizPhone').value.trim(),
-    logo_url: document.getElementById('bizLogo').value.trim(),
+    business_name: $('bizName').value.trim(),
+    industry: $('bizIndustry').value || null,
+    slug,
+    location: $('bizLocation').value.trim(),
+    description: $('bizDescription').value.trim(),
+    services: $('bizServices').value.trim(),
+    contact_email: $('bizEmail').value.trim(),
+    phone: $('bizPhone').value.trim(),
+    logo_url: $('bizLogo').value.trim(),
     updated_at: new Date().toISOString()
   };
+
   setLoading(btn, true, 'Saving…');
   const { error } = await supabase.from('profiles').update(updates).eq('id', currentUser.id);
   setLoading(btn, false);
-  if (error) return showToast('Save failed: ' + error.message, 'error');
-  showToast('✅ Information saved!', 'success');
+  if(error) return showToast('Save failed: '+error.message, 'error');
+  $('bizSlug').value = slug;
+  showToast('✅ Information saved!','success');
 });
 
-// =========================================================
-// LINKS CRUD
-// =========================================================
-function renderLinks(links) {
-  // Update count badge
-  if (links.length === 0) {
-    linksCount.textContent = '0 active';
-    linksCount.classList.add('empty');
-  } else {
-    linksCount.textContent = links.length + ' active';
-    linksCount.classList.remove('empty');
-  }
+// ---------- Hours ----------
+function defaultHours(){
+  const o = {};
+  DAYS.forEach(d => o[d] = { closed: d==='sun', open:'09:00', close:'17:00' });
+  return o;
+}
 
-  if (!links.length) {
-    linksContainer.innerHTML = '<div class="empty-state">No links yet. Add your first one below.</div>';
-    return;
-  }
+async function loadHours(){
+  const { data } = await supabase.from('profiles').select('opening_hours').eq('id', currentUser.id).single();
+  const hours = data?.opening_hours && Object.keys(data.opening_hours).length ? data.opening_hours : defaultHours();
+  renderHours(hours);
+}
 
-  linksContainer.innerHTML = '';
-  links.forEach(link => {
-    linksContainer.appendChild(buildViewRow(link));
+function renderHours(hours){
+  const grid = $('hoursGrid');
+  grid.innerHTML = DAYS.map(d=>{
+    const h = hours[d] || { closed: false, open:'09:00', close:'17:00' };
+    return `
+      <div class="hour-row ${h.closed?'is-closed':''}" data-day="${d}">
+        <div class="day">${DAY_LABELS[d]}</div>
+        <label class="closed-label"><input type="checkbox" class="closed-cb" ${h.closed?'checked':''}> Closed</label>
+        <input type="time" class="open-in" value="${h.open||'09:00'}">
+        <input type="time" class="close-in" value="${h.close||'17:00'}">
+      </div>
+    `;
+  }).join('');
+
+  grid.querySelectorAll('.closed-cb').forEach(cb=>{
+    cb.addEventListener('change', ()=>{
+      cb.closest('.hour-row').classList.toggle('is-closed', cb.checked);
+    });
   });
 }
 
-// View mode row
-function buildViewRow(link) {
+$('saveHoursBtn').addEventListener('click', async ()=>{
+  const btn = $('saveHoursBtn');
+  const hours = {};
+  document.querySelectorAll('.hour-row').forEach(row=>{
+    const day = row.dataset.day;
+    const closed = row.querySelector('.closed-cb').checked;
+    hours[day] = {
+      closed,
+      open: closed ? '' : row.querySelector('.open-in').value,
+      close: closed ? '' : row.querySelector('.close-in').value
+    };
+  });
+  setLoading(btn, true, 'Saving…');
+  const { error } = await supabase.from('profiles').update({ opening_hours: hours }).eq('id', currentUser.id);
+  setLoading(btn, false);
+  if(error) return showToast('Save failed: '+error.message, 'error');
+  showToast('✅ Hours saved!','success');
+});
+
+// ---------- Links ----------
+async function loadLinks(){
+  const { data: links } = await supabase
+    .from('business_links').select('*')
+    .eq('profile_id', currentUser.id).order('sort_order');
+  renderLinks(links || []);
+}
+
+function renderLinks(links){
+  const c = $('linksContainer');
+  const count = $('linksCount');
+  if(!links.length){
+    count.textContent = '0 active'; count.classList.add('empty');
+    c.innerHTML = '<div class="empty-state">No links yet. Add your first one below.</div>';
+    return;
+  }
+  count.textContent = links.length + ' active'; count.classList.remove('empty');
+  c.innerHTML = '';
+  links.forEach(l => c.appendChild(buildViewRow(l)));
+}
+
+function buildViewRow(link){
   const row = document.createElement('div');
   row.className = 'link-item';
   row.dataset.id = link.id;
-
   row.innerHTML = `
     <div class="link-icon-box">${linkIcon(link.label)}</div>
     <div class="link-body">
@@ -506,151 +510,147 @@ function buildViewRow(link) {
       <button class="mini-btn delete" data-action="delete">🗑 Delete</button>
     </div>
   `;
-
-  row.querySelectorAll('button').forEach(btn => {
-    btn.addEventListener('click', () => handleAction(row, btn.dataset.action, link));
-  });
-
+  row.querySelectorAll('button').forEach(b => b.addEventListener('click', ()=>handleAction(row, b.dataset.action, link)));
   return row;
 }
 
-// Edit mode row
-function buildEditRow(id, label, url, isNew) {
+function buildEditRow(id, label, url, isNew){
   const row = document.createElement('div');
   row.className = 'link-item editing';
   row.dataset.id = id || '';
   row.dataset.isNew = isNew ? '1' : '';
-
   row.innerHTML = `
     <div class="link-edit-grid">
-      <div class="form-group">
-        <label>Label</label>
-        <input type="text" class="edit-label" value="${escapeAttr(label)}" placeholder="e.g. Website" />
-      </div>
-      <div class="form-group">
-        <label>URL (https:// added automatically)</label>
-        <input type="text" class="edit-url" value="${escapeAttr(url)}" placeholder="example.com" />
-      </div>
+      <div class="form-group"><label>Label</label><input type="text" class="edit-label" value="${escapeAttr(label)}" placeholder="e.g. Website" /></div>
+      <div class="form-group"><label>URL</label><input type="text" class="edit-url" value="${escapeAttr(url)}" placeholder="example.com" /></div>
     </div>
-    <div class="link-actions" style="grid-column: 1 / -1;">
-      <button class="mini-btn save"   data-action="save">💾 Save</button>
+    <div class="link-actions">
+      <button class="mini-btn save" data-action="save">💾 Save</button>
       <button class="mini-btn cancel" data-action="cancel">✕ Cancel</button>
     </div>
   `;
-
-  const urlInput = row.querySelector('.edit-url');
-  urlInput.addEventListener('blur', () => {
-    if (urlInput.value.trim()) urlInput.value = normalizeUrl(urlInput.value);
-  });
-
-  row.querySelectorAll('button').forEach(btn => {
-    btn.addEventListener('click', () => handleAction(row, btn.dataset.action));
-  });
-
+  const urlIn = row.querySelector('.edit-url');
+  urlIn.addEventListener('blur', ()=>{ if(urlIn.value.trim()) urlIn.value = normalizeUrl(urlIn.value); });
+  row.querySelectorAll('button').forEach(b => b.addEventListener('click', ()=>handleAction(row, b.dataset.action, null)));
   return row;
 }
 
-async function handleAction(row, action, originalLink) {
+async function handleAction(row, action, original){
   const id = row.dataset.id || '';
   const isNew = row.dataset.isNew === '1';
 
-  // ---- OPEN (only from view mode) ----
-  if (action === 'open') {
-    const url = normalizeUrl(originalLink?.url || '');
-    if (!url) return showToast('No URL to open', 'error');
+  if(action==='open'){
+    const url = normalizeUrl(original?.url || '');
+    if(!url) return showToast('No URL','error');
     window.open(url, '_blank', 'noopener');
     return;
   }
 
-  // ---- EDIT (view → edit mode) ----
-  if (action === 'edit') {
-    const editRow = buildEditRow(originalLink.id, originalLink.label, originalLink.url, false);
+  if(action==='edit'){
+    const editRow = buildEditRow(original.id, original.label, original.url, false);
     row.replaceWith(editRow);
     editRow.querySelector('.edit-label').focus();
     return;
   }
 
-  // ---- CANCEL (edit → view, or discard new) ----
-  if (action === 'cancel') {
-    if (isNew) {
+  if(action==='cancel'){
+    if(isNew){
       row.remove();
-      if (!document.querySelector('.link-item')) {
-        linksContainer.innerHTML = '<div class="empty-state">No links yet. Add your first one below.</div>';
-        linksCount.textContent = '0 active';
-        linksCount.classList.add('empty');
+      if(!document.querySelector('.link-item')){
+        $('linksContainer').innerHTML = '<div class="empty-state">No links yet.</div>';
+        $('linksCount').textContent = '0 active'; $('linksCount').classList.add('empty');
       }
       return;
     }
-    // Reload from server to restore original values
     const { data } = await supabase.from('business_links').select('*').eq('id', id).single();
-    if (data) row.replaceWith(buildViewRow(data));
+    if(data) row.replaceWith(buildViewRow(data));
     return;
   }
 
-  // ---- SAVE ----
-  if (action === 'save') {
+  if(action==='save'){
     const label = row.querySelector('.edit-label').value.trim();
-    const rawUrl = row.querySelector('.edit-url').value.trim();
-    const url = normalizeUrl(rawUrl);
-
-    if (!label || !url) return showToast('Label and URL are both required', 'error');
-
+    const url = normalizeUrl(row.querySelector('.edit-url').value.trim());
+    if(!label||!url) return showToast('Both fields required','error');
     const btn = row.querySelector('.mini-btn.save');
-    setLoading(btn, true, 'Saving…');
-
-    if (id) {
-      const { error } = await supabase
-        .from('business_links').update({ label, url }).eq('id', id);
-      if (error) {
-        setLoading(btn, false);
-        console.error(error);
-        return showToast('Save failed: ' + error.message, 'error');
-      }
-      showToast('✅ Link updated', 'success');
+    setLoading(btn, true, '…');
+    if(id){
+      const { error } = await supabase.from('business_links').update({ label, url }).eq('id', id);
+      if(error){ setLoading(btn, false); return showToast('Failed: '+error.message,'error'); }
+      showToast('✅ Updated','success');
     } else {
-      const { error } = await supabase
-        .from('business_links').insert({ profile_id: currentUser.id, label, url });
-      if (error) {
-        setLoading(btn, false);
-        console.error(error);
-        return showToast('Save failed: ' + error.message, 'error');
-      }
-      showToast('✅ Link added', 'success');
+      const { error } = await supabase.from('business_links').insert({ profile_id: currentUser.id, label, url });
+      if(error){ setLoading(btn, false); return showToast('Failed: '+error.message,'error'); }
+      showToast('✅ Added','success');
     }
     await loadLinks();
     return;
   }
 
-  // ---- DELETE ----
-  if (action === 'delete') {
-    if (!confirm(`Delete "${originalLink.label}" permanently?`)) return;
-    const btn = row.querySelector('.mini-btn.delete');
-    setLoading(btn, true, 'Deleting…');
+  if(action==='delete'){
+    if(!confirm(`Delete "${original.label}" permanently?`)) return;
     const { error } = await supabase.from('business_links').delete().eq('id', id);
-    if (error) {
-      setLoading(btn, false);
-      console.error(error);
-      return showToast('Delete failed: ' + error.message, 'error');
-    }
-    showToast('🗑 Link deleted', 'success');
+    if(error) return showToast('Delete failed: '+error.message,'error');
+    showToast('🗑 Deleted','success');
     await loadLinks();
-    return;
   }
 }
 
-document.getElementById('addLinkBtn').addEventListener('click', () => {
-  // Remove empty state
-  const empty = linksContainer.querySelector('.empty-state');
-  if (empty) empty.remove();
-
-  // Prepend new row so it's visible
-  const newRow = buildEditRow(null, '', '', true);
-  linksContainer.prepend(newRow);
-  newRow.querySelector('.edit-label').focus();
-
-  // Update count badge to show there's an unsaved change pending
-  // (leave the saved count — it will update after save)
+$('addLinkBtn').addEventListener('click', ()=>{
+  const c = $('linksContainer');
+  const e = c.querySelector('.empty-state'); if(e) e.remove();
+  const r = buildEditRow(null, '', '', true);
+  c.prepend(r);
+  r.querySelector('.edit-label').focus();
 });
+
+// ---------- Analytics ----------
+async function loadAnalytics(){
+  const since = new Date(Date.now() - 30*24*60*60*1000).toISOString();
+
+  const [{ data: views }, { data: clicks }] = await Promise.all([
+    supabase.from('profile_views').select('viewed_at').eq('profile_id', currentUser.id).gte('viewed_at', since),
+    supabase.from('link_clicks').select('clicked_at, link_label').eq('profile_id', currentUser.id).gte('clicked_at', since)
+  ]);
+
+  const viewsList = views || [];
+  const clicksList = clicks || [];
+
+  $('statViews').textContent = viewsList.length;
+  $('statClicks').textContent = clicksList.length;
+  const ctr = viewsList.length ? Math.round((clicksList.length / viewsList.length) * 100) : 0;
+  $('statCtr').textContent = ctr + '%';
+
+  // Daily chart
+  const days = new Array(30).fill(0);
+  const today = new Date(); today.setHours(0,0,0,0);
+  viewsList.forEach(v => {
+    const d = new Date(v.viewed_at); d.setHours(0,0,0,0);
+    const idx = 29 - Math.floor((today - d) / (24*60*60*1000));
+    if(idx >= 0 && idx < 30) days[idx]++;
+  });
+  const max = Math.max(...days, 1);
+  $('viewsChart').innerHTML = days.map((c,i)=>{
+    const h = Math.max(3, (c/max) * 130);
+    return `<div class="bar" style="height:${h}px" data-count="${c} view${c===1?'':'s'}"></div>`;
+  }).join('');
+
+  // Top links
+  const counts = {};
+  clicksList.forEach(c => {
+    const k = c.link_label || 'Unknown';
+    counts[k] = (counts[k] || 0) + 1;
+  });
+  const sorted = Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,5);
+
+  if(sorted.length){
+    $('topLinks').innerHTML = sorted.map(([label, count]) =>
+      `<li><span class="tl-label">${escapeHtml(label)}</span><span class="tl-count">${count} click${count===1?'':'s'}</span></li>`
+    ).join('');
+    $('topLinksWrap').style.display = 'block';
+  } else {
+    $('topLinksWrap').style.display = 'none';
+  }
+}
 </script>
 </body>
 </html>
