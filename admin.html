@@ -12,14 +12,17 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
 .header h1{font-size:1.4rem;font-weight:700}
 .badge-admin{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:.7rem;font-weight:800;padding:4px 10px;border-radius:20px;margin-left:8px;letter-spacing:.5px}
-.btn{padding:10px 20px;border:none;border-radius:10px;font-size:.9rem;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn{padding:10px 18px;border:none;border-radius:10px;font-size:.88rem;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .15s}
+.btn:hover:not(:disabled){transform:translateY(-1px)}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
 .btn-primary{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
 .btn-danger{background:#ef4444;color:#fff}
 .btn-ghost{background:transparent;color:#6366f1;border:1.5px solid #6366f1}
 .btn-ghost:hover{background:#6366f1;color:#fff}
+.btn-sm{padding:7px 13px;font-size:.78rem}
 .card{background:#fff;border-radius:16px;padding:24px;box-shadow:0 4px 24px rgba(0,0,0,.06);margin-bottom:20px}
-.card h2{font-size:1.05rem;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #e5e7eb}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:8px}
+.card h2{font-size:1.05rem;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
 .stat-card{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-radius:14px;padding:20px;text-align:center}
 .stat-card.alt{background:linear-gradient(135deg,#fdf2f8,#fce7f3)}
 .stat-card.alt .num{color:#db2777}
@@ -35,27 +38,55 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .table-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:.88rem}
 th,td{padding:12px 10px;text-align:left;border-bottom:1px solid #f1f5f9}
-th{background:#f9fafb;font-size:.75rem;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;position:sticky;top:0}
+th{background:#f9fafb;font-size:.75rem;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:.4px}
 td .biz-cell{display:flex;align-items:center;gap:10px;min-width:180px}
 td .biz-mini-logo{width:34px;height:34px;border-radius:8px;background:#eef2ff;color:#4f46e5;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;flex-shrink:0}
 td .biz-mini-name{font-weight:700}
 td .biz-mini-slug{font-size:.72rem;color:#9ca3af}
 .tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:700;background:#f3f4f6;color:#6b7280}
-.tag.verified{background:#dcfce7;color:#16a34a}
-.tag.unverified{background:#fef3c7;color:#92400e}
-input[type="number"].rank-input{width:60px;padding:6px 8px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:.85rem;text-align:center}
+.tag.active{background:#dcfce7;color:#16a34a}
+.tag.inactive{background:#fee2e2;color:#dc2626}
+input[type="number"].rank-input{width:60px;padding:6px 8px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:.85rem;text-align:center;font-family:inherit}
 input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-color:#10b981}
 .mini-btn{padding:6px 10px;border:none;border-radius:7px;font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block}
 .mini-btn.view{background:#dbeafe;color:#1d4ed8}
+.mini-btn.edit{background:#fef3c7;color:#92400e}
 .mini-btn.danger{background:#fee2e2;color:#dc2626}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;padding:12px 24px;border-radius:10px;font-size:.9rem;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.mini-btn.toggle-on{background:#dcfce7;color:#16a34a}
+.mini-btn.toggle-off{background:#f3f4f6;color:#6b7280}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;padding:12px 24px;border-radius:10px;font-size:.9rem;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999;max-width:90vw;text-align:center}
 .toast.show{opacity:1}
 .toast.error{background:#dc2626}
 .toast.success{background:#16a34a}
 .access-denied{text-align:center;padding:80px 20px}
 .access-denied h2{font-size:1.5rem;color:#dc2626;margin-bottom:12px}
 .access-denied p{color:#6b7280;margin-bottom:24px}
-@media(max-width:720px){th:nth-child(4),td:nth-child(4){display:none}}
+
+/* Ad form */
+.ad-form{background:#f9fafb;border-radius:12px;padding:20px;margin-bottom:20px;border:1.5px solid #e5e7eb}
+.ad-form h3{font-size:.95rem;font-weight:800;margin-bottom:14px;color:#374151}
+.ad-form .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ad-form .form-group{margin-bottom:14px}
+.ad-form .form-group label{display:block;font-size:.78rem;font-weight:700;margin-bottom:6px;color:#4b5563;text-transform:uppercase;letter-spacing:.3px}
+.ad-form input,.ad-form textarea{width:100%;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:9px;font-size:.9rem;background:#fff;font-family:inherit}
+.ad-form input:focus,.ad-form textarea:focus{outline:none;border-color:#6366f1}
+.ad-form textarea{resize:vertical;min-height:70px}
+.ad-form .checkbox-row{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.ad-form .checkbox-row label{margin:0;text-transform:none;font-size:.85rem}
+.ad-form .checkbox-row input{width:auto}
+
+.ad-preview{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-radius:10px;padding:14px;margin-top:14px;border:1.5px dashed #c7d2fe}
+.ad-preview .adp-label{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#6366f1;margin-bottom:8px}
+.ad-preview .adp-card{background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.ad-preview .adp-img{width:100%;height:100px;border-radius:8px;object-fit:cover;background:#eef2ff;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:10px}
+.ad-preview .adp-title{font-weight:800;font-size:.9rem;margin-bottom:4px}
+.ad-preview .adp-body{font-size:.78rem;color:#6b7280;line-height:1.5}
+.ad-preview .adp-cta{display:inline-block;margin-top:8px;font-size:.78rem;font-weight:700;color:#6366f1}
+
+@media(max-width:720px){
+  .ad-form .row2{grid-template-columns:1fr}
+  th:nth-child(4),td:nth-child(4){display:none}
+}
 </style>
 </head>
 <body>
@@ -63,7 +94,7 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
 <div class="container">
   <div class="header">
     <h1>⚙️ Admin Dashboard <span class="badge-admin">ADMIN</span></h1>
-    <div style="display:flex;gap:8px;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
       <a href="dashboard.html" class="btn btn-ghost">My Business</a>
       <a href="index.html" class="btn btn-ghost">Public Site</a>
       <button class="btn btn-danger" id="logoutBtn">Log Out</button>
@@ -79,7 +110,7 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
   </div>
 
   <div id="content" class="hidden">
-    <!-- PLATFORM STATS -->
+    <!-- STATS -->
     <div class="card">
       <h2>📈 Platform Overview</h2>
       <div class="stats-grid">
@@ -90,11 +121,91 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
       </div>
     </div>
 
-    <!-- BUSINESS MANAGEMENT -->
+    <!-- ADS MANAGER -->
+    <div class="card">
+      <h2>
+        📢 Sponsored Ads
+        <button class="btn btn-primary btn-sm" id="newAdBtn">+ New Ad</button>
+      </h2>
+
+      <!-- Ad form -->
+      <div class="ad-form hidden" id="adForm">
+        <h3 id="adFormTitle">New Ad</h3>
+        <input type="hidden" id="adId" />
+        <div class="form-group">
+          <label>Title *</label>
+          <input type="text" id="adTitle" placeholder="e.g. Promote Your Business" />
+        </div>
+        <div class="form-group">
+          <label>Body / Description</label>
+          <textarea id="adBody" placeholder="Short supporting text…"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Image URL (optional)</label>
+          <input type="url" id="adImage" placeholder="https://…" />
+        </div>
+        <div class="row2">
+          <div class="form-group">
+            <label>CTA Button Text</label>
+            <input type="text" id="adCtaText" placeholder="Learn more" />
+          </div>
+          <div class="form-group">
+            <label>CTA URL</label>
+            <input type="text" id="adCtaUrl" placeholder="https://… or mailto:…" />
+          </div>
+        </div>
+        <div class="row2">
+          <div class="form-group">
+            <label>Sort Order</label>
+            <input type="number" id="adSort" value="0" />
+          </div>
+          <div class="form-group" style="display:flex;align-items:flex-end">
+            <div class="checkbox-row">
+              <input type="checkbox" id="adActive" checked />
+              <label for="adActive">Active (visible on site)</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="ad-preview">
+          <div class="adp-label">Live Preview</div>
+          <div class="adp-card">
+            <div class="adp-img" id="adpImg">📢</div>
+            <div class="adp-title" id="adpTitle">Your Ad Title</div>
+            <div class="adp-body" id="adpBody">Your ad description will appear here.</div>
+            <span class="adp-cta" id="adpCta">Learn more →</span>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+          <button class="btn btn-primary" id="saveAdBtn">💾 Save Ad</button>
+          <button class="btn btn-ghost" id="cancelAdBtn">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Ads table -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Ad</th>
+              <th>CTA</th>
+              <th style="text-align:center">Order</th>
+              <th style="text-align:center">Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="adsTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- BUSINESSES -->
     <div class="card">
       <h2>🏪 Manage Businesses</h2>
       <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
-        <input type="text" id="searchBiz" placeholder="Search by name, email, industry..." style="flex:1;min-width:200px;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:.9rem;font-family:inherit" />
+        <input type="text" id="searchBiz" placeholder="Search by name, email, industry..."
+               style="flex:1;min-width:200px;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:.9rem;font-family:inherit" />
         <button class="btn btn-ghost" id="refreshBtn">Refresh</button>
       </div>
       <div class="table-wrap">
@@ -119,23 +230,39 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
 <div class="toast" id="toast"></div>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=9';
+import { supabase } from './supabase-client.js?v=11';
 
 const $ = id => document.getElementById(id);
 let allBiz = [];
+let allAds = [];
 let isAdmin = false;
 
+// ---------- Toast ----------
 function showToast(msg, type='info', d=3000){
   const t = $('toast');
   t.textContent = msg;
   t.className = 'toast show' + (type==='error'?' error':type==='success'?' success':'');
   clearTimeout(showToast._t);
-  showToast._t = setTimeout(()=>t.classList.remove('show'), d);
+  showToast._t = setTimeout(() => t.classList.remove('show'), d);
 }
-function escapeHtml(s){ return s==null?'':String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-// Auth gate
-supabase.auth.onAuthStateChange(async (_, session)=>{
+function escapeHtml(s){
+  return s == null ? '' : String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escapeAttr(s){
+  return s == null ? '' : String(s).replace(/"/g,'&quot;').replace(/</g,'&lt;');
+}
+function normalizeUrl(raw){
+  if(!raw) return '';
+  let u = String(raw).trim();
+  if(!u) return '';
+  if(/^[a-z][a-z0-9+.-]*:\/\//i.test(u)) return u;
+  if(/^(mailto:|tel:|sms:|whatsapp:)/i.test(u)) return u;
+  return 'https://' + u;
+}
+
+// ---------- Auth gate ----------
+supabase.auth.onAuthStateChange(async (_, session) => {
   const user = session?.user;
   if(!user){ window.location.href = 'dashboard.html'; return; }
 
@@ -151,39 +278,40 @@ supabase.auth.onAuthStateChange(async (_, session)=>{
   await loadAll();
 });
 
-$('logoutBtn').addEventListener('click', async ()=>{
+$('logoutBtn').addEventListener('click', async () => {
   await supabase.auth.signOut();
   window.location.href = 'dashboard.html';
 });
 
 async function loadAll(){
-  await Promise.all([loadStats(), loadBiz()]);
+  await Promise.all([loadStats(), loadBiz(), loadAds()]);
 }
 
+// ---------- Stats ----------
 async function loadStats(){
   const since = new Date(Date.now() - 7*24*60*60*1000).toISOString();
 
-  const [{ count: totalBiz }, { count: verified }, { count: views7 }, { count: clicks7 }] = await Promise.all([
+  const [bizC, verC, viewC, clickC] = await Promise.all([
     supabase.from('profiles').select('*', { count:'exact', head:true }),
     supabase.from('profiles').select('*', { count:'exact', head:true }).eq('verified', true),
     supabase.from('profile_views').select('*', { count:'exact', head:true }).gte('viewed_at', since),
     supabase.from('link_clicks').select('*', { count:'exact', head:true }).gte('clicked_at', since)
   ]);
 
-  $('sTotalBiz').textContent = totalBiz || 0;
-  $('sVerified').textContent = verified || 0;
-  $('sViews7').textContent = views7 || 0;
-  $('sClicks7').textContent = clicks7 || 0;
+  $('sTotalBiz').textContent = bizC.count || 0;
+  $('sVerified').textContent = verC.count || 0;
+  $('sViews7').textContent   = viewC.count || 0;
+  $('sClicks7').textContent  = clickC.count || 0;
 }
 
+// ---------- Businesses ----------
 async function loadBiz(){
   const { data, error } = await supabase
-    .from('profiles')
-    .select('*')
+    .from('profiles').select('*')
     .order('rank', { ascending: false })
     .order('created_at', { ascending: false });
 
-  if(error){ showToast('Load failed: '+error.message, 'error'); return; }
+  if(error){ showToast('Load failed: ' + error.message, 'error'); return; }
   allBiz = data || [];
   renderBiz(allBiz);
 }
@@ -225,28 +353,27 @@ function renderBiz(list){
     `;
   }).join('');
 
-  // Wire changes
   tbody.querySelectorAll('tr').forEach(row => {
     const id = row.dataset.id;
     const vcb = row.querySelector('[data-field="verified"]');
     const rin = row.querySelector('[data-field="rank"]');
 
-    vcb.addEventListener('change', async ()=>{
+    vcb.addEventListener('change', async () => {
       const { error } = await supabase.from('profiles').update({ verified: vcb.checked }).eq('id', id);
-      if(error) return showToast('Failed: '+error.message,'error');
+      if(error) return showToast('Failed: ' + error.message, 'error');
       showToast(vcb.checked ? '✅ Verified' : 'Unverified', 'success');
     });
 
-    rin.addEventListener('change', async ()=>{
+    rin.addEventListener('change', async () => {
       const rank = parseInt(rin.value, 10) || 0;
       const { error } = await supabase.from('profiles').update({ rank }).eq('id', id);
-      if(error) return showToast('Failed: '+error.message,'error');
+      if(error) return showToast('Failed: ' + error.message, 'error');
       showToast('Rank = ' + rank, 'success');
     });
   });
 }
 
-$('searchBiz').addEventListener('input', e=>{
+$('searchBiz').addEventListener('input', e => {
   const q = e.target.value.toLowerCase().trim();
   if(!q) return renderBiz(allBiz);
   renderBiz(allBiz.filter(b =>
@@ -258,6 +385,177 @@ $('searchBiz').addEventListener('input', e=>{
 });
 
 $('refreshBtn').addEventListener('click', loadAll);
+
+// =========================================================
+// ADS MANAGER
+// =========================================================
+async function loadAds(){
+  const { data, error } = await supabase
+    .from('site_ads').select('*')
+    .order('sort_order', { ascending: true })
+    .order('created_at', { ascending: false });
+
+  if(error){ console.warn('Ads load error:', error.message); allAds = []; }
+  else allAds = data || [];
+  renderAds(allAds);
+}
+
+function renderAds(list){
+  const tbody = $('adsTable');
+  if(!list.length){
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px;color:#9ca3af">No ads yet. Click "+ New Ad" to create one.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map(ad => `
+    <tr data-id="${ad.id}">
+      <td>
+        <div class="biz-cell">
+          <div class="biz-mini-logo">${ad.image_url ? '🖼' : '📢'}</div>
+          <div>
+            <div class="biz-mini-name">${escapeHtml(ad.title)}</div>
+            <div class="biz-mini-slug">${escapeHtml((ad.body || '').substring(0, 60))}${(ad.body||'').length>60?'…':''}</div>
+          </div>
+        </div>
+      </td>
+      <td style="font-size:.82rem;color:#6b7280">${escapeHtml(ad.cta_text || '—')}</td>
+      <td style="text-align:center">
+        <input type="number" class="rank-input ad-sort" value="${ad.sort_order || 0}" />
+      </td>
+      <td style="text-align:center">
+        <span class="tag ${ad.active ? 'active' : 'inactive'}">${ad.active ? 'Active' : 'Inactive'}</span>
+      </td>
+      <td style="text-align:right;white-space:nowrap">
+        <button class="mini-btn ${ad.active ? 'toggle-off' : 'toggle-on'}" data-action="toggle">
+          ${ad.active ? 'Deactivate' : 'Activate'}
+        </button>
+        <button class="mini-btn edit" data-action="edit">Edit</button>
+        <button class="mini-btn danger" data-action="delete">Delete</button>
+      </td>
+    </tr>
+  `).join('');
+
+  tbody.querySelectorAll('tr').forEach(row => {
+    const id = row.dataset.id;
+    const ad = list.find(x => x.id === id);
+
+    row.querySelector('.ad-sort').addEventListener('change', async (e) => {
+      const sort_order = parseInt(e.target.value, 10) || 0;
+      const { error } = await supabase.from('site_ads').update({ sort_order }).eq('id', id);
+      if(error) return showToast('Failed: ' + error.message, 'error');
+      showToast('Order updated', 'success');
+    });
+
+    row.querySelectorAll('.mini-btn').forEach(btn => {
+      btn.addEventListener('click', () => handleAdAction(btn.dataset.action, ad));
+    });
+  });
+}
+
+async function handleAdAction(action, ad){
+  if(action === 'edit') return openAdForm(ad);
+
+  if(action === 'toggle'){
+    const { error } = await supabase.from('site_ads').update({ active: !ad.active }).eq('id', ad.id);
+    if(error) return showToast('Failed: ' + error.message, 'error');
+    showToast(ad.active ? 'Deactivated' : 'Activated', 'success');
+    await loadAds();
+    return;
+  }
+
+  if(action === 'delete'){
+    if(!confirm(`Delete ad "${ad.title}"?`)) return;
+    const { error } = await supabase.from('site_ads').delete().eq('id', ad.id);
+    if(error) return showToast('Delete failed: ' + error.message, 'error');
+    showToast('🗑 Ad deleted', 'success');
+    await loadAds();
+  }
+}
+
+// ---------- Ad form ----------
+function openAdForm(ad){
+  $('adForm').classList.remove('hidden');
+  $('adFormTitle').textContent = ad ? 'Edit Ad' : 'New Ad';
+  $('adId').value = ad?.id || '';
+  $('adTitle').value = ad?.title || '';
+  $('adBody').value = ad?.body || '';
+  $('adImage').value = ad?.image_url || '';
+  $('adCtaText').value = ad?.cta_text || 'Learn more';
+  $('adCtaUrl').value = ad?.cta_url || '';
+  $('adSort').value = ad?.sort_order ?? 0;
+  $('adActive').checked = ad ? ad.active : true;
+  updateAdPreview();
+  $('adForm').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function closeAdForm(){
+  $('adForm').classList.add('hidden');
+  ['adId','adTitle','adBody','adImage','adCtaUrl'].forEach(id => $(id).value = '');
+  $('adCtaText').value = 'Learn more';
+  $('adSort').value = 0;
+  $('adActive').checked = true;
+}
+
+function updateAdPreview(){
+  const img = $('adImage').value.trim();
+  const title = $('adTitle').value.trim();
+  const body = $('adBody').value.trim();
+  const cta = $('adCtaText').value.trim() || 'Learn more';
+
+  const preview = $('adpImg');
+  if(img){
+    preview.outerHTML = `<img class="adp-img" id="adpImg" src="${escapeAttr(img)}" alt="" onerror="this.outerHTML='<div class=&quot;adp-img&quot; id=&quot;adpImg&quot;>📢</div>'" />`;
+  } else {
+    const el = document.getElementById('adpImg');
+    if(el && el.tagName !== 'DIV'){
+      el.outerHTML = '<div class="adp-img" id="adpImg">📢</div>';
+    }
+  }
+  $('adpTitle').textContent = title || 'Your Ad Title';
+  $('adpBody').textContent = body || 'Your ad description will appear here.';
+  $('adpCta').textContent = cta + ' →';
+}
+
+['adTitle','adBody','adImage','adCtaText'].forEach(id => {
+  $(id).addEventListener('input', updateAdPreview);
+});
+
+$('newAdBtn').addEventListener('click', () => openAdForm(null));
+$('cancelAdBtn').addEventListener('click', closeAdForm);
+
+$('saveAdBtn').addEventListener('click', async () => {
+  const btn = $('saveAdBtn');
+  const id = $('adId').value;
+  const title = $('adTitle').value.trim();
+  if(!title) return showToast('Title is required', 'error');
+
+  const payload = {
+    title,
+    body: $('adBody').value.trim() || null,
+    image_url: $('adImage').value.trim() || null,
+    cta_text: $('adCtaText').value.trim() || 'Learn more',
+    cta_url: $('adCtaUrl').value.trim() || null,
+    sort_order: parseInt($('adSort').value, 10) || 0,
+    active: $('adActive').checked
+  };
+
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+
+  let error;
+  if(id){
+    ({ error } = await supabase.from('site_ads').update(payload).eq('id', id));
+  } else {
+    ({ error } = await supabase.from('site_ads').insert(payload));
+  }
+
+  btn.disabled = false;
+  btn.textContent = '💾 Save Ad';
+
+  if(error) return showToast('Save failed: ' + error.message, 'error');
+  showToast(id ? '✅ Ad updated' : '✅ Ad created', 'success');
+  closeAdForm();
+  await loadAds();
+});
 </script>
 </body>
 </html>
