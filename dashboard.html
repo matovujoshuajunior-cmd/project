@@ -18,9 +18,10 @@
     .btn-danger { background: #ef4444; color: white; }
     .btn-ghost { background: transparent; color: #6366f1; border: 1.5px solid #6366f1; }
     .btn-ghost:hover { background: #6366f1; color: white; }
+    .btn-full { width: 100%; margin-top: 14px; padding: 13px; font-size: 0.92rem; }
     .card { background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); margin-bottom: 24px; }
-    .card h2 { font-size: 1.15rem; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb; }
-    .card .hint { font-size: 0.82rem; color: #9ca3af; margin: -8px 0 18px; line-height: 1.55; }
+    .card h2 { font-size: 1.15rem; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb; }
+    .card .hint { font-size: 0.82rem; color: #9ca3af; margin: 12px 0 18px; line-height: 1.55; }
     .form-group { margin-bottom: 18px; }
     .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: #374151; }
     .form-group input, .form-group textarea {
@@ -30,6 +31,7 @@
     .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #6366f1; background: white; }
     .form-group textarea { resize: vertical; min-height: 90px; }
 
+    /* auth */
     .auth-tabs { display: flex; gap: 8px; margin-bottom: 24px; }
     .auth-tab {
       flex: 1; padding: 12px; text-align: center; border-radius: 10px; cursor: pointer;
@@ -37,89 +39,101 @@
       border: none; transition: all 0.2s;
     }
     .auth-tab.active { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
-
-    /* LINK ROWS */
-    .link-row {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      padding: 16px; background: #f9fafb;
-      border-radius: 12px; margin-bottom: 12px;
-      border: 1.5px solid #e5e7eb;
-      transition: border-color 0.2s;
-    }
-    .link-row.editing { border-color: #6366f1; background: #eef2ff; }
-    .link-row-header {
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 10px; flex-wrap: wrap;
-    }
-    .link-row-title {
-      font-size: 0.9rem; font-weight: 700; color: #374151;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .status-pill {
-      font-size: 0.65rem; font-weight: 700;
-      padding: 3px 9px; border-radius: 10px;
-      text-transform: uppercase; letter-spacing: 0.4px;
-    }
-    .status-pill.saved { background: #d1fae5; color: #065f46; }
-    .status-pill.new   { background: #fef3c7; color: #92400e; }
-
-    .link-view {
-      font-size: 0.88rem; color: #4b5563; line-height: 1.55;
-      display: flex; flex-direction: column; gap: 4px;
-    }
-    .link-view .url-display {
-      font-family: ui-monospace, monospace;
-      font-size: 0.8rem; color: #6366f1;
-      word-break: break-all;
-    }
-
-    .link-edit { display: none; flex-direction: column; gap: 12px; }
-    .link-row.editing .link-edit { display: flex; }
-    .link-row.editing .link-view { display: none; }
-
-    .link-edit .form-group { margin-bottom: 0; }
-    .link-edit .form-group label { font-size: 0.75rem; }
-
-    .link-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-    .icon-btn {
-      padding: 9px 14px; border: none; border-radius: 9px;
-      font-size: 0.8rem; font-weight: 700; cursor: pointer;
-      transition: transform 0.15s, background 0.15s;
-      display: inline-flex; align-items: center; gap: 5px;
-      white-space: nowrap;
-    }
-    .icon-btn:hover:not(:disabled) { transform: translateY(-1px); }
-    .icon-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .icon-btn.view { background: #e5e7eb; color: #374151; }
-    .icon-btn.edit { background: #fef3c7; color: #92400e; }
-    .icon-btn.save { background: #6366f1; color: white; }
-    .icon-btn.cancel { background: #e5e7eb; color: #374151; }
-    .icon-btn.danger { background: #fee2e2; color: #dc2626; }
-    .icon-btn.danger:hover { background: #fecaca; }
-    .icon-btn.open { background: #dbeafe; color: #1d4ed8; }
-
-    .toast {
-      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-      background: #1a1a2e; color: white; padding: 12px 24px; border-radius: 10px;
-      font-size: 0.9rem; opacity: 0; transition: opacity 0.3s; pointer-events: none;
-      z-index: 999; max-width: 90vw; text-align: center; line-height: 1.5;
-    }
-    .toast.show { opacity: 1; }
-    .toast.error { background: #dc2626; }
-    .toast.success { background: #16a34a; }
-    .toast.warn { background: #d97706; }
-
-    .empty-state { text-align: center; padding: 40px 20px; color: #9ca3af; font-size: 0.9rem; }
-    .logo-preview { width: 64px; height: 64px; border-radius: 12px; object-fit: cover; margin-top: 8px; border: 2px solid #e5e7eb; }
     .help-panel {
       background: #fef2f2; border: 1px solid #fecaca; color: #7f1d1d;
       padding: 16px 18px; border-radius: 10px; font-size: 0.87rem;
       margin-bottom: 18px; line-height: 1.6;
     }
     .help-panel strong { display: block; margin-bottom: 6px; }
-    .help-panel ol { padding-left: 20px; margin-top: 8px; }
+
+    /* LINKS HEADER */
+    .links-head {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 14px; border-bottom: 1px solid #e5e7eb; margin-bottom: 6px;
+    }
+    .links-head h2 { border: none; padding: 0; }
+    .links-count {
+      font-size: 0.75rem; font-weight: 700;
+      padding: 4px 12px; border-radius: 20px;
+      background: #eef2ff; color: #4f46e5;
+    }
+    .links-count.empty { background: #f3f4f6; color: #9ca3af; }
+
+    /* LINK ITEM */
+    .link-item {
+      display: grid;
+      grid-template-columns: 40px 1fr auto;
+      gap: 14px; align-items: center;
+      padding: 16px 4px;
+      border-bottom: 1px solid #f1f5f9;
+      transition: background 0.15s;
+    }
+    .link-item:last-child { border-bottom: none; }
+    .link-item.editing {
+      background: #eef2ff;
+      border-radius: 12px;
+      padding: 16px;
+      border-bottom: none;
+      margin: 6px 0;
+    }
+    .link-icon-box {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: #eef2ff; color: #4f46e5;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.15rem;
+    }
+    .link-body { min-width: 0; }
+    .link-label { font-size: 0.95rem; font-weight: 700; color: #1a1a2e; }
+    .link-url {
+      font-size: 0.8rem; color: #6366f1; margin-top: 2px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .link-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+    .mini-btn {
+      padding: 8px 12px; border: none; border-radius: 8px;
+      font-size: 0.78rem; font-weight: 700; cursor: pointer;
+      transition: transform 0.15s;
+      display: inline-flex; align-items: center; gap: 4px;
+      white-space: nowrap;
+    }
+    .mini-btn:hover { transform: translateY(-1px); }
+    .mini-btn.open   { background: #dbeafe; color: #1d4ed8; }
+    .mini-btn.edit   { background: #fef3c7; color: #92400e; }
+    .mini-btn.save   { background: #6366f1; color: white; }
+    .mini-btn.cancel { background: #e5e7eb; color: #374151; }
+    .mini-btn.delete { background: #fee2e2; color: #dc2626; }
+    .mini-btn.delete:hover { background: #fecaca; }
+
+    .link-edit-grid {
+      grid-column: 1 / -1;
+      display: grid; grid-template-columns: 1fr 2fr; gap: 12px;
+      margin-bottom: 12px;
+    }
+    .link-edit-grid .form-group { margin-bottom: 0; }
+    .link-edit-grid .form-group label { font-size: 0.72rem; }
+    .link-edit-grid input {
+      padding: 9px 12px; font-size: 0.88rem;
+    }
+
+    .empty-state { text-align: center; padding: 36px 20px; color: #9ca3af; font-size: 0.9rem; }
+    .logo-preview { width: 64px; height: 64px; border-radius: 12px; object-fit: cover; margin-top: 8px; border: 2px solid #e5e7eb; }
+
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: #1a1a2e; color: white; padding: 12px 24px; border-radius: 10px;
+      font-size: 0.9rem; opacity: 0; transition: opacity 0.3s; pointer-events: none;
+      z-index: 999; max-width: 90vw; text-align: center;
+    }
+    .toast.show { opacity: 1; }
+    .toast.error { background: #dc2626; }
+    .toast.success { background: #16a34a; }
+    .toast.warn { background: #d97706; }
+
+    @media (max-width: 520px) {
+      .link-item { grid-template-columns: 40px 1fr; }
+      .link-actions { grid-column: 2; margin-top: 4px; }
+      .link-edit-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -139,9 +153,7 @@
 
       <div id="helpPanel" class="help-panel hidden">
         <strong>⚠️ That email already has an account</strong>
-        If you're sure you want a fresh start, delete the old user from the
-        Supabase dashboard (Authentication → Users) and try signing up again.
-        Or, if you remember your old password, switch to <b>Log In</b>.
+        Delete the old user from the Supabase dashboard (Authentication → Users) and try again, or log in with your old password.
       </div>
 
       <div id="loginForm">
@@ -180,7 +192,7 @@
   <div id="dashboardSection" class="hidden">
     <div class="card">
       <h2>📋 Business Information</h2>
-      <div class="form-group">
+      <div class="form-group" style="margin-top:16px;">
         <label>Business Name</label>
         <input type="text" id="bizName" />
       </div>
@@ -209,16 +221,17 @@
     </div>
 
     <div class="card">
-      <h2>🔗 Business Links</h2>
+      <div class="links-head">
+        <h2>🔗 Your Active Links</h2>
+        <span id="linksCount" class="links-count empty">0 active</span>
+      </div>
       <p class="hint">
-        Add your website, YouTube, Instagram, WhatsApp etc. Click <b>✏️ Edit</b> to change a link,
-        <b>💾 Save</b> to store changes, <b>🗑 Delete</b> to remove it.
-        If you type <code>example.com</code> without <code>https://</code>, we'll add it automatically.
+        These links appear on your public profile. Visitors click them to reach your site, YouTube, socials, etc.
       </p>
       <div id="linksContainer">
-        <div class="empty-state">No links yet. Click "Add New Link" below.</div>
+        <div class="empty-state">No links yet. Add your first one below.</div>
       </div>
-      <button class="btn btn-ghost" id="addLinkBtn" style="margin-top:16px;">+ Add New Link</button>
+      <button class="btn btn-ghost btn-full" id="addLinkBtn">+ Add New Link</button>
     </div>
   </div>
 </div>
@@ -226,18 +239,22 @@
 <div class="toast" id="toast"></div>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=6';
+import { supabase } from './supabase-client.js?v=7';
 
 const authSection = document.getElementById('authSection');
 const dashboardSection = document.getElementById('dashboardSection');
 const logoutBtn = document.getElementById('logoutBtn');
 const toastEl = document.getElementById('toast');
 const helpPanel = document.getElementById('helpPanel');
+const linksContainer = document.getElementById('linksContainer');
+const linksCount = document.getElementById('linksCount');
 
 let currentUser = null;
 
-// ---------- Helpers ----------
-function showToast(msg, type = 'info', duration = 3500) {
+// =========================================================
+// HELPERS
+// =========================================================
+function showToast(msg, type = 'info', duration = 3200) {
   toastEl.textContent = msg;
   toastEl.className = 'toast show ' + (type === 'error' ? 'error' : type === 'success' ? 'success' : type === 'warn' ? 'warn' : '');
   clearTimeout(showToast._t);
@@ -269,18 +286,34 @@ function displayUrl(url) {
   return String(url).replace(/^https?:\/\//i, '').replace(/\/$/, '');
 }
 
-function escapeHtml(str) {
-  if (str === null || str === undefined) return '';
-  return String(str)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+function escapeHtml(s) {
+  if (s === null || s === undefined) return '';
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
-function escapeAttr(str) {
-  if (str === null || str === undefined) return '';
-  return String(str).replace(/"/g, '&quot;').replace(/</g, '&lt;');
+function escapeAttr(s) {
+  if (s === null || s === undefined) return '';
+  return String(s).replace(/"/g, '&quot;').replace(/</g, '&lt;');
 }
 
-// ---------- Auth tabs ----------
+function linkIcon(label) {
+  const l = (label || '').toLowerCase();
+  if (l.includes('website') || l.includes('site')) return '🌐';
+  if (l.includes('instagram')) return '📸';
+  if (l.includes('facebook'))  return '📘';
+  if (l.includes('twitter') || l === 'x') return '🐦';
+  if (l.includes('tiktok'))    return '🎵';
+  if (l.includes('linkedin'))  return '💼';
+  if (l.includes('whatsapp'))  return '💬';
+  if (l.includes('youtube'))   return '▶️';
+  if (l.includes('email') || l.includes('mail')) return '✉️';
+  if (l.includes('phone') || l.includes('call')) return '📞';
+  if (l.includes('booking'))   return '📅';
+  return '🔗';
+}
+
+// =========================================================
+// AUTH (unchanged)
+// =========================================================
 document.querySelectorAll('.auth-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
@@ -292,52 +325,41 @@ document.querySelectorAll('.auth-tab').forEach(tab => {
   });
 });
 
-// ---------- Sign Up ----------
 document.getElementById('signupBtn').addEventListener('click', async () => {
   const btn = document.getElementById('signupBtn');
   const businessName = document.getElementById('signupBusinessName').value.trim();
   const email = document.getElementById('signupEmail').value.trim().toLowerCase();
   const password = document.getElementById('signupPassword').value;
-
   if (!businessName || !email || !password) return showToast('Please fill all fields', 'error');
   if (password.length < 6) return showToast('Password must be at least 6 characters', 'error');
-
   setLoading(btn, true, 'Creating account…');
   const { data, error } = await supabase.auth.signUp({
     email, password, options: { data: { business_name: businessName } }
   });
   setLoading(btn, false);
-
-  if (error) {
-    if (error.message.toLowerCase().includes('already')) return showToast('That email is already registered.', 'error');
-    return showToast('Signup failed: ' + error.message, 'error');
-  }
+  if (error) return showToast('Signup failed: ' + error.message, 'error');
   if (data?.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
     helpPanel.classList.remove('hidden');
     return showToast('That email already has an account.', 'warn', 6000);
   }
-  if (data?.session) return showToast('✅ Account created! Logging you in…', 'success');
+  if (data?.session) return showToast('✅ Account created!', 'success');
   if (data?.user) {
-    showToast('📧 Account created. Check your email to confirm.', 'success', 6000);
+    showToast('📧 Account created. Check your email.', 'success', 6000);
     document.querySelector('.auth-tab[data-tab="login"]').click();
     document.getElementById('loginEmail').value = email;
   }
 });
 
-// ---------- Log In ----------
 document.getElementById('loginBtn').addEventListener('click', async () => {
   const btn = document.getElementById('loginBtn');
   const email = document.getElementById('loginEmail').value.trim().toLowerCase();
   const password = document.getElementById('loginPassword').value;
   if (!email || !password) return showToast('Please fill all fields', 'error');
-
   setLoading(btn, true, 'Logging in…');
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   setLoading(btn, false);
-
   if (error) {
-    const msg = (error.message || '').toLowerCase();
-    if (msg.includes('invalid login credentials')) {
+    if ((error.message || '').toLowerCase().includes('invalid')) {
       helpPanel.classList.remove('hidden');
       return showToast('Wrong email or password.', 'error', 5000);
     }
@@ -382,10 +404,15 @@ supabase.auth.onAuthStateChange(async (event, session) => {
   }
 });
 
+// =========================================================
+// PROFILE
+// =========================================================
 async function loadProfile() {
   if (!currentUser) return;
 
-  const { data: profile } = await supabase.from('profiles').select('*').eq('id', currentUser.id).maybeSingle();
+  const { data: profile } = await supabase
+    .from('profiles').select('*').eq('id', currentUser.id).maybeSingle();
+
   if (!profile) {
     const fallbackName = currentUser.user_metadata?.business_name || 'My Business';
     await supabase.from('profiles').insert({ id: currentUser.id, business_name: fallbackName });
@@ -400,11 +427,15 @@ async function loadProfile() {
     updateLogoPreview(profile.logo_url);
   }
 
+  await loadLinks();
+}
+
+async function loadLinks() {
   const { data: links, error } = await supabase
     .from('business_links').select('*')
     .eq('profile_id', currentUser.id).order('sort_order');
 
-  console.log('Loaded links:', { links, error });
+  if (error) console.error('Load links error:', error);
   renderLinks(links || []);
 }
 
@@ -434,168 +465,191 @@ document.getElementById('saveProfileBtn').addEventListener('click', async () => 
 });
 
 // =========================================================
-// LINKS — full CRUD per row
+// LINKS CRUD
 // =========================================================
 function renderLinks(links) {
-  const container = document.getElementById('linksContainer');
+  // Update count badge
+  if (links.length === 0) {
+    linksCount.textContent = '0 active';
+    linksCount.classList.add('empty');
+  } else {
+    linksCount.textContent = links.length + ' active';
+    linksCount.classList.remove('empty');
+  }
+
   if (!links.length) {
-    container.innerHTML = '<div class="empty-state">No links yet. Click "Add New Link" below.</div>';
+    linksContainer.innerHTML = '<div class="empty-state">No links yet. Add your first one below.</div>';
     return;
   }
-  container.innerHTML = '';
+
+  linksContainer.innerHTML = '';
   links.forEach(link => {
-    container.appendChild(buildLinkRow(link.id, link.label, link.url));
+    linksContainer.appendChild(buildViewRow(link));
   });
 }
 
-function buildLinkRow(id, label, url) {
+// View mode row
+function buildViewRow(link) {
   const row = document.createElement('div');
-  row.className = 'link-row';
-  row.dataset.id = id || '';
-
-  const statusText = id ? 'saved' : 'new';
-  const statusCls = id ? 'saved' : 'new';
-  const displayURL = displayUrl(normalizeUrl(url));
+  row.className = 'link-item';
+  row.dataset.id = link.id;
 
   row.innerHTML = `
-    <div class="link-row-header">
-      <div class="link-row-title">
-        🔗 ${escapeHtml(label || 'New link')}
-        <span class="status-pill ${statusCls}">${statusText}</span>
-      </div>
+    <div class="link-icon-box">${linkIcon(link.label)}</div>
+    <div class="link-body">
+      <div class="link-label">${escapeHtml(link.label)}</div>
+      <div class="link-url">${escapeHtml(displayUrl(link.url))}</div>
     </div>
-
-    <div class="link-view">
-      <div><b>Label:</b> ${escapeHtml(label || '(not set)')}</div>
-      <div><b>URL:</b> <span class="url-display">${escapeHtml(displayURL || '(not set)')}</span></div>
+    <div class="link-actions">
+      <button class="mini-btn open"   data-action="open">🔗 Open</button>
+      <button class="mini-btn edit"   data-action="edit">✏️ Edit</button>
+      <button class="mini-btn delete" data-action="delete">🗑 Delete</button>
     </div>
-
-    <div class="link-edit">
-      <div class="form-group">
-        <label>Label</label>
-        <input type="text" class="edit-label" value="${escapeAttr(label || '')}" placeholder="e.g. Website, YouTube" />
-      </div>
-      <div class="form-group">
-        <label>URL</label>
-        <input type="text" class="edit-url" value="${escapeAttr(url || '')}" placeholder="example.com or youtube.com/@channel" />
-      </div>
-    </div>
-
-    <div class="link-actions"></div>
   `;
 
-  const actions = row.querySelector('.link-actions');
-  if (!id) {
-    // New row: only Save and Cancel
-    actions.appendChild(makeButton('save',   '💾 Save',   'save'));
-    actions.appendChild(makeButton('cancel', '✕ Cancel', 'cancel'));
-    row.classList.add('editing');
-  } else {
-    // Saved row: View mode — Open, Edit, Delete
-    actions.appendChild(makeButton('open',   '🔗 Open',   'open'));
-    actions.appendChild(makeButton('edit',   '✏️ Edit',   'edit'));
-    actions.appendChild(makeButton('delete', '🗑 Delete', 'danger'));
-  }
-
-  // Auto-normalize URL on blur
-  const urlInput = row.querySelector('.edit-url');
-  if (urlInput) {
-    urlInput.addEventListener('blur', () => {
-      if (urlInput.value.trim()) urlInput.value = normalizeUrl(urlInput.value);
-    });
-  }
+  row.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => handleAction(row, btn.dataset.action, link));
+  });
 
   return row;
 }
 
-function makeButton(action, label, styleClass) {
-  const b = document.createElement('button');
-  b.type = 'button';
-  b.className = 'icon-btn ' + styleClass;
-  b.textContent = label;
-  b.dataset.action = action;
-  b.addEventListener('click', () => handleLinkAction(b.closest('.link-row'), action));
-  return b;
+// Edit mode row
+function buildEditRow(id, label, url, isNew) {
+  const row = document.createElement('div');
+  row.className = 'link-item editing';
+  row.dataset.id = id || '';
+  row.dataset.isNew = isNew ? '1' : '';
+
+  row.innerHTML = `
+    <div class="link-edit-grid">
+      <div class="form-group">
+        <label>Label</label>
+        <input type="text" class="edit-label" value="${escapeAttr(label)}" placeholder="e.g. Website" />
+      </div>
+      <div class="form-group">
+        <label>URL (https:// added automatically)</label>
+        <input type="text" class="edit-url" value="${escapeAttr(url)}" placeholder="example.com" />
+      </div>
+    </div>
+    <div class="link-actions" style="grid-column: 1 / -1;">
+      <button class="mini-btn save"   data-action="save">💾 Save</button>
+      <button class="mini-btn cancel" data-action="cancel">✕ Cancel</button>
+    </div>
+  `;
+
+  const urlInput = row.querySelector('.edit-url');
+  urlInput.addEventListener('blur', () => {
+    if (urlInput.value.trim()) urlInput.value = normalizeUrl(urlInput.value);
+  });
+
+  row.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => handleAction(row, btn.dataset.action));
+  });
+
+  return row;
 }
 
-async function handleLinkAction(row, action) {
+async function handleAction(row, action, originalLink) {
   const id = row.dataset.id || '';
-  const labelInput = row.querySelector('.edit-label');
-  const urlInput = row.querySelector('.edit-url');
-  const label = labelInput?.value.trim() || '';
-  const rawUrl = urlInput?.value.trim() || '';
-  const url = normalizeUrl(rawUrl);
+  const isNew = row.dataset.isNew === '1';
 
+  // ---- OPEN (only from view mode) ----
   if (action === 'open') {
-    // In view mode, url comes from the display; fall back to input
-    const viewUrl = row.querySelector('.url-display')?.textContent || '';
-    const finalUrl = normalizeUrl(viewUrl);
-    if (!finalUrl) return showToast('No URL to open', 'error');
-    window.open(finalUrl, '_blank', 'noopener');
+    const url = normalizeUrl(originalLink?.url || '');
+    if (!url) return showToast('No URL to open', 'error');
+    window.open(url, '_blank', 'noopener');
     return;
   }
 
+  // ---- EDIT (view → edit mode) ----
   if (action === 'edit') {
-    row.classList.add('editing');
-    const actions = row.querySelector('.link-actions');
-    actions.innerHTML = '';
-    actions.appendChild(makeButton('save',   '💾 Save',   'save'));
-    actions.appendChild(makeButton('cancel', '✕ Cancel', 'cancel'));
+    const editRow = buildEditRow(originalLink.id, originalLink.label, originalLink.url, false);
+    row.replaceWith(editRow);
+    editRow.querySelector('.edit-label').focus();
     return;
   }
 
+  // ---- CANCEL (edit → view, or discard new) ----
   if (action === 'cancel') {
-    if (!id) {
+    if (isNew) {
       row.remove();
-      if (!document.querySelector('.link-row')) {
-        document.getElementById('linksContainer').innerHTML =
-          '<div class="empty-state">No links yet. Click "Add New Link" below.</div>';
+      if (!document.querySelector('.link-item')) {
+        linksContainer.innerHTML = '<div class="empty-state">No links yet. Add your first one below.</div>';
+        linksCount.textContent = '0 active';
+        linksCount.classList.add('empty');
       }
       return;
     }
-    // Restore original data by reloading that row from server
+    // Reload from server to restore original values
     const { data } = await supabase.from('business_links').select('*').eq('id', id).single();
-    if (data) {
-      const fresh = buildLinkRow(data.id, data.label, data.url);
-      row.replaceWith(fresh);
-    }
+    if (data) row.replaceWith(buildViewRow(data));
     return;
   }
 
+  // ---- SAVE ----
   if (action === 'save') {
-    if (!label || !url) return showToast('Both label and URL are required', 'error');
-    const payload = { profile_id: currentUser.id, label, url };
+    const label = row.querySelector('.edit-label').value.trim();
+    const rawUrl = row.querySelector('.edit-url').value.trim();
+    const url = normalizeUrl(rawUrl);
+
+    if (!label || !url) return showToast('Label and URL are both required', 'error');
+
+    const btn = row.querySelector('.mini-btn.save');
+    setLoading(btn, true, 'Saving…');
 
     if (id) {
-      const { error } = await supabase.from('business_links').update(payload).eq('id', id);
-      if (error) { console.error(error); return showToast('Save failed: ' + error.message, 'error'); }
+      const { error } = await supabase
+        .from('business_links').update({ label, url }).eq('id', id);
+      if (error) {
+        setLoading(btn, false);
+        console.error(error);
+        return showToast('Save failed: ' + error.message, 'error');
+      }
       showToast('✅ Link updated', 'success');
-      await loadProfile();   // re-render with fresh data
     } else {
-      const { data, error } = await supabase.from('business_links').insert(payload).select().single();
-      if (error) { console.error(error); return showToast('Save failed: ' + error.message, 'error'); }
+      const { error } = await supabase
+        .from('business_links').insert({ profile_id: currentUser.id, label, url });
+      if (error) {
+        setLoading(btn, false);
+        console.error(error);
+        return showToast('Save failed: ' + error.message, 'error');
+      }
       showToast('✅ Link added', 'success');
-      await loadProfile();
     }
+    await loadLinks();
     return;
   }
 
+  // ---- DELETE ----
   if (action === 'delete') {
-    if (!id) { row.remove(); return; }
-    if (!confirm('Delete this link permanently?')) return;
+    if (!confirm(`Delete "${originalLink.label}" permanently?`)) return;
+    const btn = row.querySelector('.mini-btn.delete');
+    setLoading(btn, true, 'Deleting…');
     const { error } = await supabase.from('business_links').delete().eq('id', id);
-    if (error) { console.error(error); return showToast('Delete failed: ' + error.message, 'error'); }
+    if (error) {
+      setLoading(btn, false);
+      console.error(error);
+      return showToast('Delete failed: ' + error.message, 'error');
+    }
     showToast('🗑 Link deleted', 'success');
-    await loadProfile();
+    await loadLinks();
     return;
   }
 }
 
 document.getElementById('addLinkBtn').addEventListener('click', () => {
-  const container = document.getElementById('linksContainer');
-  const empty = container.querySelector('.empty-state');
+  // Remove empty state
+  const empty = linksContainer.querySelector('.empty-state');
   if (empty) empty.remove();
-  container.appendChild(buildLinkRow(null, '', ''));
+
+  // Prepend new row so it's visible
+  const newRow = buildEditRow(null, '', '', true);
+  linksContainer.prepend(newRow);
+  newRow.querySelector('.edit-label').focus();
+
+  // Update count badge to show there's an unsaved change pending
+  // (leave the saved count — it will update after save)
 });
 </script>
 </body>
