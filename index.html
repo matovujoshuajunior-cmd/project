@@ -1,382 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Cache-Control" content="no-cache" />
-  <title>Find a Service Provider</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    .hidden { display: none !important; }
-    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f8fafc; color: #1a1a2e; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<title>Find a Service Provider</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+.hidden{display:none!important}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f8fafc;color:#1a1a2e}
 
-    /* HERO */
-    .hero {
-      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
-      padding: 64px 24px 96px; text-align: center; color: white;
-    }
-    .hero h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 800; margin-bottom: 12px; }
-    .hero p { font-size: 1.05rem; opacity: 0.9; max-width: 520px; margin: 0 auto 28px; }
-    .search-box {
-      display: flex; max-width: 620px; margin: 0 auto;
-      background: white; border-radius: 14px; overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-    }
-    .search-box input { flex: 1; padding: 16px 20px; border: none; font-size: 0.95rem; outline: none; }
-    .search-box select {
-      border: none; outline: none; background: #f3f4f6;
-      padding: 0 14px; font-size: 0.88rem; font-weight: 600;
-      color: #374151; cursor: pointer;
-      border-right: 1px solid #e5e7eb;
-    }
-    .search-box button {
-      padding: 16px 28px; border: none; background: #1a1a2e; color: white;
-      font-weight: 600; cursor: pointer; font-size: 0.95rem;
-    }
-    .search-box button:hover { background: #2d2d4e; }
+.hero{background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 50%,#a855f7 100%);padding:64px 24px 96px;text-align:center;color:#fff}
+.hero h1{font-size:clamp(1.8rem,5vw,2.8rem);font-weight:800;margin-bottom:12px}
+.hero p{font-size:1.05rem;opacity:.9;max-width:520px;margin:0 auto 28px}
+.search-box{display:flex;max-width:620px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.15)}
+.search-box input{flex:1;padding:16px 20px;border:none;font-size:.95rem;outline:none}
+.search-box select{border:none;outline:none;background:#f3f4f6;padding:0 14px;font-size:.88rem;font-weight:600;color:#374151;cursor:pointer;border-right:1px solid #e5e7eb}
+.search-box button{padding:16px 28px;border:none;background:#1a1a2e;color:#fff;font-weight:600;cursor:pointer;font-size:.95rem}
+.search-box button:hover{background:#2d2d4e}
 
-    /* CTA */
-    .cta-banner {
-      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-      color: #1a1a2e; padding: 22px 28px;
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 20px; flex-wrap: wrap;
-      max-width: 1200px; margin: -56px auto 32px;
-      border-radius: 18px;
-      box-shadow: 0 12px 32px rgba(245,158,11,0.35);
-      position: relative; z-index: 2;
-      opacity: 0; transform: translateY(-12px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .cta-banner.visible { opacity: 1; transform: translateY(0); }
-    .cta-banner .cta-text { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 220px; }
-    .cta-banner .cta-icon { font-size: 2rem; }
-    .cta-banner strong { display: block; font-size: 1.1rem; font-weight: 800; margin-bottom: 2px; }
-    .cta-banner .cta-sub { opacity: 0.75; font-size: 0.85rem; }
-    .cta-banner .cta-btn {
-      background: #1a1a2e; color: white; text-decoration: none;
-      padding: 13px 26px; border-radius: 12px;
-      font-weight: 700; font-size: 0.9rem; white-space: nowrap;
-      transition: transform 0.15s;
-    }
-    .cta-banner .cta-btn:hover { transform: translateY(-2px); }
-    .cta-close {
-      position: absolute; top: 8px; right: 10px;
-      background: rgba(26,26,46,0.15); border: none;
-      width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
-      color: #1a1a2e; font-size: 0.85rem; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .cta-close:hover { background: rgba(26,26,46,0.3); }
+.cta-banner{background:linear-gradient(135deg,#fbbf24 0%,#f59e0b 100%);color:#1a1a2e;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;max-width:1200px;margin:-56px auto 32px;border-radius:18px;box-shadow:0 12px 32px rgba(245,158,11,.35);position:relative;z-index:2;opacity:0;transform:translateY(-12px);transition:opacity .5s,transform .5s}
+.cta-banner.visible{opacity:1;transform:translateY(0)}
+.cta-banner .cta-text{display:flex;align-items:center;gap:14px;flex:1;min-width:220px}
+.cta-banner .cta-icon{font-size:2rem}
+.cta-banner strong{display:block;font-size:1.1rem;font-weight:800;margin-bottom:2px}
+.cta-banner .cta-sub{opacity:.75;font-size:.85rem}
+.cta-banner .cta-btn{background:#1a1a2e;color:#fff;text-decoration:none;padding:13px 26px;border-radius:12px;font-weight:700;font-size:.9rem;white-space:nowrap}
+.cta-banner .cta-btn:hover{transform:translateY(-2px)}
+.cta-close{position:absolute;top:8px;right:10px;background:rgba(26,26,46,.15);border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;color:#1a1a2e;font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.cta-close:hover{background:rgba(26,26,46,.3)}
 
-    /* MAIN LAYOUT: 1/4 ads + 3/4 list */
-    .layout {
-      max-width: 1200px; margin: 0 auto 60px; padding: 0 24px;
-      display: grid;
-      grid-template-columns: 1fr 3fr;
-      gap: 24px;
-      align-items: start;
-    }
+.layout{max-width:1200px;margin:0 auto 60px;padding:0 24px;display:grid;grid-template-columns:1fr 3fr;gap:24px;align-items:start}
 
-    /* ADS SIDEBAR */
-    .ads-col {
-      position: sticky; top: 24px;
-      display: flex; flex-direction: column; gap: 16px;
-    }
-    .ads-label {
-      font-size: 0.68rem; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 1px;
-      color: #9ca3af; padding-left: 4px;
-    }
-    .ad-slot {
-      background: white; border-radius: 14px;
-      padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-      border: 1.5px solid #f1f5f9;
-      transition: transform 0.15s, box-shadow 0.15s;
-      display: block; text-decoration: none; color: inherit;
-    }
-    .ad-slot:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(99,102,241,0.12); }
-    .ad-slot .ad-img {
-      width: 100%; height: 140px; border-radius: 10px;
-      object-fit: cover; margin-bottom: 12px;
-      background: linear-gradient(135deg, #eef2ff, #e0e7ff);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2rem;
-    }
-    .ad-slot .ad-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 4px; }
-    .ad-slot .ad-text { font-size: 0.82rem; color: #6b7280; line-height: 1.5; }
-    .ad-slot .ad-cta {
-      display: inline-block; margin-top: 12px;
-      font-size: 0.8rem; font-weight: 700; color: #6366f1;
-    }
+.ads-col{position:sticky;top:24px;display:flex;flex-direction:column;gap:16px}
+.ads-label{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#9ca3af;padding-left:4px}
+.ad-slot{background:#fff;border-radius:14px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,.05);border:1.5px solid #f1f5f9;transition:transform .15s,box-shadow .15s;display:block;text-decoration:none;color:inherit}
+.ad-slot:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(99,102,241,.12)}
+.ad-slot .ad-img{width:100%;height:140px;border-radius:10px;object-fit:cover;margin-bottom:12px;background:linear-gradient(135deg,#eef2ff,#e0e7ff);display:flex;align-items:center;justify-content:center;font-size:2rem}
+.ad-slot .ad-title{font-size:.95rem;font-weight:800;margin-bottom:4px}
+.ad-slot .ad-text{font-size:.82rem;color:#6b7280;line-height:1.5}
+.ad-slot .ad-cta{display:inline-block;margin-top:10px;font-size:.8rem;font-weight:700;color:#6366f1}
 
-    /* LIST COLUMN */
-    .list-col { min-width: 0; }
-
-    .list-header {
-      display: flex; justify-content: space-between; align-items: baseline;
-      margin-bottom: 16px; padding: 0 4px;
-    }
-    .list-header h2 { font-size: 1.05rem; font-weight: 800; }
-    .list-header .count { font-size: 0.8rem; color: #6b7280; font-weight: 600; }
-
-    .biz-list { display: flex; flex-direction: column; gap: 12px; }
-
-    .biz-item {
-      display: flex; align-items: flex-start; gap: 18px;
-      background: white; border-radius: 14px;
-      padding: 20px 22px;
-      text-decoration: none; color: inherit;
-      border: 1.5px solid #f1f5f9;
-      transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
-    }
-    .biz-item:hover {
-      border-color: #c7d2fe;
-      box-shadow: 0 8px 28px rgba(99,102,241,0.10);
-      transform: translateX(4px);
-    }
-    .biz-item.featured { border-left: 4px solid #fbbf24; padding-left: 19px; }
-
-    .biz-logo {
-      width: 60px; height: 60px; border-radius: 13px;
-      object-fit: cover; background: #f1f5f9; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem; font-weight: 800; color: #6366f1;
-    }
-    .biz-body { flex: 1; min-width: 0; }
-    .biz-name-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 5px; }
-    .biz-name { font-size: 1.02rem; font-weight: 700; line-height: 1.3; }
-
-    .badge {
-      display: inline-flex; align-items: center; gap: 3px;
-      padding: 3px 10px; border-radius: 20px;
-      font-size: 0.66rem; font-weight: 800; flex-shrink: 0;
-    }
-    .badge.gold   { background: linear-gradient(135deg,#fbbf24,#f59e0b); color: #1a1a2e; }
-    .badge.silver { background: linear-gradient(135deg,#e5e7eb,#9ca3af); color: #1a1a2e; }
-    .badge.bronze { background: linear-gradient(135deg,#d97706,#92400e); color: white; }
-    .badge.featured { background: linear-gradient(135deg,#6366f1,#8b5cf6); color: white; }
-
-    .biz-subrow {
-      display: flex; gap: 12px; flex-wrap: wrap;
-      font-size: 0.8rem; color: #6b7280; margin-bottom: 8px;
-    }
-    .biz-subrow .industry { color: #4f46e5; font-weight: 600; }
-
-    .biz-desc {
-      font-size: 0.86rem; color: #4b5563; line-height: 1.55;
-      margin-bottom: 10px;
-      display: -webkit-box; -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical; overflow: hidden;
-    }
-    .biz-meta { display: flex; gap: 8px; flex-wrap: wrap; }
-    .meta-chip {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 5px 11px; border-radius: 20px;
-      font-size: 0.74rem; font-weight: 600;
-    }
-    .meta-chip.website { background: #eef2ff; color: #4f46e5; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .meta-chip.links   { background: #f3f4f6; color: #6b7280; }
-
-    .biz-action { align-self: center; flex-shrink: 0; }
-    .btn-view {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: #1a1a2e; color: white;
-      padding: 10px 18px; border-radius: 10px;
-      font-size: 0.82rem; font-weight: 700;
-      white-space: nowrap; transition: background 0.15s;
-    }
-    .biz-item:hover .btn-view { background: #6366f1; }
-
-    .loading, .empty { text-align: center; padding: 80px 20px; color: #9ca3af; font-size: 0.95rem; }
-    .spinner {
-      width: 36px; height: 36px; border-radius: 50%;
-      border: 3px solid #e5e7eb; border-top-color: #6366f1;
-      animation: spin 0.7s linear infinite; margin: 0 auto 16px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .footer { text-align: center; padding: 32px; font-size: 0.8rem; color: #9ca3af; }
-    .footer a { color: #6366f1; text-decoration: none; }
-
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-      .layout { grid-template-columns: 1fr; }
-      .ads-col { position: static; order: 2; flex-direction: row; overflow-x: auto; }
-      .ads-col .ads-label { display: none; }
-      .ad-slot { min-width: 260px; flex-shrink: 0; }
-    }
-    .chips-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.list-col{min-width:0}
+.chips-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
 .chip{padding:8px 16px;border-radius:20px;background:#fff;color:#4b5563;border:1.5px solid #e5e7eb;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap}
 .chip:hover{border-color:#c7d2fe;color:#4f46e5}
 .chip.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-color:transparent}
-    @media (max-width: 640px) {
-      .biz-item { flex-wrap: wrap; padding: 16px; gap: 12px; }
-      .biz-action { width: 100%; }
-      .btn-view { width: 100%; justify-content: center; }
-      .biz-logo { width: 52px; height: 52px; font-size: 1.2rem; }
-      .search-box { flex-direction: column; }
-      .search-box select { border-right: none; border-bottom: 1px solid #e5e7eb; padding: 12px 16px; }
-    }
-  </style>
+
+.list-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;padding:0 4px}
+.list-header h2{font-size:1.05rem;font-weight:800}
+.list-header .count{font-size:.8rem;color:#6b7280;font-weight:600}
+
+.biz-list{display:flex;flex-direction:column;gap:12px}
+.biz-item{display:flex;align-items:flex-start;gap:18px;background:#fff;border-radius:14px;padding:20px 22px;text-decoration:none;color:inherit;border:1.5px solid #f1f5f9;transition:border-color .18s,box-shadow .18s,transform .18s}
+.biz-item:hover{border-color:#c7d2fe;box-shadow:0 8px 28px rgba(99,102,241,.10);transform:translateX(4px)}
+.biz-item.featured{border-left:4px solid #fbbf24;padding-left:19px}
+.biz-logo{width:60px;height:60px;border-radius:13px;object-fit:cover;background:#f1f5f9;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:800;color:#6366f1}
+.biz-body{flex:1;min-width:0}
+.biz-name-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:5px}
+.biz-name{font-size:1.02rem;font-weight:700;line-height:1.3}
+.badge{display:inline-flex;align-items:center;gap:3px;padding:3px 10px;border-radius:20px;font-size:.66rem;font-weight:800;flex-shrink:0}
+.badge.gold{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1a1a2e}
+.badge.silver{background:linear-gradient(135deg,#e5e7eb,#9ca3af);color:#1a1a2e}
+.badge.bronze{background:linear-gradient(135deg,#d97706,#92400e);color:#fff}
+.badge.featured{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
+.biz-subrow{display:flex;gap:12px;flex-wrap:wrap;font-size:.8rem;color:#6b7280;margin-bottom:8px}
+.biz-subrow .industry{color:#4f46e5;font-weight:600}
+.biz-desc{font-size:.86rem;color:#4b5563;line-height:1.55;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.biz-meta{display:flex;gap:8px;flex-wrap:wrap}
+.meta-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;font-size:.74rem;font-weight:600}
+.meta-chip.website{background:#eef2ff;color:#4f46e5;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.meta-chip.links{background:#f3f4f6;color:#6b7280}
+.biz-action{align-self:center;flex-shrink:0}
+.btn-view{display:inline-flex;align-items:center;gap:6px;background:#1a1a2e;color:#fff;padding:10px 18px;border-radius:10px;font-size:.82rem;font-weight:700;white-space:nowrap;transition:background .15s}
+.biz-item:hover .btn-view{background:#6366f1}
+
+.loading,.empty{text-align:center;padding:80px 20px;color:#9ca3af;font-size:.95rem}
+.spinner{width:36px;height:36px;border-radius:50%;border:3px solid #e5e7eb;border-top-color:#6366f1;animation:spin .7s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.footer{text-align:center;padding:32px;font-size:.8rem;color:#9ca3af}
+.footer a{color:#6366f1;text-decoration:none}
+
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .ads-col{position:static;order:2;flex-direction:row;overflow-x:auto}
+  .ads-col .ads-label{display:none}
+  .ad-slot{min-width:260px;flex-shrink:0}
+}
+@media(max-width:640px){
+  .biz-item{flex-wrap:wrap;padding:16px;gap:12px}
+  .biz-action{width:100%}
+  .btn-view{width:100%;justify-content:center}
+  .biz-logo{width:52px;height:52px;font-size:1.2rem}
+  .search-box{flex-direction:column}
+  .search-box select{border-right:none;border-bottom:1px solid #e5e7eb;padding:12px 16px}
+}
+</style>
 </head>
 <body>
 
-  <section class="hero">
-    <h1>Find the right service provider</h1>
-    <p>Browse trusted businesses and connect with them directly.</p>
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Search name, service, or location..." />
-      <select id="industryFilter">
-        <option value="">All industries</option>
-        <option>Construction</option>
-        <option>Real Estate</option>
-        <option>IT &amp; Technology</option>
-        <option>Marketing &amp; Advertising</option>
-        <option>Legal Services</option>
-        <option>Accounting &amp; Finance</option>
-        <option>Healthcare</option>
-        <option>Education &amp; Training</option>
-        <option>Hospitality &amp; Tourism</option>
-        <option>Retail &amp; E-commerce</option>
-        <option>Transportation &amp; Logistics</option>
-        <option>Manufacturing</option>
-        <option>Agriculture</option>
-        <option>Beauty &amp; Wellness</option>
-        <option>Fitness &amp; Sports</option>
-        <option>Media &amp; Entertainment</option>
-        <option>Home Services</option>
-        <option>Other</option>
-      </select>
-      <button id="searchBtn">Search</button>
+<section class="hero">
+  <h1>Find the right service provider</h1>
+  <p>Browse trusted businesses and connect with them directly.</p>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search name, service, or location..." />
+    <select id="industryFilter">
+      <option value="">All industries</option>
+      <option>Construction</option><option>Real Estate</option><option>IT &amp; Technology</option>
+      <option>Marketing &amp; Advertising</option><option>Legal Services</option><option>Accounting &amp; Finance</option>
+      <option>Healthcare</option><option>Education &amp; Training</option><option>Hospitality &amp; Tourism</option>
+      <option>Retail &amp; E-commerce</option><option>Transportation &amp; Logistics</option><option>Manufacturing</option>
+      <option>Agriculture</option><option>Beauty &amp; Wellness</option><option>Fitness &amp; Sports</option>
+      <option>Media &amp; Entertainment</option><option>Home Services</option><option>Other</option>
+    </select>
+    <button id="searchBtn">Search</button>
+  </div>
+</section>
+
+<div class="cta-banner" id="ctaBanner">
+  <button class="cta-close" id="ctaClose" title="Dismiss">✕</button>
+  <div class="cta-text">
+    <div class="cta-icon">🏪</div>
+    <div>
+      <strong>Own a business? Get discovered.</strong>
+      <span class="cta-sub">List your business for free — appear right here in front of visitors.</span>
     </div>
-  </section>
+  </div>
+  <a class="cta-btn" href="dashboard.html">+ List Your Business</a>
+</div>
 
-  <div class="cta-banner" id="ctaBanner">
-    <button class="cta-close" id="ctaClose" title="Dismiss">✕</button>
-    <div class="cta-text">
-      <div class="cta-icon">🏪</div>
-      <div>
-        <strong>Own a business? Get discovered.</strong>
-        <span class="cta-sub">List your business for free — appear right here in front of visitors.</span>
+<div class="layout">
+  <aside class="ads-col">
+    <div class="ads-label">Sponsored</div>
+    <div id="adsContainer"></div>
+  </aside>
+
+  <main class="list-col">
+    <div class="chips-row" id="chipsRow"></div>
+    <div id="loading" class="loading"><div class="spinner"></div>Loading businesses...</div>
+    <div id="listWrap" class="hidden">
+      <div class="list-header">
+        <h2>Service Providers</h2>
+        <span class="count" id="listCount"></span>
       </div>
+      <div id="bizList" class="biz-list"></div>
     </div>
-    <a class="cta-btn" href="dashboard.html">+ List Your Business</a>
-  </div>
+    <div id="emptyState" class="empty hidden">No businesses found.</div>
+  </main>
+</div>
 
-  <div class="layout">
-    <!-- ADS SIDEBAR -->
-    <aside class="ads-col">
-      <div class="ads-label">Sponsored</div>
-
-      <!-- EDIT THESE AD SLOTS — replace with your own images and links -->
-      <a class="ad-slot" href="#" target="_blank" rel="noopener">
-        <div class="ad-img">📢</div>
-        <div class="ad-title">Your Ad Here</div>
-        <div class="ad-text">Reach thousands of buyers looking for services every day.</div>
-        <span class="ad-cta">Learn more →</span>
-      </a>
-
-      <a class="ad-slot" href="#" target="_blank" rel="noopener">
-        <div class="ad-img">⭐</div>
-        <div class="ad-title">Promote Your Brand</div>
-        <div class="ad-text">Feature your business at the top of the directory.</div>
-        <span class="ad-cta">Get featured →</span>
-      </a>
-
-      <a class="ad-slot" href="#" target="_blank" rel="noopener">
-        <div class="ad-img">🎯</div>
-        <div class="ad-title">Advertise With Us</div>
-        <div class="ad-text">Sidebar ads reach a targeted audience actively seeking services.</div>
-        <span class="ad-cta">Contact us →</span>
-      </a>
-    </aside>
-
-    <!-- BUSINESS LIST -->
-    <main class="list-col">
-      <div class="chips-row" id="chipsRow"></div>
-      <div id="loading" class="loading">
-        <div class="spinner"></div>
-        Loading businesses...
-      </div>
-
-      <div id="listWrap" class="hidden">
-        <div class="list-header">
-          <h2>Service Providers</h2>
-          <span class="count" id="listCount"></span>
-        </div>
-        <div id="bizList" class="biz-list"></div>
-      </div>
-
-      <div id="emptyState" class="empty hidden">No businesses found.</div>
-    </main>
-  </div>
-
-  <div class="footer">
-    <p>Are you a business owner? <a href="dashboard.html">List your business →</a></p>
-  </div>
+<div class="footer">
+  <p>Are you a business owner? <a href="dashboard.html">List your business →</a></p>
+</div>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=8';
+import { supabase } from './supabase-client.js?v=10';
 
-const listWrap   = document.getElementById('listWrap');
-const bizList    = document.getElementById('bizList');
-const listCount  = document.getElementById('listCount');
-const loadingEl  = document.getElementById('loading');
-const emptyState = document.getElementById('emptyState');
-const searchInput = document.getElementById('searchInput');
-const searchBtn   = document.getElementById('searchBtn');
-const industryFilter = document.getElementById('industryFilter');
-const ctaBanner   = document.getElementById('ctaBanner');
-const ctaClose    = document.getElementById('ctaClose');
+const $ = id => document.getElementById(id);
+
+const listWrap   = $('listWrap');
+const bizList    = $('bizList');
+const listCount  = $('listCount');
+const loadingEl  = $('loading');
+const emptyState = $('emptyState');
+const searchInput = $('searchInput');
+const searchBtn   = $('searchBtn');
+const industryFilter = $('industryFilter');
+const ctaBanner   = $('ctaBanner');
+const ctaClose    = $('ctaClose');
+const chipsRow    = $('chipsRow');
+const adsContainer = $('adsContainer');
 
 let allBusinesses = [];
 
-// CTA
+// ---------- CTA banner ----------
 const CTA_KEY = 'ctaBannerDismissedUntil';
 const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
-if (!localStorage.getItem(CTA_KEY) || Date.now() > parseInt(localStorage.getItem(CTA_KEY), 10)) {
+
+function shouldShowCTA(){
+  const until = localStorage.getItem(CTA_KEY);
+  return !until || Date.now() > parseInt(until, 10);
+}
+
+if(shouldShowCTA()){
   setTimeout(() => ctaBanner.classList.add('visible'), 900);
 }
+
 ctaClose.addEventListener('click', () => {
   ctaBanner.classList.remove('visible');
   setTimeout(() => ctaBanner.style.display = 'none', 500);
   localStorage.setItem(CTA_KEY, String(Date.now() + ONE_WEEK));
 });
 
-// Helpers
-function normalizeUrl(url) {
-  if (!url) return '';
-  url = String(url).trim();
-  if (!url) return '';
-  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(url)) return url;
-  if (/^(mailto:|tel:|sms:|whatsapp:)/i.test(url)) return url;
-  return 'https://' + url;
+// ---------- Helpers ----------
+function normalizeUrl(raw){
+  if(!raw) return '';
+  let u = String(raw).trim();
+  if(!u) return '';
+  if(/^[a-z][a-z0-9+.-]*:\/\//i.test(u)) return u;
+  if(/^(mailto:|tel:|sms:|whatsapp:)/i.test(u)) return u;
+  return 'https://' + u;
 }
-function displayUrl(url) {
-  if (!url) return '';
-  return String(url).replace(/^https?:\/\//i, '').replace(/\/$/, '');
+
+function displayUrl(u){
+  return u ? String(u).replace(/^https?:\/\//i,'').replace(/\/$/,'') : '';
 }
-function escapeHtml(s) {
-  if (s === null || s === undefined) return '';
-  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+function escapeHtml(s){
+  if(s === null || s === undefined) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-function findWebsite(links) {
-  if (!links || !links.length) return null;
+
+function findWebsite(links){
+  if(!links || !links.length) return null;
   const byLabel = links.find(l => /website|site|homepage/i.test(l.label || ''));
   return byLabel || links[0];
 }
 
-  // Build industry chips after data loads
+// ---------- Load ads ----------
+async function loadAds(){
+  const { data, error } = await supabase
+    .from('site_ads')
+    .select('*')
+    .eq('active', true)
+    .order('sort_order', { ascending: true })
+    .limit(4);
+
+  if(error){
+    console.warn('Ads load failed:', error.message);
+    // Fallback — default ad slot
+    adsContainer.innerHTML = `
+      <a class="ad-slot" href="#" target="_blank" rel="noopener">
+        <div class="ad-img">📢</div>
+        <div class="ad-title">Your Ad Here</div>
+        <div class="ad-text">Reach thousands of buyers looking for services.</div>
+        <span class="ad-cta">Learn more →</span>
+      </a>
+    `;
+    return;
+  }
+
+  if(!data || !data.length){
+    adsContainer.innerHTML = `
+      <a class="ad-slot" href="#" target="_blank" rel="noopener">
+        <div class="ad-img">📢</div>
+        <div class="ad-title">Your Ad Here</div>
+        <div class="ad-text">Add ads from the admin panel to display them here.</div>
+        <span class="ad-cta">Admin →</span>
+      </a>
+    `;
+    return;
+  }
+
+  adsContainer.innerHTML = data.map(ad => {
+    const img = ad.image_url
+      ? `<img class="ad-img" src="${escapeHtml(ad.image_url)}" alt="" onerror="this.outerHTML='<div class=&quot;ad-img&quot;>📢</div>'" />`
+      : `<div class="ad-img">📢</div>`;
+    const url = ad.cta_url ? normalizeUrl(ad.cta_url) : '#';
+    return `
+      <a class="ad-slot" href="${escapeHtml(url)}" target="_blank" rel="noopener">
+        ${img}
+        <div class="ad-title">${escapeHtml(ad.title)}</div>
+        ${ad.body ? `<div class="ad-text">${escapeHtml(ad.body)}</div>` : ''}
+        ${ad.cta_text ? `<span class="ad-cta">${escapeHtml(ad.cta_text)} →</span>` : ''}
+      </a>
+    `;
+  }).join('');
+}
+
+// ---------- Load businesses ----------
+async function loadBusinesses(){
+  const { data, error } = await supabase
+    .from('public_directory')
+    .select('*')
+    .order('rank', { ascending: false })
+    .order('created_at', { ascending: false });
+
+  loadingEl.classList.add('hidden');
+
+  if(error){
+    console.error('Directory fetch error:', error);
+    emptyState.classList.remove('hidden');
+    emptyState.textContent = 'Could not load businesses.';
+    return;
+  }
+
+  allBusinesses = data || [];
+  buildChips();
+  applyFilters();
+}
+
+// ---------- Chips ----------
 function buildChips(){
   const industries = [...new Set(allBusinesses.map(b => b.industry).filter(Boolean))].sort();
-  const row = document.getElementById('chipsRow');
-  if(!industries.length){ row.style.display = 'none'; return; }
-  row.innerHTML = `<button class="chip active" data-ind="">All</button>` +
+  if(!industries.length){
+    chipsRow.style.display = 'none';
+    return;
+  }
+  chipsRow.innerHTML = '<button class="chip active" data-ind="">All</button>' +
     industries.map(i => `<button class="chip" data-ind="${escapeHtml(i)}">${escapeHtml(i)}</button>`).join('');
-  row.querySelectorAll('.chip').forEach(c => {
+
+  chipsRow.querySelectorAll('.chip').forEach(c => {
     c.addEventListener('click', () => {
-      row.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+      chipsRow.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
       c.classList.add('active');
       industryFilter.value = c.dataset.ind;
       applyFilters();
@@ -384,49 +310,26 @@ function buildChips(){
   });
 }
 
-// Patch: call buildChips when data loads
-// In loadBusinesses, replace `allBusinesses = data || []; applyFilters();`
-// with:
-// allBusinesses = data || []; buildChips(); applyFilters();
-// Load
-async function loadBusinesses() {
-  const { data, error } = await supabase
-    .from('public_directory').select('*')
-    .order('rank', { ascending: false })
-    .order('created_at', { ascending: false });
-
-  loadingEl.classList.add('hidden');
-  if (error) {
-    emptyState.classList.remove('hidden');
-    emptyState.textContent = 'Could not load businesses.';
-    console.error(error);
-    return;
-  }
-  allBusinesses = data || [];
-  applyFilters();
-}
-
-// Filter by search text + industry
-function applyFilters() {
+// ---------- Filter & render ----------
+function applyFilters(){
   const q = searchInput.value.toLowerCase().trim();
   const ind = industryFilter.value;
   let filtered = allBusinesses;
 
-  if (ind) filtered = filtered.filter(b => (b.industry || '') === ind);
-  if (q) {
-    filtered = filtered.filter(b =>
-      b.business_name?.toLowerCase().includes(q) ||
-      b.description?.toLowerCase().includes(q) ||
-      b.services?.toLowerCase().includes(q) ||
-      b.location?.toLowerCase().includes(q) ||
-      b.industry?.toLowerCase().includes(q)
-    );
-  }
+  if(ind) filtered = filtered.filter(b => (b.industry || '') === ind);
+  if(q) filtered = filtered.filter(b =>
+    b.business_name?.toLowerCase().includes(q) ||
+    b.description?.toLowerCase().includes(q) ||
+    b.services?.toLowerCase().includes(q) ||
+    b.location?.toLowerCase().includes(q) ||
+    b.industry?.toLowerCase().includes(q)
+  );
+
   render(filtered);
 }
 
-function render(list) {
-  if (!list.length) {
+function render(list){
+  if(!list.length){
     emptyState.classList.remove('hidden');
     listWrap.classList.add('hidden');
     emptyState.textContent = 'No businesses match your search.';
@@ -438,40 +341,38 @@ function render(list) {
   bizList.innerHTML = list.map((biz, i) => bizRowHTML(biz, i)).join('');
 }
 
-function badgeFor(rank, position) {
-  if (position === 0) return '<span class="badge gold">🥇 #1</span>';
-  if (position === 1) return '<span class="badge silver">🥈 #2</span>';
-  if (position === 2) return '<span class="badge bronze">🥉 #3</span>';
-  if (rank && rank > 0) return '<span class="badge featured">⭐ Featured</span>';
+function badgeFor(rank, position){
+  if(position === 0) return '<span class="badge gold">🥇 #1</span>';
+  if(position === 1) return '<span class="badge silver">🥈 #2</span>';
+  if(position === 2) return '<span class="badge bronze">🥉 #3</span>';
+  if(rank && rank > 0) return '<span class="badge featured">⭐ Featured</span>';
   return '';
 }
 
-function bizRowHTML(biz, position) {
+function bizRowHTML(biz, position){
   const initial = (biz.business_name || '?')[0].toUpperCase();
   const featured = (biz.rank && biz.rank > 0) || position < 3;
   const logo = biz.logo_url
-    ? `<img class="biz-logo" src="${escapeHtml(biz.logo_url)}" alt=""
-            onerror="this.outerHTML='<div class=\\'biz-logo\\'>${initial}</div>'" />`
+    ? `<img class="biz-logo" src="${escapeHtml(biz.logo_url)}" alt="" onerror="this.outerHTML='<div class=&quot;biz-logo&quot;>${initial}</div>'" />`
     : `<div class="biz-logo">${initial}</div>`;
 
   const website = findWebsite(biz.links);
   const websiteChip = website
-    ? `<span class="meta-chip website">🌐 ${escapeHtml(displayUrl(normalizeUrl(website.url)))}</span>`
-    : '';
+    ? `<span class="meta-chip website">🌐 ${escapeHtml(displayUrl(normalizeUrl(website.url)))}</span>` : '';
   const linkCount = (biz.links || []).length;
   const linksChip = linkCount > 0
-    ? `<span class="meta-chip links">🔗 ${linkCount} ${linkCount === 1 ? 'link' : 'links'}</span>`
-    : '';
+    ? `<span class="meta-chip links">🔗 ${linkCount} ${linkCount === 1 ? 'link' : 'links'}</span>` : '';
 
   const subrow = [];
-  if (biz.industry) subrow.push(`<span class="industry">🏷 ${escapeHtml(biz.industry)}</span>`);
-  if (biz.location) subrow.push(`<span>📍 ${escapeHtml(biz.location)}</span>`);
+  if(biz.industry) subrow.push(`<span class="industry">🏷 ${escapeHtml(biz.industry)}</span>`);
+  if(biz.location) subrow.push(`<span>📍 ${escapeHtml(biz.location)}</span>`);
+
+  const profileUrl = biz.slug
+    ? `profile.html?b=${encodeURIComponent(biz.slug)}`
+    : `profile.html?id=${encodeURIComponent(biz.id)}`;
 
   return `
-    <a class="biz-item ${featured ? 'featured' : ''}
-// New:
-const profileUrl = biz.slug ? `profile.html?b=${encodeURIComponent(biz.slug)}` : `profile.html?id=${encodeURIComponent(biz.id)}`;
-// then use href="${profileUrl}"
+    <a class="biz-item ${featured ? 'featured' : ''}" href="${profileUrl}">
       ${logo}
       <div class="biz-body">
         <div class="biz-name-row">
@@ -482,17 +383,23 @@ const profileUrl = biz.slug ? `profile.html?b=${encodeURIComponent(biz.slug)}` :
         <div class="biz-desc">${escapeHtml(biz.description || 'No description provided.')}</div>
         <div class="biz-meta">${websiteChip}${linksChip}</div>
       </div>
-      <div class="biz-action">
-        <span class="btn-view">View →</span>
-      </div>
+      <div class="biz-action"><span class="btn-view">View →</span></div>
     </a>
   `;
 }
 
+// ---------- Search events ----------
 searchBtn.addEventListener('click', applyFilters);
 searchInput.addEventListener('input', applyFilters);
-industryFilter.addEventListener('change', applyFilters);
+industryFilter.addEventListener('change', () => {
+  chipsRow.querySelectorAll('.chip').forEach(x => {
+    x.classList.toggle('active', x.dataset.ind === industryFilter.value);
+  });
+  applyFilters();
+});
 
+// ---------- Init ----------
+loadAds();
 loadBusinesses();
 </script>
 </body>
