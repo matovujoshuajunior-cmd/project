@@ -1,191 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Cache-Control" content="no-cache" />
-  <title>Business Profile</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    .hidden { display: none !important; }
-    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f8fafc; color: #1a1a2e; min-height: 100vh; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<!-- Open Graph (generic — per-business meta requires server-side rendering) -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Business Profile" id="ogTitle" />
+<meta property="og:description" content="Connect with trusted service providers." id="ogDesc" />
+<meta property="og:site_name" content="Service Directory" />
+<title>Business Profile</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+.hidden{display:none!important}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f8fafc;color:#1a1a2e;min-height:100vh}
+.topbar{background:#fff;padding:14px 24px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.back-link{display:inline-flex;align-items:center;gap:6px;color:#6366f1;text-decoration:none;font-size:.9rem;font-weight:600}
+.back-link:hover{text-decoration:underline}
+.share-btn{background:#eef2ff;color:#4f46e5;border:none;padding:9px 16px;border-radius:9px;font-size:.82rem;font-weight:700;cursor:pointer}
+.share-btn:hover{background:#e0e7ff}
+.main{max-width:900px;margin:0 auto;padding:28px 24px 60px}
 
-    .topbar { background: white; padding: 16px 24px; border-bottom: 1px solid #e5e7eb; }
-    .back-link { display: inline-flex; align-items: center; gap: 6px; color: #6366f1; text-decoration: none; font-size: 0.9rem; font-weight: 600; }
-    .back-link:hover { text-decoration: underline; }
+.profile-hero{background:#fff;border-radius:20px;padding:36px 28px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.06);margin-bottom:20px}
+.hero-logo{width:100px;height:100px;border-radius:24px;object-fit:cover;background:#f1f5f9;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;font-weight:800;color:#6366f1;box-shadow:0 4px 16px rgba(99,102,241,.15)}
+.hero-name{font-size:1.7rem;font-weight:800;margin-bottom:8px;line-height:1.25;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.verified-badge{background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-size:.65rem;font-weight:800;padding:4px 10px;border-radius:20px;letter-spacing:.3px}
+.hero-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:12px}
+.meta-pill{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:20px;font-size:.82rem;font-weight:600;background:#f3f4f6;color:#4b5563}
+.meta-pill.industry{background:linear-gradient(135deg,#eef2ff,#e0e7ff);color:#4f46e5}
+.meta-pill.location{background:#fef3c7;color:#92400e}
 
-    .main { max-width: 900px; margin: 0 auto; padding: 28px 24px 60px; }
+.contact-bar{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.contact-card{display:flex;align-items:center;gap:12px;padding:16px 18px;background:#fff;border-radius:14px;text-decoration:none;color:inherit;box-shadow:0 2px 12px rgba(0,0,0,.05);border:1.5px solid #f1f5f9;transition:transform .15s,border-color .15s}
+.contact-card:hover{transform:translateY(-2px);border-color:#c7d2fe}
+.contact-card.whatsapp{background:#f0fdf4;border-color:#bbf7d0}
+.contact-card.whatsapp .cc-icon{background:#dcfce7;color:#16a34a}
+.contact-card .cc-icon{width:40px;height:40px;border-radius:10px;background:#eef2ff;color:#4f46e5;display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0}
+.contact-card .cc-body{min-width:0}
+.contact-card .cc-label{font-size:.7rem;font-weight:700;text-transform:uppercase;color:#9ca3af;letter-spacing:.4px}
+.contact-card .cc-value{font-size:.9rem;font-weight:600;color:#1a1a2e;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-    /* ===== HERO ===== */
-    .profile-hero {
-      background: white; border-radius: 20px;
-      padding: 36px 28px; text-align: center;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-      margin-bottom: 20px;
-    }
-    .hero-logo {
-      width: 100px; height: 100px; border-radius: 24px;
-      object-fit: cover; background: #f1f5f9;
-      margin: 0 auto 18px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2.5rem; font-weight: 800; color: #6366f1;
-      box-shadow: 0 4px 16px rgba(99,102,241,0.15);
-    }
-    .hero-name { font-size: 1.7rem; font-weight: 800; margin-bottom: 8px; line-height: 1.25; }
-    .hero-meta {
-      display: flex; flex-wrap: wrap; justify-content: center;
-      gap: 10px; margin-bottom: 4px;
-    }
-    .meta-pill {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 6px 14px; border-radius: 20px;
-      font-size: 0.82rem; font-weight: 600;
-      background: #f3f4f6; color: #4b5563;
-    }
-    .meta-pill.industry {
-      background: linear-gradient(135deg, #eef2ff, #e0e7ff);
-      color: #4f46e5;
-    }
-    .meta-pill.location { background: #fef3c7; color: #92400e; }
+.links-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:24px}
+.link-tile{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-radius:14px;text-decoration:none;font-weight:700;font-size:.9rem;transition:transform .15s,box-shadow .15s;border:1.5px solid transparent;cursor:pointer}
+.link-tile:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.link-tile.website{background:#eef2ff;color:#4f46e5;border-color:#c7d2fe}
+.link-tile.social{background:#fdf2f8;color:#db2777;border-color:#fbcfe8}
+.link-tile.contact{background:#f0fdf4;color:#16a34a;border-color:#bbf7d0}
+.link-tile.default{background:#f3f4f6;color:#374151;border-color:#e5e7eb}
+.link-tile .lt-left{display:flex;align-items:center;gap:10px;min-width:0}
+.link-tile .lt-icon{font-size:1.2rem;flex-shrink:0}
+.link-tile .lt-text{min-width:0}
+.link-tile .lt-label{font-weight:700}
+.link-tile .lt-url{font-size:.72rem;font-weight:500;opacity:.75;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:160px}
 
-    /* ===== CONTACT BAR (prominent) ===== */
-    .contact-bar {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 12px; margin-bottom: 22px;
-    }
-    .contact-card {
-      display: flex; align-items: center; gap: 12px;
-      padding: 16px 18px; background: white;
-      border-radius: 14px; text-decoration: none; color: inherit;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-      border: 1.5px solid #f1f5f9;
-      transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
-    }
-    .contact-card:hover {
-      transform: translateY(-2px);
-      border-color: #c7d2fe;
-      box-shadow: 0 8px 24px rgba(99,102,241,0.12);
-    }
-    .contact-card .cc-icon {
-      width: 40px; height: 40px; border-radius: 10px;
-      background: #eef2ff; color: #4f46e5;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.15rem; flex-shrink: 0;
-    }
-    .contact-card .cc-body { min-width: 0; }
-    .contact-card .cc-label {
-      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-      color: #9ca3af; letter-spacing: 0.4px;
-    }
-    .contact-card .cc-value {
-      font-size: 0.9rem; font-weight: 600; color: #1a1a2e;
-      margin-top: 2px;
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    }
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.info-card{background:#fff;border-radius:16px;padding:26px;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.info-card h2{font-size:1rem;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px;padding-bottom:12px;border-bottom:1px solid #f1f5f9}
+.info-card .body{font-size:.92rem;color:#4b5563;line-height:1.7;white-space:pre-wrap}
+.services-list{display:flex;flex-direction:column;gap:8px}
+.service-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;background:#f8fafc;font-size:.88rem;color:#374151;font-weight:500;border-left:3px solid #6366f1}
+.service-item .dot{color:#6366f1;font-weight:800;flex-shrink:0}
 
-    /* ===== LINKS GRID (prominent) ===== */
-    .links-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 12px; margin-bottom: 24px;
-    }
-    .link-tile {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; padding: 16px 18px;
-      border-radius: 14px; text-decoration: none;
-      font-weight: 700; font-size: 0.9rem;
-      transition: transform 0.15s, box-shadow 0.15s;
-      border: 1.5px solid transparent;
-    }
-    .link-tile:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-    .link-tile.website { background: #eef2ff; color: #4f46e5; border-color: #c7d2fe; }
-    .link-tile.social  { background: #fdf2f8; color: #db2777; border-color: #fbcfe8; }
-    .link-tile.contact { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
-    .link-tile.default { background: #f3f4f6; color: #374151; border-color: #e5e7eb; }
-    .link-tile .lt-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
-    .link-tile .lt-icon { font-size: 1.2rem; flex-shrink: 0; }
-    .link-tile .lt-text { min-width: 0; }
-    .link-tile .lt-label { font-weight: 700; }
-    .link-tile .lt-url {
-      font-size: 0.72rem; font-weight: 500; opacity: 0.75;
-      margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-      max-width: 160px;
-    }
-    .link-tile .lt-arrow { font-size: 1.1rem; opacity: 0.6; flex-shrink: 0; }
+.hours-card{background:#fff;border-radius:16px;padding:26px;box-shadow:0 2px 12px rgba(0,0,0,.04);margin-top:20px}
+.hours-list{display:flex;flex-direction:column;gap:6px}
+.hour-line{display:flex;justify-content:space-between;padding:8px 14px;border-radius:8px;font-size:.88rem}
+.hour-line:nth-child(odd){background:#f9fafb}
+.hour-line .hday{font-weight:600;color:#4b5563}
+.hour-line .htime{color:#1a1a2e;font-weight:600}
+.hour-line .htime.closed{color:#ef4444;font-weight:700}
+.hour-line.today{background:#eef2ff;border-left:3px solid #6366f1}
 
-    /* ===== TWO COLUMN: SERVICES | ABOUT ===== */
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-    .info-card {
-      background: white; border-radius: 16px;
-      padding: 26px; box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-    }
-    .info-card h2 {
-      font-size: 1rem; font-weight: 800;
-      margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
-      padding-bottom: 12px; border-bottom: 1px solid #f1f5f9;
-    }
-    .info-card .body {
-      font-size: 0.92rem; color: #4b5563;
-      line-height: 1.7; white-space: pre-wrap;
-    }
-    .services-list {
-      display: flex; flex-direction: column; gap: 8px;
-    }
-    .service-item {
-      display: flex; align-items: flex-start; gap: 10px;
-      padding: 10px 12px; border-radius: 10px;
-      background: #f8fafc; font-size: 0.88rem;
-      color: #374151; font-weight: 500;
-      border-left: 3px solid #6366f1;
-    }
-    .service-item .dot {
-      color: #6366f1; font-weight: 800; flex-shrink: 0;
-    }
+.state{text-align:center;padding:80px 20px;color:#9ca3af}
+.state h2{font-size:1.3rem;color:#1a1a2e;margin-bottom:8px}
+.state p{margin-bottom:20px;font-size:.9rem}
+.state a{display:inline-block;padding:11px 24px;background:#6366f1;color:#fff;border-radius:10px;text-decoration:none;font-weight:600;font-size:.9rem}
+.spinner{width:36px;height:36px;border-radius:50%;border:3px solid #e5e7eb;border-top-color:#6366f1;animation:spin .7s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-    /* ===== STATES ===== */
-    .state { text-align: center; padding: 80px 20px; color: #9ca3af; }
-    .state h2 { font-size: 1.3rem; color: #1a1a2e; margin-bottom: 8px; }
-    .state p { margin-bottom: 20px; font-size: 0.9rem; }
-    .state a {
-      display: inline-block; padding: 11px 24px;
-      background: #6366f1; color: white;
-      border-radius: 10px; text-decoration: none;
-      font-weight: 600; font-size: 0.9rem;
-    }
-    .spinner {
-      width: 36px; height: 36px; border-radius: 50%;
-      border: 3px solid #e5e7eb; border-top-color: #6366f1;
-      animation: spin 0.7s linear infinite; margin: 0 auto 16px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 720px) {
-      .two-col { grid-template-columns: 1fr; }
-      .contact-bar { grid-template-columns: 1fr; }
-      .hero-name { font-size: 1.4rem; }
-      .hero-logo { width: 84px; height: 84px; font-size: 2rem; }
-      .main { padding: 20px 16px 40px; }
-      .links-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+@media(max-width:720px){
+  .two-col{grid-template-columns:1fr}
+  .contact-bar{grid-template-columns:1fr}
+  .hero-name{font-size:1.4rem}
+  .hero-logo{width:84px;height:84px;font-size:2rem}
+  .main{padding:20px 16px 40px}
+  .links-grid{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
 
 <div class="topbar">
-  <a href="index.html" class="back-link">← Back to directory</a>
+  <a href="index.html" class="back-link">← Back</a>
+  <button class="share-btn" id="shareBtn" style="display:none">🔗 Share</button>
 </div>
 
 <main class="main">
-  <div id="loading" class="state">
-    <div class="spinner"></div>
-    Loading profile...
-  </div>
-
+  <div id="loading" class="state"><div class="spinner"></div>Loading profile...</div>
   <div id="notFound" class="state hidden">
     <h2>Business not found</h2>
     <p>This profile may have been removed or the link is incorrect.</p>
@@ -193,20 +103,15 @@
   </div>
 
   <div id="profile" class="hidden">
-    <!-- HERO -->
     <div class="profile-hero">
       <div id="heroLogoWrap"></div>
       <h1 class="hero-name" id="heroName"></h1>
       <div class="hero-meta" id="heroMeta"></div>
     </div>
 
-    <!-- CONTACTS -->
     <div class="contact-bar" id="contactBar"></div>
-
-    <!-- LINKS -->
     <div class="links-grid" id="linksGrid"></div>
 
-    <!-- TWO COLUMN -->
     <div class="two-col">
       <div class="info-card" id="servicesCard">
         <h2>🛠 Services</h2>
@@ -217,139 +122,153 @@
         <div class="body" id="aboutBody"></div>
       </div>
     </div>
+
+    <div class="hours-card hidden" id="hoursCard">
+      <h2 style="font-size:1rem;font-weight:800;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #f1f5f9;">🕐 Business Hours</h2>
+      <div class="hours-list" id="hoursList"></div>
+    </div>
   </div>
 </main>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=8';
+import { supabase } from './supabase-client.js?v=9';
 
-const loadingEl  = document.getElementById('loading');
-const notFoundEl = document.getElementById('notFound');
-const profileEl  = document.getElementById('profile');
-
-const heroLogoWrap = document.getElementById('heroLogoWrap');
-const heroName     = document.getElementById('heroName');
-const heroMeta     = document.getElementById('heroMeta');
-const contactBar   = document.getElementById('contactBar');
-const linksGrid    = document.getElementById('linksGrid');
-const servicesCard = document.getElementById('servicesCard');
-const servicesList = document.getElementById('servicesList');
-const aboutBody    = document.getElementById('aboutBody');
-
+const $ = id => document.getElementById(id);
 const params = new URLSearchParams(window.location.search);
-const bizId  = params.get('id');
+const bizId = params.get('id');
+const bizSlug = params.get('b');
 
-// ---------- URL helpers ----------
-function normalizeUrl(raw) {
-  if (!raw) return '';
-  let url = String(raw).trim();
-  if (!url) return '';
-  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(url)) return url;
-  if (/^(mailto:|tel:|sms:|whatsapp:)/i.test(url)) return url;
-  return 'https://' + url;
-}
-function displayUrl(url) {
-  if (!url) return '';
-  return String(url).replace(/^https?:\/\//i, '').replace(/\/$/, '');
-}
-function escapeHtml(s) {
-  if (s === null || s === undefined) return '';
-  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
+const DAYS = ['sun','mon','tue','wed','thu','fri','sat'];
+const DAY_LABELS = { sun:'Sunday', mon:'Monday', tue:'Tuesday', wed:'Wednesday', thu:'Thursday', fri:'Friday', sat:'Saturday' };
 
-// ---------- Icons ----------
-function linkIcon(label) {
-  const l = (label || '').toLowerCase();
-  if (l.includes('website') || l.includes('site')) return '🌐';
-  if (l.includes('instagram')) return '📸';
-  if (l.includes('facebook'))  return '📘';
-  if (l.includes('twitter') || l === 'x') return '🐦';
-  if (l.includes('tiktok'))    return '🎵';
-  if (l.includes('linkedin'))  return '💼';
-  if (l.includes('whatsapp'))  return '💬';
-  if (l.includes('youtube'))   return '▶️';
-  if (l.includes('email') || l.includes('mail')) return '✉️';
-  if (l.includes('phone') || l.includes('call')) return '📞';
-  if (l.includes('booking'))   return '📅';
+function normalizeUrl(raw){
+  if(!raw) return '';
+  let u = String(raw).trim(); if(!u) return '';
+  if(/^[a-z][a-z0-9+.-]*:\/\//i.test(u)) return u;
+  if(/^(mailto:|tel:|sms:|whatsapp:)/i.test(u)) return u;
+  return 'https://' + u;
+}
+function displayUrl(u){ return u ? String(u).replace(/^https?:\/\//i,'').replace(/\/$/,'') : ''; }
+function escapeHtml(s){ return s==null?'':String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function linkIcon(label){
+  const l = (label||'').toLowerCase();
+  if(l.includes('website')||l.includes('site')) return '🌐';
+  if(l.includes('instagram')) return '📸';
+  if(l.includes('facebook')) return '📘';
+  if(l.includes('twitter')||l==='x') return '🐦';
+  if(l.includes('tiktok')) return '🎵';
+  if(l.includes('linkedin')) return '💼';
+  if(l.includes('whatsapp')) return '💬';
+  if(l.includes('youtube')) return '▶️';
+  if(l.includes('email')||l.includes('mail')) return '✉️';
+  if(l.includes('phone')||l.includes('call')) return '📞';
+  if(l.includes('booking')) return '📅';
   return '🔗';
 }
-function linkClass(label) {
-  const l = (label || '').toLowerCase();
-  if (l.includes('website') || l.includes('site')) return 'website';
-  if (l.includes('instagram') || l.includes('facebook') || l.includes('twitter')
-      || l.includes('tiktok') || l.includes('linkedin') || l.includes('youtube')) return 'social';
-  if (l.includes('whatsapp') || l.includes('phone') || l.includes('email') || l.includes('contact')) return 'contact';
+function linkClass(label){
+  const l = (label||'').toLowerCase();
+  if(l.includes('website')||l.includes('site')) return 'website';
+  if(l.includes('instagram')||l.includes('facebook')||l.includes('twitter')||l.includes('tiktok')||l.includes('linkedin')||l.includes('youtube')) return 'social';
+  if(l.includes('whatsapp')||l.includes('phone')||l.includes('email')||l.includes('contact')) return 'contact';
   return 'default';
 }
 
-// ---------- Load ----------
-async function init() {
-  if (!bizId) return showNotFound();
-  const { data, error } = await supabase
-    .from('public_directory').select('*').eq('id', bizId).maybeSingle();
-  if (error || !data) return showNotFound();
+async function init(){
+  let query = supabase.from('public_directory').select('*');
+  if(bizId) query = query.eq('id', bizId);
+  else if(bizSlug) query = query.eq('slug', bizSlug);
+  else return showNotFound();
+
+  const { data, error } = await query.maybeSingle();
+  if(error || !data) return showNotFound();
   render(data);
 }
 
-function showNotFound() {
-  loadingEl.classList.add('hidden');
-  notFoundEl.classList.remove('hidden');
+function showNotFound(){
+  $('loading').classList.add('hidden');
+  $('notFound').classList.remove('hidden');
 }
 
-function render(biz) {
-  loadingEl.classList.add('hidden');
-  profileEl.classList.remove('hidden');
-  document.title = `${biz.business_name} — Business Profile`;
+function render(biz){
+  $('loading').classList.add('hidden');
+  $('profile').classList.remove('hidden');
 
-  // Hero logo
+  const title = `${biz.business_name} — Business Profile`;
+  document.title = title;
+  document.getElementById('ogTitle').content = biz.business_name || 'Business Profile';
+  document.getElementById('ogDesc').content = (biz.description || '').substring(0, 155);
+
+  // Share button
+  $('shareBtn').style.display = 'inline-block';
+  $('shareBtn').addEventListener('click', async ()=>{
+    const url = window.location.href;
+    const shareText = `Check out ${biz.business_name} on our directory`;
+    if(navigator.share){
+      try { await navigator.share({ title: biz.business_name, text: shareText, url }); } catch(_) {}
+    } else {
+      try { await navigator.clipboard.writeText(url); showToastLocal('✅ Link copied!'); }
+      catch(_) { prompt('Copy this link:', url); }
+    }
+  });
+
+  // Hero
   const initial = (biz.business_name || '?')[0].toUpperCase();
-  heroLogoWrap.innerHTML = biz.logo_url
-    ? `<img class="hero-logo" src="${escapeHtml(biz.logo_url)}" alt=""
-            onerror="this.outerHTML='<div class=\\'hero-logo\\'>${initial}</div>'" />`
+  $('heroLogoWrap').innerHTML = biz.logo_url
+    ? `<img class="hero-logo" src="${escapeHtml(biz.logo_url)}" alt="" onerror="this.outerHTML='<div class=\\'hero-logo\\'>${initial}</div>'">`
     : `<div class="hero-logo">${initial}</div>`;
 
-  // Hero name + meta pills
-  heroName.textContent = biz.business_name || 'Unnamed Business';
-  const metaParts = [];
-  if (biz.industry) metaParts.push(`<span class="meta-pill industry">🏷 ${escapeHtml(biz.industry)}</span>`);
-  if (biz.location) metaParts.push(`<span class="meta-pill location">📍 ${escapeHtml(biz.location)}</span>`);
-  heroMeta.innerHTML = metaParts.join('');
+  const verified = biz.verified ? '<span class="verified-badge">✓ VERIFIED</span>' : '';
+  $('heroName').innerHTML = `${escapeHtml(biz.business_name || 'Unnamed')} ${verified}`;
 
-  // Contact bar
+  const metaParts = [];
+  if(biz.industry) metaParts.push(`<span class="meta-pill industry">🏷 ${escapeHtml(biz.industry)}</span>`);
+  if(biz.location) metaParts.push(`<span class="meta-pill location">📍 ${escapeHtml(biz.location)}</span>`);
+  $('heroMeta').innerHTML = metaParts.join('');
+
+  // Contacts (including WhatsApp)
   const contacts = [];
-  if (biz.contact_email) {
-    contacts.push(`
-      <a class="contact-card" href="mailto:${escapeHtml(biz.contact_email)}">
-        <div class="cc-icon">✉️</div>
-        <div class="cc-body">
-          <div class="cc-label">Email</div>
-          <div class="cc-value">${escapeHtml(biz.contact_email)}</div>
-        </div>
-      </a>
-    `);
-  }
-  if (biz.phone) {
+  if(biz.phone){
+    // WhatsApp button
+    const digits = biz.phone.replace(/[^\d]/g,'');
+    if(digits.length >= 8){
+      const waMsg = encodeURIComponent(`Hi ${biz.business_name}, I found you on the directory.`);
+      contacts.push(`
+        <a class="contact-card whatsapp" href="https://wa.me/${digits}?text=${waMsg}" target="_blank" rel="noopener">
+          <div class="cc-icon">💬</div>
+          <div class="cc-body"><div class="cc-label">WhatsApp</div><div class="cc-value">${escapeHtml(biz.phone)}</div></div>
+        </a>
+      `);
+    }
     contacts.push(`
       <a class="contact-card" href="tel:${escapeHtml(biz.phone)}">
         <div class="cc-icon">📞</div>
-        <div class="cc-body">
-          <div class="cc-label">Phone</div>
-          <div class="cc-value">${escapeHtml(biz.phone)}</div>
-        </div>
+        <div class="cc-body"><div class="cc-label">Phone</div><div class="cc-value">${escapeHtml(biz.phone)}</div></div>
       </a>
     `);
   }
-  contactBar.innerHTML = contacts.join('');
-  contactBar.style.display = contacts.length ? 'grid' : 'none';
+  if(biz.contact_email){
+    contacts.push(`
+      <a class="contact-card" href="mailto:${escapeHtml(biz.contact_email)}">
+        <div class="cc-icon">✉️</div>
+        <div class="cc-body"><div class="cc-label">Email</div><div class="cc-value">${escapeHtml(biz.contact_email)}</div></div>
+      </a>
+    `);
+  }
+  $('contactBar').innerHTML = contacts.join('');
+  $('contactBar').style.display = contacts.length ? 'grid' : 'none';
 
-  // Links grid
+  // Links (with click tracking)
   const links = biz.links || [];
-  if (links.length) {
-    linksGrid.innerHTML = links.map(l => {
+  if(links.length){
+    $('linksGrid').innerHTML = links.map(l => {
       const safe = normalizeUrl(l.url);
       return `
         <a class="link-tile ${linkClass(l.label)}"
-           href="${escapeHtml(safe)}" target="_blank" rel="noopener noreferrer">
+           href="${escapeHtml(safe)}"
+           data-link-id="${l.id}"
+           data-link-label="${escapeHtml(l.label)}"
+           target="_blank" rel="noopener noreferrer">
           <span class="lt-left">
             <span class="lt-icon">${linkIcon(l.label)}</span>
             <span class="lt-text">
@@ -361,34 +280,72 @@ function render(biz) {
         </a>
       `;
     }).join('');
+
+    // Log clicks
+    $('linksGrid').querySelectorAll('.link-tile').forEach(a => {
+      a.addEventListener('click', () => {
+        supabase.from('link_clicks').insert({
+          profile_id: biz.id,
+          link_id: a.dataset.linkId,
+          link_label: a.dataset.linkLabel
+        }).then(()=>{});
+      });
+    });
   } else {
-    linksGrid.style.display = 'none';
+    $('linksGrid').style.display = 'none';
   }
 
   // Services
-  const services = (biz.services || '')
-    .split('\n').map(s => s.trim()).filter(Boolean);
-  if (services.length) {
-    servicesList.innerHTML = services.map(s =>
+  const services = (biz.services || '').split('\n').map(s=>s.trim()).filter(Boolean);
+  if(services.length){
+    $('servicesList').innerHTML = services.map(s =>
       `<div class="service-item"><span class="dot">•</span><span>${escapeHtml(s)}</span></div>`
     ).join('');
   } else {
-    servicesCard.style.display = 'none';
+    $('servicesCard').style.display = 'none';
+    document.querySelector('.two-col').style.gridTemplateColumns = '1fr';
   }
 
   // About
-  if (biz.description?.trim()) {
-    aboutBody.textContent = biz.description;
+  if(biz.description?.trim()){
+    $('aboutBody').textContent = biz.description;
   } else {
-    aboutBody.textContent = "This business hasn't added a description yet.";
-    aboutBody.style.color = '#9ca3af';
-    aboutBody.style.fontStyle = 'italic';
+    $('aboutBody').textContent = "This business hasn't added a description yet.";
+    $('aboutBody').style.color = '#9ca3af';
+    $('aboutBody').style.fontStyle = 'italic';
   }
 
-  // If services is hidden, expand About to full width
-  if (!services.length) {
-    document.querySelector('.two-col').style.gridTemplateColumns = '1fr';
+  // Hours
+  const hours = biz.opening_hours;
+  if(hours && Object.keys(hours).length){
+    renderHours(hours);
   }
+
+  // Track view (fire and forget)
+  supabase.from('profile_views').insert({
+    profile_id: biz.id,
+    referrer: document.referrer || null
+  }).then(()=>{});
+}
+
+function renderHours(hours){
+  const today = DAYS[new Date().getDay()];
+  const order = ['mon','tue','wed','thu','fri','sat','sun'];
+  $('hoursList').innerHTML = order.map(d => {
+    const h = hours[d];
+    if(!h) return '';
+    const time = h.closed ? '<span class="htime closed">Closed</span>' : `<span class="htime">${h.open} – ${h.close}</span>`;
+    return `<div class="hour-line ${d===today?'today':''}"><span class="hday">${DAY_LABELS[d]}</span>${time}</div>`;
+  }).join('');
+  $('hoursCard').classList.remove('hidden');
+}
+
+function showToastLocal(msg){
+  const t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#16a34a;color:#fff;padding:12px 24px;border-radius:10px;font-weight:600;font-size:.9rem;z-index:999';
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(), 2500);
 }
 
 init();
