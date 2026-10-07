@@ -3,39 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache" />
   <title>Find a Service Provider</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     .hidden { display: none !important; }
     body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f8fafc; color: #1a1a2e; }
 
-    /* ============ HERO (kept) ============ */
+    /* HERO */
     .hero {
       background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
-      padding: 64px 24px 96px;
-      text-align: center; color: white;
+      padding: 64px 24px 96px; text-align: center; color: white;
     }
     .hero h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 800; margin-bottom: 12px; }
     .hero p { font-size: 1.05rem; opacity: 0.9; max-width: 520px; margin: 0 auto 28px; }
     .search-box {
-      display: flex; max-width: 520px; margin: 0 auto;
+      display: flex; max-width: 620px; margin: 0 auto;
       background: white; border-radius: 14px; overflow: hidden;
       box-shadow: 0 8px 32px rgba(0,0,0,0.15);
     }
     .search-box input { flex: 1; padding: 16px 20px; border: none; font-size: 0.95rem; outline: none; }
+    .search-box select {
+      border: none; outline: none; background: #f3f4f6;
+      padding: 0 14px; font-size: 0.88rem; font-weight: 600;
+      color: #374151; cursor: pointer;
+      border-right: 1px solid #e5e7eb;
+    }
     .search-box button {
       padding: 16px 28px; border: none; background: #1a1a2e; color: white;
-      font-weight: 600; cursor: pointer; font-size: 0.95rem; transition: background 0.2s;
+      font-weight: 600; cursor: pointer; font-size: 0.95rem;
     }
     .search-box button:hover { background: #2d2d4e; }
 
-    /* ============ CTA BANNER (kept, dismissible) ============ */
+    /* CTA */
     .cta-banner {
       background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
       color: #1a1a2e; padding: 22px 28px;
       display: flex; align-items: center; justify-content: space-between;
       gap: 20px; flex-wrap: wrap;
-      max-width: 1080px; margin: -56px auto 36px;
+      max-width: 1200px; margin: -56px auto 32px;
       border-radius: 18px;
       box-shadow: 0 12px 32px rgba(245,158,11,0.35);
       position: relative; z-index: 2;
@@ -43,138 +49,146 @@
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
     .cta-banner.visible { opacity: 1; transform: translateY(0); }
-    .cta-banner .cta-text { display: flex; align-items: center; gap: 14px; font-size: 0.95rem; flex: 1; min-width: 220px; }
+    .cta-banner .cta-text { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 220px; }
     .cta-banner .cta-icon { font-size: 2rem; }
     .cta-banner strong { display: block; font-size: 1.1rem; font-weight: 800; margin-bottom: 2px; }
     .cta-banner .cta-sub { opacity: 0.75; font-size: 0.85rem; }
     .cta-banner .cta-btn {
       background: #1a1a2e; color: white; text-decoration: none;
       padding: 13px 26px; border-radius: 12px;
-      font-weight: 700; font-size: 0.9rem;
-      transition: transform 0.15s, box-shadow 0.15s;
-      white-space: nowrap;
+      font-weight: 700; font-size: 0.9rem; white-space: nowrap;
+      transition: transform 0.15s;
     }
-    .cta-banner .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+    .cta-banner .cta-btn:hover { transform: translateY(-2px); }
     .cta-close {
       position: absolute; top: 8px; right: 10px;
       background: rgba(26,26,46,0.15); border: none;
       width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
       color: #1a1a2e; font-size: 0.85rem; font-weight: 700;
       display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s;
     }
     .cta-close:hover { background: rgba(26,26,46,0.3); }
 
-    /* ============ MAIN ============ */
-    .main { max-width: 1080px; margin: 0 auto 60px; padding: 0 24px; }
+    /* MAIN LAYOUT: 1/4 ads + 3/4 list */
+    .layout {
+      max-width: 1200px; margin: 0 auto 60px; padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* ADS SIDEBAR */
+    .ads-col {
+      position: sticky; top: 24px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .ads-label {
+      font-size: 0.68rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: #9ca3af; padding-left: 4px;
+    }
+    .ad-slot {
+      background: white; border-radius: 14px;
+      padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      border: 1.5px solid #f1f5f9;
+      transition: transform 0.15s, box-shadow 0.15s;
+      display: block; text-decoration: none; color: inherit;
+    }
+    .ad-slot:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(99,102,241,0.12); }
+    .ad-slot .ad-img {
+      width: 100%; height: 140px; border-radius: 10px;
+      object-fit: cover; margin-bottom: 12px;
+      background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+    }
+    .ad-slot .ad-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 4px; }
+    .ad-slot .ad-text { font-size: 0.82rem; color: #6b7280; line-height: 1.5; }
+    .ad-slot .ad-cta {
+      display: inline-block; margin-top: 12px;
+      font-size: 0.8rem; font-weight: 700; color: #6366f1;
+    }
+
+    /* LIST COLUMN */
+    .list-col { min-width: 0; }
 
     .list-header {
       display: flex; justify-content: space-between; align-items: baseline;
       margin-bottom: 16px; padding: 0 4px;
     }
-    .list-header h2 {
-      font-size: 1.05rem; font-weight: 800; color: #1a1a2e;
-      letter-spacing: -0.01em;
-    }
-    .list-header .count {
-      font-size: 0.8rem; color: #6b7280; font-weight: 600;
-    }
+    .list-header h2 { font-size: 1.05rem; font-weight: 800; }
+    .list-header .count { font-size: 0.8rem; color: #6b7280; font-weight: 600; }
 
-    /* ============ DIRECTORY ROWS ============ */
     .biz-list { display: flex; flex-direction: column; gap: 12px; }
 
     .biz-item {
-      display: flex; align-items: flex-start; gap: 20px;
+      display: flex; align-items: flex-start; gap: 18px;
       background: white; border-radius: 14px;
-      padding: 22px 24px;
+      padding: 20px 22px;
       text-decoration: none; color: inherit;
       border: 1.5px solid #f1f5f9;
       transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
-      position: relative;
     }
     .biz-item:hover {
       border-color: #c7d2fe;
       box-shadow: 0 8px 28px rgba(99,102,241,0.10);
       transform: translateX(4px);
     }
-    .biz-item.featured {
-      border-left: 4px solid #fbbf24;
-      padding-left: 21px;
-    }
+    .biz-item.featured { border-left: 4px solid #fbbf24; padding-left: 19px; }
 
-    /* Logo */
     .biz-logo {
-      width: 68px; height: 68px; border-radius: 14px;
+      width: 60px; height: 60px; border-radius: 13px;
       object-fit: cover; background: #f1f5f9; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.6rem; font-weight: 800; color: #6366f1;
+      font-size: 1.4rem; font-weight: 800; color: #6366f1;
     }
-
-    /* Body */
     .biz-body { flex: 1; min-width: 0; }
-
-    .biz-name-row {
-      display: flex; align-items: center; gap: 10px;
-      flex-wrap: wrap; margin-bottom: 4px;
-    }
-    .biz-name {
-      font-size: 1.08rem; font-weight: 700; line-height: 1.3;
-    }
+    .biz-name-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 5px; }
+    .biz-name { font-size: 1.02rem; font-weight: 700; line-height: 1.3; }
 
     .badge {
       display: inline-flex; align-items: center; gap: 3px;
       padding: 3px 10px; border-radius: 20px;
-      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.3px;
-      flex-shrink: 0;
+      font-size: 0.66rem; font-weight: 800; flex-shrink: 0;
     }
     .badge.gold   { background: linear-gradient(135deg,#fbbf24,#f59e0b); color: #1a1a2e; }
     .badge.silver { background: linear-gradient(135deg,#e5e7eb,#9ca3af); color: #1a1a2e; }
     .badge.bronze { background: linear-gradient(135deg,#d97706,#92400e); color: white; }
     .badge.featured { background: linear-gradient(135deg,#6366f1,#8b5cf6); color: white; }
 
-    .biz-location {
-      font-size: 0.82rem; color: #6b7280; margin-bottom: 8px;
-      display: flex; align-items: center; gap: 5px;
+    .biz-subrow {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      font-size: 0.8rem; color: #6b7280; margin-bottom: 8px;
     }
+    .biz-subrow .industry { color: #4f46e5; font-weight: 600; }
 
     .biz-desc {
-      font-size: 0.88rem; color: #4b5563; line-height: 1.55;
-      margin-bottom: 12px;
+      font-size: 0.86rem; color: #4b5563; line-height: 1.55;
+      margin-bottom: 10px;
       display: -webkit-box; -webkit-line-clamp: 2;
       -webkit-box-orient: vertical; overflow: hidden;
     }
-
-    .biz-meta {
-      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
-    }
+    .biz-meta { display: flex; gap: 8px; flex-wrap: wrap; }
     .meta-chip {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 6px 12px; border-radius: 20px;
-      font-size: 0.78rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 11px; border-radius: 20px;
+      font-size: 0.74rem; font-weight: 600;
     }
-    .meta-chip.website { background: #eef2ff; color: #4f46e5; }
+    .meta-chip.website { background: #eef2ff; color: #4f46e5; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .meta-chip.links   { background: #f3f4f6; color: #6b7280; }
 
-    /* Action column */
-    .biz-action {
-      display: flex; align-items: center; justify-content: flex-end;
-      align-self: center; flex-shrink: 0;
-    }
+    .biz-action { align-self: center; flex-shrink: 0; }
     .btn-view {
       display: inline-flex; align-items: center; gap: 6px;
       background: #1a1a2e; color: white;
-      padding: 11px 20px; border-radius: 10px;
-      font-size: 0.85rem; font-weight: 700;
-      text-decoration: none; white-space: nowrap;
-      transition: transform 0.15s, background 0.15s;
+      padding: 10px 18px; border-radius: 10px;
+      font-size: 0.82rem; font-weight: 700;
+      white-space: nowrap; transition: background 0.15s;
     }
-    .btn-view:hover { background: #2d2d4e; transform: translateX(3px); }
+    .biz-item:hover .btn-view { background: #6366f1; }
 
-    /* Loading / empty */
-    .loading, .empty {
-      text-align: center; padding: 80px 20px;
-      color: #9ca3af; font-size: 0.95rem;
-    }
+    .loading, .empty { text-align: center; padding: 80px 20px; color: #9ca3af; font-size: 0.95rem; }
     .spinner {
       width: 36px; height: 36px; border-radius: 50%;
       border: 3px solid #e5e7eb; border-top-color: #6366f1;
@@ -185,18 +199,20 @@
     .footer { text-align: center; padding: 32px; font-size: 0.8rem; color: #9ca3af; }
     .footer a { color: #6366f1; text-decoration: none; }
 
-    /* Responsive */
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .ads-col { position: static; order: 2; flex-direction: row; overflow-x: auto; }
+      .ads-col .ads-label { display: none; }
+      .ad-slot { min-width: 260px; flex-shrink: 0; }
+    }
     @media (max-width: 640px) {
-      .biz-item {
-        flex-wrap: wrap;
-        padding: 18px;
-        gap: 14px;
-      }
+      .biz-item { flex-wrap: wrap; padding: 16px; gap: 12px; }
       .biz-action { width: 100%; }
       .btn-view { width: 100%; justify-content: center; }
-      .biz-logo { width: 56px; height: 56px; font-size: 1.3rem; }
-      .biz-name { font-size: 1rem; }
-      .biz-item:hover { transform: none; }
+      .biz-logo { width: 52px; height: 52px; font-size: 1.2rem; }
+      .search-box { flex-direction: column; }
+      .search-box select { border-right: none; border-bottom: 1px solid #e5e7eb; padding: 12px 16px; }
     }
   </style>
 </head>
@@ -206,7 +222,28 @@
     <h1>Find the right service provider</h1>
     <p>Browse trusted businesses and connect with them directly.</p>
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Search by business name, location, or keyword..." />
+      <input type="text" id="searchInput" placeholder="Search name, service, or location..." />
+      <select id="industryFilter">
+        <option value="">All industries</option>
+        <option>Construction</option>
+        <option>Real Estate</option>
+        <option>IT &amp; Technology</option>
+        <option>Marketing &amp; Advertising</option>
+        <option>Legal Services</option>
+        <option>Accounting &amp; Finance</option>
+        <option>Healthcare</option>
+        <option>Education &amp; Training</option>
+        <option>Hospitality &amp; Tourism</option>
+        <option>Retail &amp; E-commerce</option>
+        <option>Transportation &amp; Logistics</option>
+        <option>Manufacturing</option>
+        <option>Agriculture</option>
+        <option>Beauty &amp; Wellness</option>
+        <option>Fitness &amp; Sports</option>
+        <option>Media &amp; Entertainment</option>
+        <option>Home Services</option>
+        <option>Other</option>
+      </select>
       <button id="searchBtn">Search</button>
     </div>
   </section>
@@ -223,29 +260,59 @@
     <a class="cta-btn" href="dashboard.html">+ List Your Business</a>
   </div>
 
-  <main class="main">
-    <div id="loading" class="loading">
-      <div class="spinner"></div>
-      Loading businesses...
-    </div>
+  <div class="layout">
+    <!-- ADS SIDEBAR -->
+    <aside class="ads-col">
+      <div class="ads-label">Sponsored</div>
 
-    <div id="listWrap" class="hidden">
-      <div class="list-header">
-        <h2>Service Providers</h2>
-        <span class="count" id="listCount"></span>
+      <!-- EDIT THESE AD SLOTS — replace with your own images and links -->
+      <a class="ad-slot" href="#" target="_blank" rel="noopener">
+        <div class="ad-img">📢</div>
+        <div class="ad-title">Your Ad Here</div>
+        <div class="ad-text">Reach thousands of buyers looking for services every day.</div>
+        <span class="ad-cta">Learn more →</span>
+      </a>
+
+      <a class="ad-slot" href="#" target="_blank" rel="noopener">
+        <div class="ad-img">⭐</div>
+        <div class="ad-title">Promote Your Brand</div>
+        <div class="ad-text">Feature your business at the top of the directory.</div>
+        <span class="ad-cta">Get featured →</span>
+      </a>
+
+      <a class="ad-slot" href="#" target="_blank" rel="noopener">
+        <div class="ad-img">🎯</div>
+        <div class="ad-title">Advertise With Us</div>
+        <div class="ad-text">Sidebar ads reach a targeted audience actively seeking services.</div>
+        <span class="ad-cta">Contact us →</span>
+      </a>
+    </aside>
+
+    <!-- BUSINESS LIST -->
+    <main class="list-col">
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+        Loading businesses...
       </div>
-      <div id="bizList" class="biz-list"></div>
-    </div>
 
-    <div id="emptyState" class="empty hidden">No businesses found.</div>
-  </main>
+      <div id="listWrap" class="hidden">
+        <div class="list-header">
+          <h2>Service Providers</h2>
+          <span class="count" id="listCount"></span>
+        </div>
+        <div id="bizList" class="biz-list"></div>
+      </div>
+
+      <div id="emptyState" class="empty hidden">No businesses found.</div>
+    </main>
+  </div>
 
   <div class="footer">
     <p>Are you a business owner? <a href="dashboard.html">List your business →</a></p>
   </div>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=7';
+import { supabase } from './supabase-client.js?v=8';
 
 const listWrap   = document.getElementById('listWrap');
 const bizList    = document.getElementById('bizList');
@@ -254,19 +321,16 @@ const loadingEl  = document.getElementById('loading');
 const emptyState = document.getElementById('emptyState');
 const searchInput = document.getElementById('searchInput');
 const searchBtn   = document.getElementById('searchBtn');
+const industryFilter = document.getElementById('industryFilter');
 const ctaBanner   = document.getElementById('ctaBanner');
 const ctaClose    = document.getElementById('ctaClose');
 
 let allBusinesses = [];
 
-// ---------- CTA banner ----------
+// CTA
 const CTA_KEY = 'ctaBannerDismissedUntil';
 const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
-function shouldShowCTA() {
-  const until = localStorage.getItem(CTA_KEY);
-  return !until || Date.now() > parseInt(until, 10);
-}
-if (shouldShowCTA()) {
+if (!localStorage.getItem(CTA_KEY) || Date.now() > parseInt(localStorage.getItem(CTA_KEY), 10)) {
   setTimeout(() => ctaBanner.classList.add('visible'), 900);
 }
 ctaClose.addEventListener('click', () => {
@@ -275,7 +339,7 @@ ctaClose.addEventListener('click', () => {
   localStorage.setItem(CTA_KEY, String(Date.now() + ONE_WEEK));
 });
 
-// ---------- Helpers ----------
+// Helpers
 function normalizeUrl(url) {
   if (!url) return '';
   url = String(url).trim();
@@ -298,7 +362,7 @@ function findWebsite(links) {
   return byLabel || links[0];
 }
 
-// ---------- Load ----------
+// Load
 async function loadBusinesses() {
   const { data, error } = await supabase
     .from('public_directory').select('*')
@@ -307,19 +371,39 @@ async function loadBusinesses() {
 
   loadingEl.classList.add('hidden');
   if (error) {
-    console.error(error);
     emptyState.classList.remove('hidden');
     emptyState.textContent = 'Could not load businesses.';
+    console.error(error);
     return;
   }
   allBusinesses = data || [];
-  render(allBusinesses);
+  applyFilters();
+}
+
+// Filter by search text + industry
+function applyFilters() {
+  const q = searchInput.value.toLowerCase().trim();
+  const ind = industryFilter.value;
+  let filtered = allBusinesses;
+
+  if (ind) filtered = filtered.filter(b => (b.industry || '') === ind);
+  if (q) {
+    filtered = filtered.filter(b =>
+      b.business_name?.toLowerCase().includes(q) ||
+      b.description?.toLowerCase().includes(q) ||
+      b.services?.toLowerCase().includes(q) ||
+      b.location?.toLowerCase().includes(q) ||
+      b.industry?.toLowerCase().includes(q)
+    );
+  }
+  render(filtered);
 }
 
 function render(list) {
   if (!list.length) {
     emptyState.classList.remove('hidden');
     listWrap.classList.add('hidden');
+    emptyState.textContent = 'No businesses match your search.';
     return;
   }
   emptyState.classList.add('hidden');
@@ -348,14 +432,14 @@ function bizRowHTML(biz, position) {
   const websiteChip = website
     ? `<span class="meta-chip website">🌐 ${escapeHtml(displayUrl(normalizeUrl(website.url)))}</span>`
     : '';
-
   const linkCount = (biz.links || []).length;
   const linksChip = linkCount > 0
     ? `<span class="meta-chip links">🔗 ${linkCount} ${linkCount === 1 ? 'link' : 'links'}</span>`
     : '';
 
-  const locationHTML = biz.location
-    ? `<div class="biz-location">📍 ${escapeHtml(biz.location)}</div>` : '';
+  const subrow = [];
+  if (biz.industry) subrow.push(`<span class="industry">🏷 ${escapeHtml(biz.industry)}</span>`);
+  if (biz.location) subrow.push(`<span>📍 ${escapeHtml(biz.location)}</span>`);
 
   return `
     <a class="biz-item ${featured ? 'featured' : ''}"
@@ -366,29 +450,20 @@ function bizRowHTML(biz, position) {
           <span class="biz-name">${escapeHtml(biz.business_name)}</span>
           ${badgeFor(biz.rank, position)}
         </div>
-        ${locationHTML}
+        ${subrow.length ? `<div class="biz-subrow">${subrow.join('')}</div>` : ''}
         <div class="biz-desc">${escapeHtml(biz.description || 'No description provided.')}</div>
         <div class="biz-meta">${websiteChip}${linksChip}</div>
       </div>
       <div class="biz-action">
-        <span class="btn-view">View profile →</span>
+        <span class="btn-view">View →</span>
       </div>
     </a>
   `;
 }
 
-// ---------- Search ----------
-function filterList(q) {
-  q = q.toLowerCase().trim();
-  if (!q) return render(allBusinesses);
-  render(allBusinesses.filter(b =>
-    b.business_name?.toLowerCase().includes(q) ||
-    b.description?.toLowerCase().includes(q) ||
-    b.location?.toLowerCase().includes(q)
-  ));
-}
-searchBtn.addEventListener('click', () => filterList(searchInput.value));
-searchInput.addEventListener('input', e => filterList(e.target.value));
+searchBtn.addEventListener('click', applyFilters);
+searchInput.addEventListener('input', applyFilters);
+industryFilter.addEventListener('change', applyFilters);
 
 loadBusinesses();
 </script>
