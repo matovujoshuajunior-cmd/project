@@ -9,15 +9,18 @@
     .hidden { display: none !important; }
     body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f8fafc; color: #1a1a2e; }
 
+    /* ============ HERO (kept) ============ */
     .hero {
       background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
-      padding: 64px 24px 80px; text-align: center; color: white;
+      padding: 64px 24px 96px;
+      text-align: center; color: white;
     }
     .hero h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 800; margin-bottom: 12px; }
     .hero p { font-size: 1.05rem; opacity: 0.9; max-width: 520px; margin: 0 auto 28px; }
     .search-box {
-      display: flex; max-width: 520px; margin: 0 auto; background: white;
-      border-radius: 14px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      display: flex; max-width: 520px; margin: 0 auto;
+      background: white; border-radius: 14px; overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
     }
     .search-box input { flex: 1; padding: 16px 20px; border: none; font-size: 0.95rem; outline: none; }
     .search-box button {
@@ -26,25 +29,20 @@
     }
     .search-box button:hover { background: #2d2d4e; }
 
-    /* CTA BANNER — animated in after page load */
+    /* ============ CTA BANNER (kept, dismissible) ============ */
     .cta-banner {
       background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-      color: #1a1a2e;
-      padding: 22px 28px;
+      color: #1a1a2e; padding: 22px 28px;
       display: flex; align-items: center; justify-content: space-between;
       gap: 20px; flex-wrap: wrap;
-      max-width: 1100px; margin: -40px auto 32px;
+      max-width: 1080px; margin: -56px auto 36px;
       border-radius: 18px;
       box-shadow: 0 12px 32px rgba(245,158,11,0.35);
       position: relative; z-index: 2;
-      opacity: 0;
-      transform: translateY(-12px);
+      opacity: 0; transform: translateY(-12px);
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
-    .cta-banner.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .cta-banner.visible { opacity: 1; transform: translateY(0); }
     .cta-banner .cta-text { display: flex; align-items: center; gap: 14px; font-size: 0.95rem; flex: 1; min-width: 220px; }
     .cta-banner .cta-icon { font-size: 2rem; }
     .cta-banner strong { display: block; font-size: 1.1rem; font-weight: 800; margin-bottom: 2px; }
@@ -59,75 +57,124 @@
     .cta-banner .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
     .cta-close {
       position: absolute; top: 8px; right: 10px;
-      background: rgba(26,26,46,0.15);
-      border: none; width: 28px; height: 28px;
-      border-radius: 50%; cursor: pointer;
-      color: #1a1a2e; font-size: 0.9rem; font-weight: 700;
+      background: rgba(26,26,46,0.15); border: none;
+      width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+      color: #1a1a2e; font-size: 0.85rem; font-weight: 700;
       display: flex; align-items: center; justify-content: center;
       transition: background 0.15s;
     }
     .cta-close:hover { background: rgba(26,26,46,0.3); }
 
-    .main { max-width: 1100px; margin: 0 auto 60px; padding: 0 24px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+    /* ============ MAIN ============ */
+    .main { max-width: 1080px; margin: 0 auto 60px; padding: 0 24px; }
 
-    .biz-card {
-      position: relative; display: flex; flex-direction: column;
-      background: white; border-radius: 16px; padding: 22px;
+    .list-header {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 16px; padding: 0 4px;
+    }
+    .list-header h2 {
+      font-size: 1.05rem; font-weight: 800; color: #1a1a2e;
+      letter-spacing: -0.01em;
+    }
+    .list-header .count {
+      font-size: 0.8rem; color: #6b7280; font-weight: 600;
+    }
+
+    /* ============ DIRECTORY ROWS ============ */
+    .biz-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .biz-item {
+      display: flex; align-items: flex-start; gap: 20px;
+      background: white; border-radius: 14px;
+      padding: 22px 24px;
       text-decoration: none; color: inherit;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
-      border: 1.5px solid transparent;
-      min-height: 210px;
+      border: 1.5px solid #f1f5f9;
+      transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+      position: relative;
     }
-    .biz-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(99,102,241,0.15); border-color: #c7d2fe; }
-
-    .rank-badge {
-      position: absolute; top: 12px; right: 12px;
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 5px 11px; border-radius: 20px;
-      font-size: 0.72rem; font-weight: 800;
+    .biz-item:hover {
+      border-color: #c7d2fe;
+      box-shadow: 0 8px 28px rgba(99,102,241,0.10);
+      transform: translateX(4px);
     }
-    .rank-badge.gold   { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #1a1a2e; }
-    .rank-badge.silver { background: linear-gradient(135deg, #e5e7eb, #9ca3af); color: #1a1a2e; }
-    .rank-badge.bronze { background: linear-gradient(135deg, #d97706, #92400e); color: white; }
-    .rank-badge.featured { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
+    .biz-item.featured {
+      border-left: 4px solid #fbbf24;
+      padding-left: 21px;
+    }
 
-    .card-top { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; padding-right: 70px; }
+    /* Logo */
     .biz-logo {
-      width: 52px; height: 52px; border-radius: 12px;
+      width: 68px; height: 68px; border-radius: 14px;
       object-fit: cover; background: #f1f5f9; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; font-weight: 700; color: #6366f1;
-    }
-    .biz-name { font-size: 1rem; font-weight: 700; line-height: 1.3;
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .biz-location { font-size: 0.78rem; color: #6b7280; margin-top: 3px; }
-
-    .biz-snippet {
-      font-size: 0.85rem; color: #6b7280; line-height: 1.5;
-      margin-bottom: 16px; flex: 1;
-      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+      font-size: 1.6rem; font-weight: 800; color: #6366f1;
     }
 
-    .website-row {
-      display: flex; align-items: center; gap: 8px;
-      padding: 10px 14px; background: #eef2ff; border-radius: 10px;
-      color: #4f46e5; font-size: 0.85rem; font-weight: 600;
-      margin-bottom: 10px;
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    }
-    .website-row .url-text { overflow: hidden; text-overflow: ellipsis; }
+    /* Body */
+    .biz-body { flex: 1; min-width: 0; }
 
-    .card-footer {
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 0.78rem; color: #9ca3af;
-      padding-top: 12px; border-top: 1px solid #f1f5f9;
+    .biz-name-row {
+      display: flex; align-items: center; gap: 10px;
+      flex-wrap: wrap; margin-bottom: 4px;
     }
-    .view-arrow { color: #6366f1; font-weight: 700; transition: transform 0.18s; }
-    .biz-card:hover .view-arrow { transform: translateX(3px); }
+    .biz-name {
+      font-size: 1.08rem; font-weight: 700; line-height: 1.3;
+    }
 
-    .loading, .empty { text-align: center; padding: 80px 20px; color: #9ca3af; font-size: 0.95rem; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 3px;
+      padding: 3px 10px; border-radius: 20px;
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.3px;
+      flex-shrink: 0;
+    }
+    .badge.gold   { background: linear-gradient(135deg,#fbbf24,#f59e0b); color: #1a1a2e; }
+    .badge.silver { background: linear-gradient(135deg,#e5e7eb,#9ca3af); color: #1a1a2e; }
+    .badge.bronze { background: linear-gradient(135deg,#d97706,#92400e); color: white; }
+    .badge.featured { background: linear-gradient(135deg,#6366f1,#8b5cf6); color: white; }
+
+    .biz-location {
+      font-size: 0.82rem; color: #6b7280; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 5px;
+    }
+
+    .biz-desc {
+      font-size: 0.88rem; color: #4b5563; line-height: 1.55;
+      margin-bottom: 12px;
+      display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+
+    .biz-meta {
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    }
+    .meta-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px; border-radius: 20px;
+      font-size: 0.78rem; font-weight: 600;
+    }
+    .meta-chip.website { background: #eef2ff; color: #4f46e5; }
+    .meta-chip.links   { background: #f3f4f6; color: #6b7280; }
+
+    /* Action column */
+    .biz-action {
+      display: flex; align-items: center; justify-content: flex-end;
+      align-self: center; flex-shrink: 0;
+    }
+    .btn-view {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #1a1a2e; color: white;
+      padding: 11px 20px; border-radius: 10px;
+      font-size: 0.85rem; font-weight: 700;
+      text-decoration: none; white-space: nowrap;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .btn-view:hover { background: #2d2d4e; transform: translateX(3px); }
+
+    /* Loading / empty */
+    .loading, .empty {
+      text-align: center; padding: 80px 20px;
+      color: #9ca3af; font-size: 0.95rem;
+    }
     .spinner {
       width: 36px; height: 36px; border-radius: 50%;
       border: 3px solid #e5e7eb; border-top-color: #6366f1;
@@ -137,6 +184,20 @@
 
     .footer { text-align: center; padding: 32px; font-size: 0.8rem; color: #9ca3af; }
     .footer a { color: #6366f1; text-decoration: none; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .biz-item {
+        flex-wrap: wrap;
+        padding: 18px;
+        gap: 14px;
+      }
+      .biz-action { width: 100%; }
+      .btn-view { width: 100%; justify-content: center; }
+      .biz-logo { width: 56px; height: 56px; font-size: 1.3rem; }
+      .biz-name { font-size: 1rem; }
+      .biz-item:hover { transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -150,7 +211,6 @@
     </div>
   </section>
 
-  <!-- CTA — starts hidden, fades in after landing -->
   <div class="cta-banner" id="ctaBanner">
     <button class="cta-close" id="ctaClose" title="Dismiss">✕</button>
     <div class="cta-text">
@@ -168,7 +228,15 @@
       <div class="spinner"></div>
       Loading businesses...
     </div>
-    <div id="grid" class="grid hidden"></div>
+
+    <div id="listWrap" class="hidden">
+      <div class="list-header">
+        <h2>Service Providers</h2>
+        <span class="count" id="listCount"></span>
+      </div>
+      <div id="bizList" class="biz-list"></div>
+    </div>
+
     <div id="emptyState" class="empty hidden">No businesses found.</div>
   </main>
 
@@ -177,11 +245,13 @@
   </div>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=5';
+import { supabase } from './supabase-client.js?v=7';
 
-const grid        = document.getElementById('grid');
-const loading     = document.getElementById('loading');
-const emptyState  = document.getElementById('emptyState');
+const listWrap   = document.getElementById('listWrap');
+const bizList    = document.getElementById('bizList');
+const listCount  = document.getElementById('listCount');
+const loadingEl  = document.getElementById('loading');
+const emptyState = document.getElementById('emptyState');
 const searchInput = document.getElementById('searchInput');
 const searchBtn   = document.getElementById('searchBtn');
 const ctaBanner   = document.getElementById('ctaBanner');
@@ -189,153 +259,136 @@ const ctaClose    = document.getElementById('ctaClose');
 
 let allBusinesses = [];
 
-// ---------- CTA banner: fade in after landing, dismissible ----------
-const CTA_DISMISS_KEY = 'ctaBannerDismissedUntil';
+// ---------- CTA banner ----------
+const CTA_KEY = 'ctaBannerDismissedUntil';
 const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
-
 function shouldShowCTA() {
-  const until = localStorage.getItem(CTA_DISMISS_KEY);
-  if (!until) return true;
-  return Date.now() > parseInt(until, 10);
+  const until = localStorage.getItem(CTA_KEY);
+  return !until || Date.now() > parseInt(until, 10);
 }
-
-// Show after a short delay (feels like it "arrives" after landing)
 if (shouldShowCTA()) {
   setTimeout(() => ctaBanner.classList.add('visible'), 900);
 }
-
 ctaClose.addEventListener('click', () => {
   ctaBanner.classList.remove('visible');
-  // Hide completely after the transition ends
   setTimeout(() => ctaBanner.style.display = 'none', 500);
-  localStorage.setItem(CTA_DISMISS_KEY, String(Date.now() + ONE_WEEK));
+  localStorage.setItem(CTA_KEY, String(Date.now() + ONE_WEEK));
 });
 
-// ---------- URL helpers ----------
+// ---------- Helpers ----------
 function normalizeUrl(url) {
   if (!url) return '';
-  url = url.trim();
+  url = String(url).trim();
   if (!url) return '';
-  if (/^https?:\/\//i.test(url)) return url;
+  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(url)) return url;
   if (/^(mailto:|tel:|sms:|whatsapp:)/i.test(url)) return url;
   return 'https://' + url;
 }
 function displayUrl(url) {
   if (!url) return '';
-  return url.replace(/^https?:\/\//i, '').replace(/\/$/, '');
+  return String(url).replace(/^https?:\/\//i, '').replace(/\/$/, '');
 }
-
+function escapeHtml(s) {
+  if (s === null || s === undefined) return '';
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 function findWebsite(links) {
   if (!links || !links.length) return null;
   const byLabel = links.find(l => /website|site|homepage/i.test(l.label || ''));
   return byLabel || links[0];
 }
 
+// ---------- Load ----------
 async function loadBusinesses() {
-  loading.classList.remove('hidden');
-  grid.classList.add('hidden');
-  emptyState.classList.add('hidden');
-
   const { data, error } = await supabase
     .from('public_directory').select('*')
     .order('rank', { ascending: false })
     .order('created_at', { ascending: false });
 
-  console.log('Directory fetch:', { data, error });
-
-  loading.classList.add('hidden');
+  loadingEl.classList.add('hidden');
   if (error) {
     console.error(error);
     emptyState.classList.remove('hidden');
-    emptyState.textContent = 'Could not load businesses. Check console.';
+    emptyState.textContent = 'Could not load businesses.';
     return;
   }
   allBusinesses = data || [];
-  renderBusinesses(allBusinesses);
+  render(allBusinesses);
 }
 
-function renderBusinesses(list) {
+function render(list) {
   if (!list.length) {
     emptyState.classList.remove('hidden');
-    grid.classList.add('hidden');
+    listWrap.classList.add('hidden');
     return;
   }
   emptyState.classList.add('hidden');
-  grid.classList.remove('hidden');
-  grid.innerHTML = list.map((biz, i) => bizCardHTML(biz, i)).join('');
+  listWrap.classList.remove('hidden');
+  listCount.textContent = `${list.length} ${list.length === 1 ? 'provider' : 'providers'}`;
+  bizList.innerHTML = list.map((biz, i) => bizRowHTML(biz, i)).join('');
 }
 
-function rankBadgeHTML(rank, position) {
-  if (position === 0) return `<div class="rank-badge gold">🥇 #1</div>`;
-  if (position === 1) return `<div class="rank-badge silver">🥈 #2</div>`;
-  if (position === 2) return `<div class="rank-badge bronze">🥉 #3</div>`;
-  if (rank && rank > 0) return `<div class="rank-badge featured">⭐ Featured</div>`;
+function badgeFor(rank, position) {
+  if (position === 0) return '<span class="badge gold">🥇 #1</span>';
+  if (position === 1) return '<span class="badge silver">🥈 #2</span>';
+  if (position === 2) return '<span class="badge bronze">🥉 #3</span>';
+  if (rank && rank > 0) return '<span class="badge featured">⭐ Featured</span>';
   return '';
 }
 
-function bizCardHTML(biz, position) {
+function bizRowHTML(biz, position) {
   const initial = (biz.business_name || '?')[0].toUpperCase();
+  const featured = (biz.rank && biz.rank > 0) || position < 3;
   const logo = biz.logo_url
     ? `<img class="biz-logo" src="${escapeHtml(biz.logo_url)}" alt=""
             onerror="this.outerHTML='<div class=\\'biz-logo\\'>${initial}</div>'" />`
     : `<div class="biz-logo">${initial}</div>`;
 
   const website = findWebsite(biz.links);
-  const websiteRow = website
-    ? `<div class="website-row">
-         <span>🌐</span>
-         <span class="url-text">${escapeHtml(displayUrl(normalizeUrl(website.url)))}</span>
-       </div>`
+  const websiteChip = website
+    ? `<span class="meta-chip website">🌐 ${escapeHtml(displayUrl(normalizeUrl(website.url)))}</span>`
+    : '';
+
+  const linkCount = (biz.links || []).length;
+  const linksChip = linkCount > 0
+    ? `<span class="meta-chip links">🔗 ${linkCount} ${linkCount === 1 ? 'link' : 'links'}</span>`
     : '';
 
   const locationHTML = biz.location
     ? `<div class="biz-location">📍 ${escapeHtml(biz.location)}</div>` : '';
 
-  const linkCount = (biz.links || []).length;
-  const linkLabel = linkCount === 0 ? 'No links'
-                  : linkCount === 1 ? '1 link'
-                  : `${linkCount} links`;
-
   return `
-    <a class="biz-card" href="profile.html?id=${encodeURIComponent(biz.id)}">
-      ${rankBadgeHTML(biz.rank, position)}
-      <div class="card-top">
-        ${logo}
-        <div>
-          <div class="biz-name">${escapeHtml(biz.business_name)}</div>
-          ${locationHTML}
+    <a class="biz-item ${featured ? 'featured' : ''}"
+       href="profile.html?id=${encodeURIComponent(biz.id)}">
+      ${logo}
+      <div class="biz-body">
+        <div class="biz-name-row">
+          <span class="biz-name">${escapeHtml(biz.business_name)}</span>
+          ${badgeFor(biz.rank, position)}
         </div>
+        ${locationHTML}
+        <div class="biz-desc">${escapeHtml(biz.description || 'No description provided.')}</div>
+        <div class="biz-meta">${websiteChip}${linksChip}</div>
       </div>
-      <div class="biz-snippet">${escapeHtml(biz.description || 'No description provided.')}</div>
-      ${websiteRow}
-      <div class="card-footer">
-        <span>🔗 ${linkLabel}</span>
-        <span class="view-arrow">View profile →</span>
+      <div class="biz-action">
+        <span class="btn-view">View profile →</span>
       </div>
     </a>
   `;
 }
 
-function escapeHtml(str) {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
-function filterBusinesses(query) {
-  const q = query.toLowerCase().trim();
-  if (!q) return renderBusinesses(allBusinesses);
-  const filtered = allBusinesses.filter(b =>
+// ---------- Search ----------
+function filterList(q) {
+  q = q.toLowerCase().trim();
+  if (!q) return render(allBusinesses);
+  render(allBusinesses.filter(b =>
     b.business_name?.toLowerCase().includes(q) ||
     b.description?.toLowerCase().includes(q) ||
     b.location?.toLowerCase().includes(q)
-  );
-  renderBusinesses(filtered);
+  ));
 }
-
-searchBtn.addEventListener('click', () => filterBusinesses(searchInput.value));
-searchInput.addEventListener('input', e => filterBusinesses(e.target.value));
+searchBtn.addEventListener('click', () => filterList(searchInput.value));
+searchInput.addEventListener('input', e => filterList(e.target.value));
 
 loadBusinesses();
 </script>
