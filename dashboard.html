@@ -102,7 +102,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
   <div class="header">
     <h1>🏪 Business Dashboard</h1>
     <div style="display:flex;gap:8px;">
-      <a href="admin.html" id="adminLink" class="btn btn-ghost hidden">Admin</a>
+      <a href="admin.html" id="adminLink" class="btn btn-ghost" style="display:none">Admin</a>
       <button id="logoutBtn" class="btn btn-danger hidden">Log Out</button>
     </div>
   </div>
@@ -376,7 +376,8 @@ async function loadProfile(){
   $('bizLogo').value = profile.logo_url || '';
   updateLogoPreview(profile.logo_url);
 
-  if(profile.is_admin) adminLink.classList.remove('hidden');
+  // Show admin button ONLY when is_admin is strictly true
+adminLink.style.display = (profile.is_admin === true) ? 'inline-block' : 'none';
 }
 
 $('bizLogo').addEventListener('input', e=>updateLogoPreview(e.target.value));
