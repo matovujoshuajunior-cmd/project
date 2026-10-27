@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<title>Compare Agencies — Get the Tools to Close Your Leaks</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+.hidden{display:none!important}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f8fafc;color:#1a1a2e}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1a1a2e 0%,#2d2d4e 50%,#1a1a2e 100%);padding:56px 24px 72px;text-align:center;color:#fff;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:-10%;width:60%;height:200%;background:radial-gradient(circle,rgba(99,102,241,.15) 0%,transparent 60%);pointer-events:none}
+.hero-inner{max-width:720px;margin:0 auto;position:relative;z-index:1}
+.hero .eyebrow{display:inline-block;background:rgba(251,191,36,.15);color:#fbbf24;padding:6px 14px;border-radius:20px;font-size:.75rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(1.7rem,4vw,2.4rem);font-weight:800;margin-bottom:14px;line-height:1.2}
+.hero p{font-size:1rem;opacity:.85;line-height:1.6;max-width:580px;margin:0 auto 28px}
+.hero .trust-row{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:24px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1)}
+.hero .trust-item{font-size:.82rem;color:#cbd5e1;display:flex;align-items:center;gap:6px}
+.hero .trust-item strong{color:#fff}
+
+/* BACK LINK */
+.back-bar{max-width:1100px;margin:0 auto;padding:16px 24px 0}
+.back-link{display:inline-flex;align-items:center;gap:6px;color:#6366f1;text-decoration:none;font-size:.85rem;font-weight:600}
+.back-link:hover{text-decoration:underline}
+
+/* MAIN */
+.main{max-width:1100px;margin:0 auto;padding:24px 24px 60px}
+
+/* FILTERS */
+.filters{background:#fff;border-radius:14px;padding:16px 20px;box-shadow:0 2px 16px rgba(0,0,0,.06);margin-bottom:20px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.filters label{font-size:.72rem;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:.5px}
+.filters select{padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:9px;font-size:.85rem;background:#fafafa;font-family:inherit;cursor:pointer;color:#1a1a2e;font-weight:600}
+.filters select:focus{outline:none;border-color:#6366f1}
+
+/* RESULT COUNT */
+.results-bar{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;padding:0 4px}
+.results-bar h2{font-size:1rem;font-weight:800}
+.results-bar .count{font-size:.8rem;color:#6b7280;font-weight:600}
+
+/* AGENCY LIST */
+.agency-list{display:flex;flex-direction:column;gap:14px}
+
+.agency-card{background:#fff;border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.05);border:1.5px solid #f1f5f9;transition:border-color .18s,box-shadow .18s,transform .18s}
+.agency-card:hover{border-color:#c7d2fe;box-shadow:0 8px 28px rgba(99,102,241,.10);transform:translateY(-2px)}
+.agency-card.featured{border-left:4px solid #fbbf24;padding-left:21px}
+
+.ag-top{display:flex;align-items:flex-start;gap:16px;margin-bottom:14px}
+.ag-logo{width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,#eef2ff,#e0e7ff);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:800;color:#6366f1;flex-shrink:0;overflow:hidden}
+.ag-logo img{width:100%;height:100%;object-fit:cover}
+
+.ag-body{flex:1;min-width:0}
+.ag-name-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.ag-name{font-size:1.1rem;font-weight:800;color:#1a1a2e}
+.ag-badge{font-size:.62rem;font-weight:800;padding:3px 9px;border-radius:20px;letter-spacing:.3px}
+.ag-badge.verified{background:#dcfce7;color:#16a34a}
+.ag-badge.featured{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1a1a2e}
+.ag-tagline{font-size:.9rem;color:#4b5563;line-height:1.5;margin-bottom:10px}
+
+.ag-services{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.ag-chip{font-size:.72rem;font-weight:700;padding:5px 11px;border-radius:20px;display:inline-flex;align-items:center;gap:4px}
+.ag-chip.website{background:#eef2ff;color:#4f46e5}
+.ag-chip.crm{background:#fdf2f8;color:#db2777}
+.ag-chip.ai_followup{background:#f0fdf4;color:#16a34a}
+.ag-chip.analytics{background:#fef3c7;color:#92400e}
+
+.ag-meta{display:flex;gap:16px;flex-wrap:wrap;font-size:.8rem;color:#6b7280;margin-top:6px}
+.ag-meta .meta-item{display:flex;align-items:center;gap:5px}
+.ag-meta strong{color:#1a1a2e;font-weight:700}
+
+.ag-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:16px;border-top:1px solid #f1f5f9;margin-top:6px}
+.ag-price{display:flex;align-items:baseline;gap:6px}
+.ag-price .label{font-size:.72rem;color:#9ca3af;text-transform:uppercase;letter-spacing:.4px;font-weight:700}
+.ag-price .amount{font-size:1.2rem;font-weight:800;color:#4f46e5}
+.ag-price .per{font-size:.75rem;color:#9ca3af}
+.ag-price .contact-only{font-size:.88rem;font-weight:700;color:#6b7280}
+
+.ag-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn-contact{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;padding:11px 22px;border-radius:10px;font-weight:700;font-size:.85rem;border:none;cursor:pointer;transition:transform .15s,box-shadow .15s;display:inline-flex;align-items:center;gap:6px}
+.btn-contact:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(99,102,241,.3)}
+.btn-whatsapp{background:#25d366;color:#fff;padding:11px 18px;border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:transform .15s}
+.btn-whatsapp:hover{transform:translateY(-1px)}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:999;display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+.modal-bg.show{display:flex}
+.modal{background:#fff;border-radius:16px;padding:28px;max-width:520px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);margin:auto;max-height:90vh;overflow-y:auto}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.modal h3{font-size:1.15rem;font-weight:800;color:#1a1a2e}
+.modal-close{background:#f3f4f6;border:none;width:32px;height:32px;border-radius:8px;cursor:pointer;color:#6b7280;font-size:1rem;flex-shrink:0}
+.modal-close:hover{background:#e5e7eb}
+.modal-sub{font-size:.85rem;color:#6b7280;margin-bottom:20px;line-height:1.5}
+
+.contact-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.contact-option{display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 12px;border:2px solid #e5e7eb;border-radius:12px;cursor:pointer;background:#fafafa;transition:all .15s;text-align:center}
+.contact-option:hover{border-color:#c7d2fe;background:#f5f3ff}
+.contact-option.active{border-color:#6366f1;background:#eef2ff}
+.contact-option .co-icon{font-size:1.5rem}
+.contact-option .co-label{font-size:.82rem;font-weight:700;color:#374151}
+
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:.78rem;font-weight:700;color:#374151;margin-bottom:5px}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:9px;font-size:.9rem;background:#fafafa;font-family:inherit}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:#6366f1;background:#fff}
+.form-group textarea{resize:vertical;min-height:70px}
+
+.modal-actions{display:flex;gap:10px;margin-top:20px}
+.modal-actions button{flex:1;padding:12px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;border:none}
+.btn-submit{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
+.btn-submit:hover:not(:disabled){opacity:.9}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed}
+.btn-cancel{background:#f3f4f6;color:#6b7280}
+
+/* SUCCESS STATE IN MODAL */
+.success-state{text-align:center;padding:20px 0}
+.success-icon{width:64px;height:64px;border-radius:50%;background:#dcfce7;color:#16a34a;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px}
+.success-state h3{color:#16a34a;margin-bottom:10px}
+.success-state p{font-size:.88rem;color:#4b5563;line-height:1.6;margin-bottom:16px}
+.success-state .btn-whatsapp{display:inline-flex;padding:12px 24px;font-size:.9rem}
+
+/* STATES */
+.loading{text-align:center;padding:60px 20px;color:#9ca3af;font-size:.95rem}
+.spinner{width:36px;height:36px;border-radius:50%;border:3px solid #e5e7eb;border-top-color:#6366f1;animation:spin .7s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{text-align:center;padding:60px 20px;color:#9ca3af;font-size:.95rem}
+.empty h3{color:#1a1a2e;font-size:1.1rem;margin-bottom:8px}
+.empty p{font-size:.88rem;max-width:400px;margin:0 auto 20px;line-height:1.6}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;padding:12px 24px;border-radius:10px;font-size:.9rem;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9999;max-width:90vw;text-align:center}
+.toast.show{opacity:1}
+.toast.success{background:#16a34a}
+.toast.error{background:#dc2626}
+
+/* FOOTER */
+.footer{text-align:center;padding:32px 20px;font-size:.8rem;color:#9ca3af;border-top:1px solid #f1f5f9;margin-top:20px}
+.footer a{color:#6366f1;text-decoration:none;font-weight:600}
+
+@media(max-width:720px){
+  .ag-top{flex-direction:column}
+  .ag-bottom{flex-direction:column;align-items:stretch}
+  .ag-actions{width:100%}
+  .btn-contact,.btn-whatsapp{width:100%;justify-content:center}
+  .contact-options{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a href="dashboard.html" class="back-link">← Back to dashboard</a>
+</div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">⚡ Fix your lead leaks</div>
+    <h1>Get the tools that close the gaps</h1>
+    <p>Your leak report showed exactly where you're losing customers. These vetted agencies set up the website, CRM, and AI follow-up that fix it — usually within 7 days.</p>
+    <div class="trust-row">
+      <div class="trust-item">🔧 <strong>20+ verified agencies</strong></div>
+      <div class="trust-item">⚡ <strong>Setup in 7 days</strong></div>
+      <div class="trust-item">💬 <strong>Free consultation</strong></div>
+    </div>
+  </div>
+</section>
+
+<div class="main">
+  <div class="filters">
+    <label>Filter by:</label>
+    <select id="filterService">
+      <option value="">All services</option>
+      <option value="website">Website</option>
+      <option value="crm">CRM</option>
+      <option value="ai_followup">AI follow-up</option>
+      <option value="analytics">Analytics</option>
+    </select>
+    <select id="filterSort">
+      <option value="featured">Featured first</option>
+      <option value="rating">Highest rated</option>
+      <option value="price">Lowest price</option>
+      <option value="speed">Fastest response</option>
+    </select>
+  </div>
+
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    Loading agencies…
+  </div>
+
+  <div id="listWrap" class="hidden">
+    <div class="results-bar">
+      <h2>Agencies</h2>
+      <span class="count" id="resultCount"></span>
+    </div>
+    <div id="agencyList" class="agency-list"></div>
+  </div>
+
+  <div id="empty" class="empty hidden">
+    <h3>No agencies match your filters</h3>
+    <p>Try removing a filter or clearing your selection.</p>
+    <button class="btn-contact" onclick="document.getElementById('filterService').value='';document.getElementById('filterSort').value='featured';document.getElementById('filterService').dispatchEvent(new Event('change'))">Clear filters</button>
+  </div>
+</div>
+
+<!-- CONTACT MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <div id="modalForm">
+      <div class="modal-head">
+        <h3 id="modalTitle">Contact Agency</h3>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <p class="modal-sub" id="modalSub">They'll get back to you within 24 hours with a proposal tailored to your business.</p>
+
+      <div class="contact-options">
+        <div class="contact-option active" data-channel="form">
+          <div class="co-icon">📝</div>
+          <div class="co-label">Send message</div>
+        </div>
+        <div class="contact-option" data-channel="whatsapp">
+          <div class="co-icon">💬</div>
+          <div class="co-label">Message on WhatsApp</div>
+        </div>
+      </div>
+
+      <form id="contactForm">
+        <input type="hidden" id="contactAgencyId" />
+        <div class="form-group">
+          <label>Your name *</label>
+          <input type="text" id="contactName" required />
+        </div>
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" id="contactEmail" required />
+        </div>
+        <div class="form-group">
+          <label>Phone / WhatsApp *</label>
+          <input type="tel" id="contactPhone" required placeholder="+256..." />
+        </div>
+        <div class="form-group">
+          <label>What do you need most?</label>
+          <select id="contactNeed">
+            <option value="website">A professional website</option>
+            <option value="crm">CRM to manage contacts</option>
+            <option value="ai_followup">AI follow-up system</option>
+            <option value="all">All of the above</option>
+            <option value="unsure">Not sure yet — advise me</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Anything else? (optional)</label>
+          <textarea id="contactMessage" placeholder="Tell them about your business…"></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" id="modalCancel">Cancel</button>
+          <button type="submit" class="btn-submit" id="modalSubmit">Send inquiry →</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="modalSuccess" class="success-state hidden">
+      <div class="success-icon">✓</div>
+      <h3>Inquiry sent!</h3>
+      <p id="successMessage">The agency will contact you within 24 hours.</p>
+      <a class="btn-whatsapp" id="successWhatsapp" target="_blank" rel="noopener">💬 Message them on WhatsApp</a>
+      <div style="margin-top:16px;">
+        <button class="btn-cancel" id="successClose" style="padding:10px 20px;">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p><a href="index.html">← Back to the directory</a> &nbsp;·&nbsp; <a href="dashboard.html">My dashboard</a></p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { supabase } from './supabase-client.js?v=18';
+
+const $ = id => document.getElementById(id);
+let allAgencies = [];
+let currentUser = null;
+let currentProfile = null;
+let selectedChannel = 'form';
+let currentAgency = null;
+
+// Init
+(async () => {
+  const { data: { session } } = await supabase.auth.getSession();
+  currentUser = session?.user || null;
+
+  if(currentUser){
+    const { data } = await supabase
+      .from('profiles')
+      .select('id, business_name, contact_email, phone')
+      .eq('id', currentUser.id)
+      .maybeSingle();
+    currentProfile = data;
+  }
+
+  await loadAgencies();
+})();
+
+function showToast(msg, type='info'){
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + (type === 'error' ? 'error' : type === 'success' ? 'success' : '');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+function escapeHtml(s){
+  return s == null ? '' : String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fmtPrice(cents){
+  const ugx = Math.round(cents / 100);
+  return 'UGX ' + ugx.toLocaleString();
+}
+
+function serviceLabel(s){
+  return { website:'Website', crm:'CRM', ai_followup:'AI follow-up', analytics:'Analytics' }[s] || s;
+}
+function serviceIcon(s){
+  return { website:'🌐', crm:'💼', ai_followup:'🤖', analytics:'📊' }[s] || '🔧';
+}
+
+async function loadAgencies(){
+  const { data, error } = await supabase
+    .from('agencies')
+    .select('*, agency_pricing(*)')
+    .eq('active', true);
+
+  $('loading').classList.add('hidden');
+
+  if(error){
+    console.error(error);
+    $('empty').classList.remove('hidden');
+    $('empty').querySelector('h3').textContent = 'Could not load agencies';
+    $('empty').querySelector('p').textContent = error.message;
+    return;
+  }
+
+  allAgencies = data || [];
+  applyFilters();
+}
+
+function applyFilters(){
+  const svc = $('filterService').value;
+  const sort = $('filterSort').value;
+
+  let list = [...allAgencies];
+
+  if(svc) list = list.filter(a => (a.services || []).includes(svc));
+
+  if(sort === 'featured'){
+    list.sort((a,b) => (b.featured_rank || 0) - (a.featured_rank || 0));
+  } else if(sort === 'rating'){
+    list.sort((a,b) => (b.satisfaction_score || 0) - (a.satisfaction_score || 0));
+  } else if(sort === 'price'){
+    const cheapest = a => Math.min(...(a.agency_pricing || []).map(p => p.monthly_price_cents).concat([Infinity]));
+    list.sort((a,b) => cheapest(a) - cheapest(b));
+  } else if(sort === 'speed'){
+    list.sort((a,b) => (a.avg_response_minutes || 99999) - (b.avg_response_minutes || 99999));
+  }
+
+  render(list);
+}
+
+function render(list){
+  if(!list.length){
+    $('empty').classList.remove('hidden');
+    $('listWrap').classList.add('hidden');
+    return;
+  }
+  $('empty').classList.add('hidden');
+  $('listWrap').classList.remove('hidden');
+
+  $('resultCount').textContent = `${list.length} ${list.length === 1 ? 'agency' : 'agencies'}`;
+  $('agencyList').innerHTML = list.map(agencyCardHTML).join('');
+
+  document.querySelectorAll('[data-contact]').forEach(btn => {
+    btn.addEventListener('click', () => openContact(btn.dataset.contact));
+  });
+  document.querySelectorAll('[data-wa]').forEach(el => {
+    el.addEventListener('click', () => {
+      const id = el.dataset.wa;
+      const agency = allAgencies.find(a => a.id === id);
+      const msg = encodeURIComponent(`Hi, I found you through the BSRC directory. I'd like to learn about your services.`);
+      window.open(`https://wa.me/${agency.whatsapp || agency.contact_phone}?text=${msg}`, '_blank', 'noopener');
+    });
+  });
+}
+
+function agencyCardHTML(a){
+  const initial = (a.name || '?')[0].toUpperCase();
+  const featured = a.featured_rank > 0;
+
+  const logo = a.logo_url
+    ? `<img src="${escapeHtml(a.logo_url)}" alt="" onerror="this.outerHTML='${initial}'">`
+    : initial;
+
+  const services = (a.services || []).map(s =>
+    `<span class="ag-chip ${s}">${serviceIcon(s)} ${serviceLabel(s)}</span>`
+  ).join('');
+
+  const cheapest = (a.agency_pricing || []).sort((x,y) => x.monthly_price_cents - y.monthly_price_cents)[0];
+  const priceHTML = cheapest
+    ? `<span class="label">From</span><span class="amount">${fmtPrice(cheapest.monthly_price_cents)}</span><span class="per">/month</span>`
+    : `<span class="contact-only">Contact for pricing</span>`;
+
+  const ratingHTML = a.satisfaction_score
+    ? `<span class="meta-item">⭐ <strong>${a.satisfaction_score}/5</strong></span>` : '';
+  const responseHTML = a.avg_response_minutes
+    ? `<span class="meta-item">⏱ Replies in <strong>${a.avg_response_minutes < 60 ? a.avg_response_minutes + ' min' : Math.round(a.avg_response_minutes/60) + 'h'}</strong></span>` : '';
+
+  const waBtn = (a.whatsapp || a.contact_phone)
+    ? `<a class="btn-whatsapp" data-wa="${a.id}" style="cursor:pointer">💬 WhatsApp</a>` : '';
+
+  return `
+    <div class="agency-card ${featured ? 'featured' : ''}">
+      <div class="ag-top">
+        <div class="ag-logo">${logo}</div>
+        <div class="ag-body">
+          <div class="ag-name-row">
+            <span class="ag-name">${escapeHtml(a.name)}</span>
+            ${a.verified ? '<span class="ag-badge verified">✓ VERIFIED</span>' : ''}
+            ${featured ? '<span class="ag-badge featured">⭐ FEATURED</span>' : ''}
+          </div>
+          ${a.tagline ? `<div class="ag-tagline">${escapeHtml(a.tagline)}</div>` : ''}
+          <div class="ag-services">${services}</div>
+          <div class="ag-meta">${ratingHTML}${responseHTML}</div>
+        </div>
+      </div>
+      <div class="ag-bottom">
+        <div class="ag-price">${priceHTML}</div>
+        <div class="ag-actions">
+          ${waBtn}
+          <button class="btn-contact" data-contact="${a.id}">Contact agency →</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ---- Contact modal ----
+function openContact(agencyId){
+  currentAgency = allAgencies.find(a => a.id === agencyId);
+  if(!currentAgency) return;
+
+  if(!currentUser){
+    showToast('Please sign in to your business account first', 'error');
+    setTimeout(() => window.location.href = 'dashboard.html', 1400);
+    return;
+  }
+
+  $('modalTitle').textContent = 'Contact ' + currentAgency.name;
+  $('contactAgencyId').value = agencyId;
+
+  if(currentProfile){
+    if(!$('contactName').value) $('contactName').value = currentProfile.business_name || '';
+    if(!$('contactEmail').value) $('contactEmail').value = currentProfile.contact_email || '';
+    if(!$('contactPhone').value) $('contactPhone').value = currentProfile.phone || '';
+  }
+
+  $('modalForm').classList.remove('hidden');
+  $('modalSuccess').classList.add('hidden');
+  $('modalBg').classList.add('show');
+  selectedChannel = 'form';
+  document.querySelectorAll('.contact-option').forEach(o => o.classList.toggle('active', o.dataset.channel === 'form'));
+}
+
+$('modalClose').addEventListener('click', () => $('modalBg').classList.remove('show'));
+$('modalCancel').addEventListener('click', () => $('modalBg').classList.remove('show'));
+$('successClose').addEventListener('click', () => $('modalBg').classList.remove('show'));
+$('modalBg').addEventListener('click', e => { if(e.target === $('modalBg')) $('modalBg').classList.remove('show'); });
+
+document.querySelectorAll('.contact-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    selectedChannel = opt.dataset.channel;
+    document.querySelectorAll('.contact-option').forEach(o => o.classList.toggle('active', o === opt));
+  });
+});
+
+$('contactForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  if(!currentUser || !currentAgency) return;
+
+  const name = $('contactName').value.trim();
+  const email = $('contactEmail').value.trim();
+  const phone = $('contactPhone').value.trim();
+  const need = $('contactNeed').value;
+  const msg = $('contactMessage').value.trim();
+
+  if(!name || !email || !phone) return showToast('Please fill all required fields', 'error');
+
+  const btn = $('modalSubmit');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  const notes = `Contact: ${name} | ${email} | ${phone}\nNeed: ${need}\nChannel: ${selectedChannel}\n\n${msg || '(no message)'}`;
+
+  const { error } = await supabase.from('agency_conversions').insert({
+    profile_id: currentUser.id,
+    agency_id: currentAgency.id,
+    status: 'inquiry',
+    notes
+  });
+
+  btn.disabled = false;
+  btn.textContent = 'Send inquiry →';
+
+  if(error){
+    console.error(error);
+    return showToast('Could not send: ' + error.message, 'error');
+  }
+
+  // Show success state
+  $('modalForm').classList.add('hidden');
+  $('modalSuccess').classList.remove('hidden');
+  $('successMessage').textContent = `${currentAgency.name} has received your inquiry and will reach out within 24 hours.`;
+
+  const digits = (currentAgency.whatsapp || currentAgency.contact_phone || '').replace(/[^\d]/g, '');
+  if(digits){
+    const waMsg = encodeURIComponent(`Hi ${currentAgency.name}, I just sent an inquiry through the BSRC directory. My name is ${name}. I'd like to learn about your services.`);
+    $('successWhatsapp').href = `https://wa.me/${digits}?text=${waMsg}`;
+    $('successWhatsapp').style.display = 'inline-flex';
+  } else {
+    $('successWhatsapp').style.display = 'none';
+  }
+
+  $('contactForm').reset();
+});
+</script>
+</body>
+</html>
