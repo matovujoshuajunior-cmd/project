@@ -21,7 +21,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .btn-ghost:hover{background:#6366f1;color:#fff}
 .btn-full{width:100%;margin-top:14px;padding:13px}
 .card{background:#fff;border-radius:16px;padding:26px;box-shadow:0 4px 24px rgba(0,0,0,.06);margin-bottom:20px}
-.card h2{font-size:1.1rem;padding-bottom:12px;border-bottom:1px solid #e5e7eb;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.card h2{font-size:1.1rem;padding-bottom:12px;border-bottom:1px solid #e5e7eb;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .card .hint{font-size:.82rem;color:#9ca3af;margin:-8px 0 16px;line-height:1.55}
 .form-group{margin-bottom:16px}
 .form-group label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px;color:#374151}
@@ -30,13 +30,11 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .form-group textarea{resize:vertical;min-height:90px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 
-/* auth */
 .auth-tabs{display:flex;gap:8px;margin-bottom:20px}
 .auth-tab{flex:1;padding:12px;text-align:center;border-radius:10px;cursor:pointer;font-weight:600;font-size:.9rem;background:#e5e7eb;color:#6b7280;border:none;transition:all .2s}
 .auth-tab.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
 .help-panel{background:#fef2f2;border:1px solid #fecaca;color:#7f1d1d;padding:16px;border-radius:10px;font-size:.87rem;margin-bottom:16px;line-height:1.6}
 
-/* link rows */
 .links-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid #e5e7eb;margin-bottom:12px}
 .links-head h2{border:none;padding:0;margin:0}
 .links-count{font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:20px;background:#eef2ff;color:#4f46e5}
@@ -58,7 +56,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .mini-btn.delete{background:#fee2e2;color:#dc2626}
 .link-edit-grid{display:grid;grid-template-columns:1fr 2fr;gap:12px;margin-bottom:12px}
 
-/* hours */
 .hours-grid{display:flex;flex-direction:column;gap:8px}
 .hour-row{display:grid;grid-template-columns:70px 90px 1fr 1fr;gap:10px;align-items:center;padding:8px 12px;background:#f9fafb;border-radius:10px}
 .hour-row .day{font-weight:700;font-size:.85rem;text-transform:capitalize}
@@ -66,7 +63,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .hour-row .closed-label{font-size:.82rem;display:flex;align-items:center;gap:6px;color:#6b7280;font-weight:600;cursor:pointer}
 .hour-row.is-closed input[type="time"]{opacity:.3;pointer-events:none}
 
-/* analytics */
 .stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px}
 .stat-card{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-radius:14px;padding:18px;text-align:center}
 .stat-card .num{font-size:1.8rem;font-weight:800;color:#4f46e5;line-height:1}
@@ -81,6 +77,42 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .top-links .tl-label{font-weight:600}
 .top-links .tl-count{color:#6366f1;font-weight:700}
 
+/* Score */
+.score-hero{text-align:center;padding:20px 0}
+#scoreBig{font-size:3rem;font-weight:800;color:#6366f1;line-height:1}
+#scoreTier{font-size:.95rem;font-weight:700;margin-top:8px;color:#6b7280}
+#scoreBreakdown{margin-top:8px}
+#scoreNext{margin-top:16px;padding:14px;background:#eef2ff;border-radius:10px;font-size:.85rem;color:#4f46e5;font-weight:600}
+
+/* Leads */
+.leads-badge{display:inline-block;background:#ef4444;color:#fff;font-size:.68rem;font-weight:800;padding:3px 9px;border-radius:20px;margin-left:8px;vertical-align:middle;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+.leads-filter{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.lead-filter-btn{padding:7px 14px;border:1.5px solid #e5e7eb;background:#fff;border-radius:20px;font-size:.78rem;font-weight:700;color:#6b7280;cursor:pointer;transition:all .15s}
+.lead-filter-btn:hover{border-color:#c7d2fe;color:#4f46e5}
+.lead-filter-btn.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-color:transparent}
+.lead-item{border:1.5px solid #f1f5f9;border-radius:12px;padding:16px;margin-bottom:10px;transition:border-color .15s,box-shadow .15s;cursor:pointer}
+.lead-item:hover{border-color:#c7d2fe;box-shadow:0 4px 12px rgba(99,102,241,.08)}
+.lead-item.unread{background:#fefce8;border-color:#fde047}
+.lead-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+.lead-name{font-weight:700;font-size:.95rem}
+.lead-time{font-size:.72rem;color:#9ca3af}
+.lead-status{padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.3px}
+.lead-status.new{background:#fee2e2;color:#dc2626}
+.lead-status.contacted{background:#fef3c7;color:#92400e}
+.lead-status.converted{background:#dcfce7;color:#16a34a}
+.lead-status.lost{background:#f3f4f6;color:#6b7280}
+.lead-message{font-size:.88rem;color:#4b5563;line-height:1.55;padding:10px 14px;background:#f9fafb;border-radius:8px;margin-bottom:12px;white-space:pre-wrap}
+.lead-contact{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:.82rem;color:#6b7280}
+.lead-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.lead-btn{padding:9px 14px;border:none;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;transition:transform .15s;display:inline-flex;align-items:center;gap:5px;text-decoration:none}
+.lead-btn:hover{transform:translateY(-1px)}
+.lead-btn.whatsapp{background:#dcfce7;color:#16a34a}
+.lead-btn.email{background:#eef2ff;color:#4f46e5}
+.lead-btn.call{background:#dbeafe;color:#1d4ed8}
+.lead-btn.convert{background:#dcfce7;color:#16a34a}
+.lead-btn.lost{background:#fee2e2;color:#dc2626}
+
 .empty-state{text-align:center;padding:32px 20px;color:#9ca3af;font-size:.9rem}
 .logo-preview{width:64px;height:64px;border-radius:12px;object-fit:cover;margin-top:8px;border:2px solid #e5e7eb}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;padding:12px 24px;border-radius:10px;font-size:.9rem;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999;max-width:90vw;text-align:center;line-height:1.5}
@@ -89,149 +121,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .toast.success{background:#16a34a}
 .toast.warn{background:#d97706}
 
-/* Leads */
-.leads-badge {
-  display: inline-block;
-  background: #ef4444;
-  color: #fff;
-  font-size: .68rem;
-  font-weight: 800;
-  padding: 3px 9px;
-  border-radius: 20px;
-  margin-left: 8px;
-  vertical-align: middle;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: .7; }
-}
-
-.leads-filter {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-.lead-filter-btn {
-  padding: 7px 14px;
-  border: 1.5px solid #e5e7eb;
-  background: #fff;
-  border-radius: 20px;
-  font-size: .78rem;
-  font-weight: 700;
-  color: #6b7280;
-  cursor: pointer;
-  transition: all .15s;
-}
-.lead-filter-btn:hover { border-color: #c7d2fe; color: #4f46e5; }
-.lead-filter-btn.active {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  color: #fff;
-  border-color: transparent;
-}
-
-.lead-item {
-  border: 1.5px solid #f1f5f9;
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 10px;
-  transition: border-color .15s, box-shadow .15s;
-  cursor: pointer;
-}
-.lead-item:hover { border-color: #c7d2fe; box-shadow: 0 4px 12px rgba(99,102,241,.08); }
-.lead-item.unread {
-  background: #fefce8;
-  border-color: #fde047;
-}
-.lead-item.unread::before {
-  content: '';
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: #ef4444;
-  border-radius: 50%;
-  margin-left: -10px;
-  margin-top: 8px;
-}
-
-.lead-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.lead-name { font-weight: 700; font-size: .95rem; }
-.lead-time { font-size: .72rem; color: #9ca3af; }
-
-.lead-status {
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-size: .68rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .3px;
-}
-.lead-status.new { background: #fee2e2; color: #dc2626; }
-.lead-status.contacted { background: #fef3c7; color: #92400e; }
-.lead-status.converted { background: #dcfce7; color: #16a34a; }
-.lead-status.lost { background: #f3f4f6; color: #6b7280; }
-
-.lead-message {
-  font-size: .88rem;
-  color: #4b5563;
-  line-height: 1.55;
-  padding: 10px 14px;
-  background: #f9fafb;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  white-space: pre-wrap;
-}
-
-.lead-contact {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  align-items: center;
-  font-size: .82rem;
-  color: #6b7280;
-}
-.lead-contact a {
-  color: #4f46e5;
-  text-decoration: none;
-  font-weight: 600;
-}
-.lead-contact a:hover { text-decoration: underline; }
-
-.lead-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 12px;
-}
-.lead-btn {
-  padding: 9px 14px;
-  border: none;
-  border-radius: 8px;
-  font-size: .78rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform .15s;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  text-decoration: none;
-}
-.lead-btn:hover { transform: translateY(-1px); }
-.lead-btn.whatsapp { background: #dcfce7; color: #16a34a; }
-.lead-btn.email    { background: #eef2ff; color: #4f46e5; }
-.lead-btn.call     { background: #dbeafe; color: #1d4ed8; }
-.lead-btn.mark     { background: #f3f4f6; color: #374151; }
-.lead-btn.convert  { background: #dcfce7; color: #16a34a; }
-.lead-btn.lost     { background: #fee2e2; color: #dc2626; }
-  
 @media(max-width:640px){
   .row2{grid-template-columns:1fr}
   .hour-row{grid-template-columns:70px 1fr 1fr;grid-template-areas:"day open close" "day closed closed"}
@@ -251,26 +140,22 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
     <button id="logoutBtn" class="btn btn-danger hidden">Log Out</button>
   </div>
 
-  <!-- AUTH -->
   <div id="authSection">
     <div class="card">
       <div class="auth-tabs">
         <button class="auth-tab active" data-tab="login">Log In</button>
         <button class="auth-tab" data-tab="signup">Sign Up</button>
       </div>
-
       <div id="helpPanel" class="help-panel hidden">
         <strong>⚠️ That email already has an account.</strong>
         Delete the old user from Supabase (Authentication → Users), or log in with your old password.
       </div>
-
       <div id="loginForm">
         <div class="form-group"><label>Email</label><input type="email" id="loginEmail" autocomplete="email" placeholder="you@example.com" /></div>
         <div class="form-group"><label>Password</label><input type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••" /></div>
         <button class="btn btn-primary" id="loginBtn" style="width:100%">Log In</button>
         <button type="button" id="forgotBtn" style="background:none;border:none;color:#6366f1;font-size:.85rem;cursor:pointer;padding:12px 0 0;text-decoration:underline;width:100%">Forgot password?</button>
       </div>
-
       <div id="signupForm" class="hidden">
         <div class="form-group"><label>Business Name</label><input type="text" id="signupBusinessName" placeholder="My Awesome Business" /></div>
         <div class="form-group"><label>Email</label><input type="email" id="signupEmail" autocomplete="email" placeholder="you@example.com" /></div>
@@ -280,37 +165,41 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
     </div>
   </div>
 
-  <!-- DASHBOARD -->
   <div id="dashboardSection" class="hidden">
 
-<!-- LEADS INBOX -->
-<div class="card" id="leadsCard">
-  <h2>
-    <span>📩 Enquiries / Leads
-      <span id="leadsBadge" class="leads-badge hidden">0 new</span>
-    </span>
-    <span style="font-size:.72rem;color:#9ca3af;font-weight:500" id="leadsSubtitle"></span>
-  </h2>
-  <p class="hint">Reply quickly to boost your <b>responsiveness score</b> and rise in the ranking. Responding within 24 hours earns full points.</p>
+    <!-- SCORE -->
+    <div class="card">
+      <h2>🏆 Your Business Score</h2>
+      <div class="score-hero">
+        <div id="scoreBig">—</div>
+        <div id="scoreTier">Loading…</div>
+      </div>
+      <div id="scoreBreakdown"></div>
+      <div id="scoreNext"></div>
+    </div>
 
-  <div class="leads-filter" id="leadsFilter">
-    <button class="lead-filter-btn active" data-filter="all">All</button>
-    <button class="lead-filter-btn" data-filter="new">New</button>
-    <button class="lead-filter-btn" data-filter="contacted">Contacted</button>
-    <button class="lead-filter-btn" data-filter="converted">Converted</button>
-  </div>
+    <!-- LEADS -->
+    <div class="card">
+      <h2>
+        <span>📩 Enquiries / Leads <span id="leadsBadge" class="leads-badge hidden">0 new</span></span>
+        <span style="font-size:.72rem;color:#9ca3af;font-weight:500" id="leadsSubtitle"></span>
+      </h2>
+      <p class="hint">Reply quickly to boost your responsiveness score. Respond within 24 hours for full points.</p>
+      <div class="leads-filter">
+        <button class="lead-filter-btn active" data-filter="all">All</button>
+        <button class="lead-filter-btn" data-filter="new">New</button>
+        <button class="lead-filter-btn" data-filter="contacted">Contacted</button>
+        <button class="lead-filter-btn" data-filter="converted">Converted</button>
+      </div>
+      <div id="leadsList"><div class="empty-state">No enquiries yet.</div></div>
+    </div>
 
-  <div id="leadsList">
-    <div class="empty-state">No enquiries yet. Once visitors reach out, they'll appear here.</div>
-  </div>
-</div>
-    
     <!-- ANALYTICS -->
     <div class="card">
       <h2>📊 Your Analytics <span style="font-size:.72rem;color:#9ca3af;font-weight:500">Last 30 days</span></h2>
       <div class="stats-grid">
-        <div class="stat-card"><div class="num" id="statViews">0</div><div class="lbl">Profile Views</div></div>
-        <div class="stat-card"><div class="num" id="statClicks">0</div><div class="lbl">Link Clicks</div></div>
+        <div class="stat-card"><div class="num" id="statViews">0</div><div class="lbl">Views</div></div>
+        <div class="stat-card"><div class="num" id="statClicks">0</div><div class="lbl">Clicks</div></div>
         <div class="stat-card"><div class="num" id="statCtr">0%</div><div class="lbl">Click Rate</div></div>
       </div>
       <div class="chart" id="viewsChart"></div>
@@ -338,15 +227,15 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
           </select>
         </div>
       </div>
-      <div class="form-group"><label>Your Public URL (slug)</label>
+      <div class="form-group"><label>Public URL (slug)</label>
         <div style="display:flex;gap:8px;align-items:center;">
           <span style="font-size:.8rem;color:#9ca3af;white-space:nowrap;">profile.html?b=</span>
           <input type="text" id="bizSlug" placeholder="my-business" />
         </div>
       </div>
       <div class="form-group"><label>Location</label><input type="text" id="bizLocation" placeholder="e.g. Kampala, Uganda" /></div>
-      <div class="form-group"><label>Description (About)</label><textarea id="bizDescription" placeholder="Tell visitors who you are and what makes you different..."></textarea></div>
-      <div class="form-group"><label>Services Offered</label><textarea id="bizServices" placeholder="One service per line, e.g.&#10;Residential construction&#10;Commercial renovation&#10;Roofing &amp; waterproofing"></textarea></div>
+      <div class="form-group"><label>Description (About)</label><textarea id="bizDescription" placeholder="Tell visitors who you are..."></textarea></div>
+      <div class="form-group"><label>Services Offered</label><textarea id="bizServices" placeholder="One service per line, e.g.&#10;Residential construction&#10;Commercial renovation&#10;Roofing"></textarea></div>
       <div class="row2">
         <div class="form-group"><label>Contact Email</label><input type="email" id="bizEmail" /></div>
         <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" id="bizPhone" placeholder="+256..." /></div>
@@ -358,7 +247,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
     <!-- HOURS -->
     <div class="card">
       <h2>🕐 Business Hours</h2>
-      <p class="hint">Uncheck "Open" for days you're closed. Visitors see these on your profile.</p>
+      <p class="hint">Uncheck "Closed" for days you're open. Visitors see these on your profile.</p>
       <div class="hours-grid" id="hoursGrid"></div>
       <button class="btn btn-primary" id="saveHoursBtn" style="margin-top:16px;">Save Hours</button>
     </div>
@@ -370,7 +259,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
         <span id="linksCount" class="links-count empty">0 active</span>
       </div>
       <p class="hint">Visitors click these to reach your site, YouTube, socials. Auto-https:// added if missing.</p>
-      <div id="linksContainer"><div class="empty-state">No links yet. Add your first one below.</div></div>
+      <div id="linksContainer"><div class="empty-state">No links yet.</div></div>
       <button class="btn btn-ghost btn-full" id="addLinkBtn">+ Add New Link</button>
     </div>
 
@@ -380,20 +269,18 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 <div class="toast" id="toast"></div>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=12';
+import { supabase } from './supabase-client.js?v=15';
 
-// =========================================================
-// DOM
-// =========================================================
 const $ = id => document.getElementById(id);
-
-const authSection      = $('authSection');
+const authSection = $('authSection');
 const dashboardSection = $('dashboardSection');
-const logoutBtn        = $('logoutBtn');
-const toastEl          = $('toast');
-const helpPanel        = $('helpPanel');
+const logoutBtn = $('logoutBtn');
+const toastEl = $('toast');
+const helpPanel = $('helpPanel');
 
 let currentUser = null;
+let allLeads = [];
+let currentLeadFilter = 'all';
 
 // =========================================================
 // HELPERS
@@ -404,18 +291,10 @@ function showToast(msg, type='info', d=3200){
   clearTimeout(showToast._t);
   showToast._t = setTimeout(()=>toastEl.classList.remove('show'), d);
 }
-
 function setLoading(btn, loading, label){
-  if(loading){
-    btn.dataset.orig = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = label || 'Please wait…';
-  } else {
-    btn.disabled = false;
-    btn.textContent = btn.dataset.orig || btn.textContent;
-  }
+  if(loading){ btn.dataset.orig = btn.textContent; btn.disabled = true; btn.textContent = label || 'Please wait…'; }
+  else { btn.disabled = false; btn.textContent = btn.dataset.orig || btn.textContent; }
 }
-
 function normalizeUrl(raw){
   if(!raw) return '';
   let u = String(raw).trim();
@@ -424,49 +303,71 @@ function normalizeUrl(raw){
   if(/^(mailto:|tel:|sms:|whatsapp:)/i.test(u)) return u;
   return 'https://' + u;
 }
-
-function displayUrl(u){
-  return u ? String(u).replace(/^https?:\/\//i,'').replace(/\/$/,'') : '';
-}
-
-function escapeHtml(s){
-  if(s === null || s === undefined) return '';
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-function escapeAttr(s){
-  if(s === null || s === undefined) return '';
-  return String(s).replace(/"/g,'&quot;').replace(/</g,'&lt;');
-}
-
+function displayUrl(u){ return u ? String(u).replace(/^https?:\/\//i,'').replace(/\/$/,'') : ''; }
+function escapeHtml(s){ return s == null ? '' : String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escapeAttr(s){ return s == null ? '' : String(s).replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
 function slugify(s){
   return String(s || '').toLowerCase().trim()
-    .replace(/[^a-z0-9]+/g,'-')
-    .replace(/^-+|-+$/g,'')
-    .slice(0,50);
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,50);
 }
-
 function linkIcon(label){
   const l = (label || '').toLowerCase();
-  if(l.includes('website') || l.includes('site')) return '🌐';
+  if(l.includes('website')||l.includes('site')) return '🌐';
   if(l.includes('instagram')) return '📸';
-  if(l.includes('facebook'))  return '📘';
-  if(l.includes('twitter') || l === 'x') return '🐦';
-  if(l.includes('tiktok'))    return '🎵';
-  if(l.includes('linkedin'))  return '💼';
-  if(l.includes('whatsapp'))  return '💬';
-  if(l.includes('youtube'))   return '▶️';
-  if(l.includes('email') || l.includes('mail')) return '✉️';
-  if(l.includes('phone') || l.includes('call')) return '📞';
-  if(l.includes('booking') || l.includes('appointment')) return '📅';
+  if(l.includes('facebook')) return '📘';
+  if(l.includes('twitter')||l==='x') return '🐦';
+  if(l.includes('tiktok')) return '🎵';
+  if(l.includes('linkedin')) return '💼';
+  if(l.includes('whatsapp')) return '💬';
+  if(l.includes('youtube')) return '▶️';
+  if(l.includes('email')||l.includes('mail')) return '✉️';
+  if(l.includes('phone')||l.includes('call')) return '📞';
   return '🔗';
+}
+function getTimeAgo(iso){
+  const diff = Date.now() - new Date(iso).getTime();
+  const min = Math.floor(diff / 60000);
+  if(min < 1) return 'Just now';
+  if(min < 60) return `${min}m ago`;
+  const hr = Math.floor(min / 60);
+  if(hr < 24) return `${hr}h ago`;
+  const day = Math.floor(hr / 24);
+  if(day < 7) return `${day}d ago`;
+  return new Date(iso).toLocaleDateString();
 }
 
 const DAYS = ['mon','tue','wed','thu','fri','sat','sun'];
 const DAY_LABELS = { mon:'Monday', tue:'Tuesday', wed:'Wednesday', thu:'Thursday', fri:'Friday', sat:'Saturday', sun:'Sunday' };
 
 // =========================================================
-// AUTH
+// AUTH — getSession first, then listen
 // =========================================================
+async function bootAuth(){
+  const { data: { session } } = await supabase.auth.getSession();
+  handleAuthState(session);
+
+  supabase.auth.onAuthStateChange((event, s) => {
+    if(event === 'INITIAL_SESSION') return; // already handled above
+    handleAuthState(s);
+  });
+}
+
+function handleAuthState(session){
+  currentUser = session?.user ?? null;
+  if(currentUser){
+    authSection.classList.add('hidden');
+    dashboardSection.classList.remove('hidden');
+    logoutBtn.classList.remove('hidden');
+    helpPanel.classList.add('hidden');
+    loadAll();
+  } else {
+    authSection.classList.remove('hidden');
+    dashboardSection.classList.add('hidden');
+    logoutBtn.classList.add('hidden');
+  }
+}
+
+// Auth form tabs
 document.querySelectorAll('.auth-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.auth-tab').forEach(x => x.classList.remove('active'));
@@ -489,11 +390,9 @@ $('signupBtn').addEventListener('click', async () => {
 
   setLoading(btn, true, 'Creating account…');
   const { data, error } = await supabase.auth.signUp({
-    email, password,
-    options: { data: { business_name: businessName } }
+    email, password, options:{ data:{ business_name: businessName } }
   });
   setLoading(btn, false);
-  console.log('Signup response:', { data, error });
 
   if(error){
     if(error.message.toLowerCase().includes('already')) return showToast('Email already registered', 'error');
@@ -504,7 +403,7 @@ $('signupBtn').addEventListener('click', async () => {
     helpPanel.classList.remove('hidden');
     return showToast('That email already has an account.', 'warn', 6000);
   }
-  if(data?.session) return showToast('✅ Account created! Logging you in…', 'success');
+  if(data?.session) return showToast('✅ Account created!', 'success');
   if(data?.user){
     showToast('📧 Account created. Check your email to confirm.', 'success', 6000);
     document.querySelector('.auth-tab[data-tab="login"]').click();
@@ -522,7 +421,6 @@ $('loginBtn').addEventListener('click', async () => {
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   setLoading(btn, false);
   if(error){
-    console.error('Login error:', error);
     const msg = (error.message || '').toLowerCase();
     if(msg.includes('invalid login credentials')){
       helpPanel.classList.remove('hidden');
@@ -541,34 +439,19 @@ $('forgotBtn').addEventListener('click', async () => {
     redirectTo: window.location.origin + window.location.pathname
   });
   if(error) return showToast('Could not send reset email: ' + error.message, 'error');
-  showToast('📧 Password reset email sent. Check your inbox.', 'success', 6000);
+  showToast('📧 Password reset email sent.', 'success', 6000);
 });
 
 $('loginPassword').addEventListener('keydown', e => { if(e.key === 'Enter') $('loginBtn').click(); });
 $('signupPassword').addEventListener('keydown', e => { if(e.key === 'Enter') $('signupBtn').click(); });
 
-$('logoutBtn').addEventListener('click', async () => {
+logoutBtn.addEventListener('click', async () => {
   await supabase.auth.signOut();
   showToast('Logged out');
 });
 
-supabase.auth.onAuthStateChange(async (_, session) => {
-  currentUser = session?.user ?? null;
-  if(currentUser){
-    authSection.classList.add('hidden');
-    dashboardSection.classList.remove('hidden');
-    logoutBtn.classList.remove('hidden');
-    helpPanel.classList.add('hidden');
-    await loadAll();
-  } else {
-    authSection.classList.remove('hidden');
-    dashboardSection.classList.add('hidden');
-    logoutBtn.classList.add('hidden');
-  }
-});
-
 // =========================================================
-// LOAD EVERYTHING
+// LOAD
 // =========================================================
 async function loadAll(){
   await loadProfile();
@@ -576,6 +459,7 @@ async function loadAll(){
   await loadLinks();
   await loadHours();
   await loadAnalytics();
+  await loadScore();
 }
 
 // =========================================================
@@ -587,14 +471,11 @@ async function loadProfile(){
   let { data: profile } = await supabase
     .from('profiles').select('*').eq('id', currentUser.id).maybeSingle();
 
-  // Fallback if trigger didn't create the row
   if(!profile){
     const fallback = currentUser.user_metadata?.business_name || 'My Business';
     const slug = slugify(fallback) + '-' + currentUser.id.substring(0,4);
     const { data } = await supabase.from('profiles').insert({
-      id: currentUser.id,
-      business_name: fallback,
-      slug
+      id: currentUser.id, business_name: fallback, slug
     }).select().single();
     profile = data;
   }
@@ -614,7 +495,6 @@ async function loadProfile(){
 }
 
 $('bizLogo').addEventListener('input', e => updateLogoPreview(e.target.value));
-
 function updateLogoPreview(url){
   const img = $('logoPreview');
   if(url){ img.src = url; img.classList.remove('hidden'); }
@@ -623,13 +503,10 @@ function updateLogoPreview(url){
 
 $('saveProfileBtn').addEventListener('click', async () => {
   const btn = $('saveProfileBtn');
-
-  // Auto-generate slug if blank
   let slug = $('bizSlug').value.trim();
   if(!slug) slug = slugify($('bizName').value) + '-' + currentUser.id.substring(0,4);
   slug = slugify(slug);
 
-  // Handle slug collision
   const { data: existing } = await supabase
     .from('profiles').select('id').eq('slug', slug).neq('id', currentUser.id).maybeSingle();
   if(existing){
@@ -656,6 +533,7 @@ $('saveProfileBtn').addEventListener('click', async () => {
   if(error) return showToast('Save failed: ' + error.message, 'error');
   $('bizSlug').value = slug;
   showToast('✅ Information saved!', 'success');
+  await loadScore();
 });
 
 // =========================================================
@@ -666,16 +544,13 @@ function defaultHours(){
   DAYS.forEach(d => o[d] = { closed: d === 'sun', open: '09:00', close: '17:00' });
   return o;
 }
-
 async function loadHours(){
   const { data } = await supabase
     .from('profiles').select('opening_hours').eq('id', currentUser.id).single();
   const hours = data?.opening_hours && Object.keys(data.opening_hours).length
-    ? data.opening_hours
-    : defaultHours();
+    ? data.opening_hours : defaultHours();
   renderHours(hours);
 }
-
 function renderHours(hours){
   const grid = $('hoursGrid');
   grid.innerHTML = DAYS.map(d => {
@@ -683,22 +558,18 @@ function renderHours(hours){
     return `
       <div class="hour-row ${h.closed ? 'is-closed' : ''}" data-day="${d}">
         <div class="day">${DAY_LABELS[d]}</div>
-        <label class="closed-label">
-          <input type="checkbox" class="closed-cb" ${h.closed ? 'checked' : ''} /> Closed
-        </label>
+        <label class="closed-label"><input type="checkbox" class="closed-cb" ${h.closed ? 'checked' : ''} /> Closed</label>
         <input type="time" class="open-in" value="${h.open || '09:00'}" />
         <input type="time" class="close-in" value="${h.close || '17:00'}" />
       </div>
     `;
   }).join('');
-
   grid.querySelectorAll('.closed-cb').forEach(cb => {
     cb.addEventListener('change', () => {
       cb.closest('.hour-row').classList.toggle('is-closed', cb.checked);
     });
   });
 }
-
 $('saveHoursBtn').addEventListener('click', async () => {
   const btn = $('saveHoursBtn');
   const hours = {};
@@ -707,48 +578,39 @@ $('saveHoursBtn').addEventListener('click', async () => {
     const closed = row.querySelector('.closed-cb').checked;
     hours[day] = {
       closed,
-      open:  closed ? '' : row.querySelector('.open-in').value,
+      open: closed ? '' : row.querySelector('.open-in').value,
       close: closed ? '' : row.querySelector('.close-in').value
     };
   });
-
   setLoading(btn, true, 'Saving…');
-  const { error } = await supabase.from('profiles')
-    .update({ opening_hours: hours }).eq('id', currentUser.id);
+  const { error } = await supabase.from('profiles').update({ opening_hours: hours }).eq('id', currentUser.id);
   setLoading(btn, false);
   if(error) return showToast('Save failed: ' + error.message, 'error');
   showToast('✅ Hours saved!', 'success');
+  await loadScore();
 });
 
 // =========================================================
-// LINKS CRUD
+// LINKS
 // =========================================================
 async function loadLinks(){
   const { data: links } = await supabase
     .from('business_links').select('*')
-    .eq('profile_id', currentUser.id)
-    .order('sort_order');
+    .eq('profile_id', currentUser.id).order('sort_order');
   renderLinks(links || []);
 }
-
 function renderLinks(links){
   const c = $('linksContainer');
   const count = $('linksCount');
-
   if(!links.length){
-    count.textContent = '0 active';
-    count.classList.add('empty');
-    c.innerHTML = '<div class="empty-state">No links yet. Add your first one below.</div>';
+    count.textContent = '0 active'; count.classList.add('empty');
+    c.innerHTML = '<div class="empty-state">No links yet.</div>';
     return;
   }
-
-  count.textContent = links.length + ' active';
-  count.classList.remove('empty');
-
+  count.textContent = links.length + ' active'; count.classList.remove('empty');
   c.innerHTML = '';
   links.forEach(link => c.appendChild(buildViewRow(link)));
 }
-
 function buildViewRow(link){
   const row = document.createElement('div');
   row.className = 'link-item';
@@ -765,12 +627,9 @@ function buildViewRow(link){
       <button class="mini-btn delete" data-action="delete">🗑 Delete</button>
     </div>
   `;
-  row.querySelectorAll('button').forEach(b =>
-    b.addEventListener('click', () => handleAction(row, b.dataset.action, link))
-  );
+  row.querySelectorAll('button').forEach(b => b.addEventListener('click', () => handleLinkAction(row, b.dataset.action, link)));
   return row;
 }
-
 function buildEditRow(id, label, url, isNew){
   const row = document.createElement('div');
   row.className = 'link-item editing';
@@ -778,14 +637,8 @@ function buildEditRow(id, label, url, isNew){
   row.dataset.isNew = isNew ? '1' : '';
   row.innerHTML = `
     <div class="link-edit-grid">
-      <div class="form-group">
-        <label>Label</label>
-        <input type="text" class="edit-label" value="${escapeAttr(label)}" placeholder="e.g. Website" />
-      </div>
-      <div class="form-group">
-        <label>URL (https:// added automatically)</label>
-        <input type="text" class="edit-url" value="${escapeAttr(url)}" placeholder="example.com" />
-      </div>
+      <div class="form-group"><label>Label</label><input type="text" class="edit-label" value="${escapeAttr(label)}" placeholder="e.g. Website" /></div>
+      <div class="form-group"><label>URL</label><input type="text" class="edit-url" value="${escapeAttr(url)}" placeholder="example.com" /></div>
     </div>
     <div class="link-actions">
       <button class="mini-btn save" data-action="save">💾 Save</button>
@@ -793,43 +646,32 @@ function buildEditRow(id, label, url, isNew){
     </div>
   `;
   const urlIn = row.querySelector('.edit-url');
-  urlIn.addEventListener('blur', () => {
-    if(urlIn.value.trim()) urlIn.value = normalizeUrl(urlIn.value);
-  });
-  row.querySelectorAll('button').forEach(b =>
-    b.addEventListener('click', () => handleAction(row, b.dataset.action, null))
-  );
+  urlIn.addEventListener('blur', () => { if(urlIn.value.trim()) urlIn.value = normalizeUrl(urlIn.value); });
+  row.querySelectorAll('button').forEach(b => b.addEventListener('click', () => handleLinkAction(row, b.dataset.action, null)));
   return row;
 }
-
-async function handleAction(row, action, original){
+async function handleLinkAction(row, action, original){
   const id = row.dataset.id || '';
   const isNew = row.dataset.isNew === '1';
 
-  // OPEN
   if(action === 'open'){
     const url = normalizeUrl(original?.url || '');
-    if(!url) return showToast('No URL to open', 'error');
+    if(!url) return showToast('No URL', 'error');
     window.open(url, '_blank', 'noopener');
     return;
   }
-
-  // EDIT
   if(action === 'edit'){
     const editRow = buildEditRow(original.id, original.label, original.url, false);
     row.replaceWith(editRow);
     editRow.querySelector('.edit-label').focus();
     return;
   }
-
-  // CANCEL
   if(action === 'cancel'){
     if(isNew){
       row.remove();
       if(!document.querySelector('.link-item')){
         $('linksContainer').innerHTML = '<div class="empty-state">No links yet.</div>';
-        $('linksCount').textContent = '0 active';
-        $('linksCount').classList.add('empty');
+        $('linksCount').textContent = '0 active'; $('linksCount').classList.add('empty');
       }
       return;
     }
@@ -837,32 +679,24 @@ async function handleAction(row, action, original){
     if(data) row.replaceWith(buildViewRow(data));
     return;
   }
-
-  // SAVE
   if(action === 'save'){
     const label = row.querySelector('.edit-label').value.trim();
     const url = normalizeUrl(row.querySelector('.edit-url').value.trim());
     if(!label || !url) return showToast('Both fields required', 'error');
-
     const btn = row.querySelector('.mini-btn.save');
     setLoading(btn, true, 'Saving…');
-
     if(id){
-      const { error } = await supabase.from('business_links')
-        .update({ label, url }).eq('id', id);
+      const { error } = await supabase.from('business_links').update({ label, url }).eq('id', id);
       if(error){ setLoading(btn, false); return showToast('Failed: ' + error.message, 'error'); }
       showToast('✅ Updated', 'success');
     } else {
-      const { error } = await supabase.from('business_links')
-        .insert({ profile_id: currentUser.id, label, url });
+      const { error } = await supabase.from('business_links').insert({ profile_id: currentUser.id, label, url });
       if(error){ setLoading(btn, false); return showToast('Failed: ' + error.message, 'error'); }
       showToast('✅ Added', 'success');
     }
     await loadLinks();
     return;
   }
-
-  // DELETE
   if(action === 'delete'){
     if(!confirm(`Delete "${original.label}" permanently?`)) return;
     const { error } = await supabase.from('business_links').delete().eq('id', id);
@@ -871,81 +705,20 @@ async function handleAction(row, action, original){
     await loadLinks();
   }
 }
-
 $('addLinkBtn').addEventListener('click', () => {
   const c = $('linksContainer');
-  const empty = c.querySelector('.empty-state');
-  if(empty) empty.remove();
+  const empty = c.querySelector('.empty-state'); if(empty) empty.remove();
   const r = buildEditRow(null, '', '', true);
   c.prepend(r);
   r.querySelector('.edit-label').focus();
 });
-  
+
 // =========================================================
-// ANALYTICS
+// LEADS
 // =========================================================
-async function loadAnalytics(){
-  const since = new Date(Date.now() - 30*24*60*60*1000).toISOString();
-
-  const [{ data: views }, { data: clicks }] = await Promise.all([
-    supabase.from('profile_views').select('viewed_at')
-      .eq('profile_id', currentUser.id).gte('viewed_at', since),
-    supabase.from('link_clicks').select('clicked_at, link_label')
-      .eq('profile_id', currentUser.id).gte('clicked_at', since)
-  ]);
-
-  const viewsList  = views  || [];
-  const clicksList = clicks || [];
-
-  $('statViews').textContent  = viewsList.length;
-  $('statClicks').textContent = clicksList.length;
-  const ctr = viewsList.length
-    ? Math.round((clicksList.length / viewsList.length) * 100)
-    : 0;
-  $('statCtr').textContent = ctr + '%';
-
-  // 30-day chart
-  const days = new Array(30).fill(0);
-  const today = new Date(); today.setHours(0,0,0,0);
-  viewsList.forEach(v => {
-    const d = new Date(v.viewed_at); d.setHours(0,0,0,0);
-    const idx = 29 - Math.floor((today - d) / (24*60*60*1000));
-    if(idx >= 0 && idx < 30) days[idx]++;
-  });
-
-  const max = Math.max(...days, 1);
-  $('viewsChart').innerHTML = days.map(c => {
-    const h = Math.max(3, (c / max) * 130);
-    return `<div class="bar" style="height:${h}px" data-count="${c} view${c===1?'':'s'}"></div>`;
-  }).join('');
-
-  // Top links
-  const counts = {};
-  clicksList.forEach(c => {
-    const k = c.link_label || 'Unknown';
-    counts[k] = (counts[k] || 0) + 1;
-  });
-  const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]).slice(0,5);
-
-  if(sorted.length){
-    $('topLinks').innerHTML = sorted.map(([label, count]) =>
-      `<li><span class="tl-label">${escapeHtml(label)}</span><span class="tl-count">${count} click${count===1?'':'s'}</span></li>`
-    ).join('');
-    $('topLinksWrap').style.display = 'block';
-  } else {
-    $('topLinksWrap').style.display = 'none';
-  }
-}
-// =========================================================
-// LEADS INBOX
-// =========================================================
-let allLeads = [];
-let currentLeadFilter = 'all';
-
 async function loadLeads(){
   const { data, error } = await supabase
-    .from('enquiries')
-    .select('*')
+    .from('enquiries').select('*')
     .eq('profile_id', currentUser.id)
     .order('created_at', { ascending: false })
     .limit(100);
@@ -954,42 +727,35 @@ async function loadLeads(){
   allLeads = data || [];
 
   const unread = allLeads.filter(l => !l.viewed_by_owner).length;
-  const badge = document.getElementById('leadsBadge');
-  if(unread > 0){
-    badge.textContent = unread + ' new';
-    badge.classList.remove('hidden');
-  } else {
-    badge.classList.add('hidden');
-  }
+  const badge = $('leadsBadge');
+  if(unread > 0){ badge.textContent = unread + ' new'; badge.classList.remove('hidden'); }
+  else badge.classList.add('hidden');
 
-  const subtitle = document.getElementById('leadsSubtitle');
-  subtitle.textContent = allLeads.length
-    ? `${allLeads.length} total · ${unread} unread`
-    : '';
+  $('leadsSubtitle').textContent = allLeads.length
+    ? `${allLeads.length} total · ${unread} unread` : '';
 
   renderLeads();
 }
 
 function renderLeads(){
-  const container = document.getElementById('leadsList');
+  const container = $('leadsList');
   const filtered = currentLeadFilter === 'all'
     ? allLeads
     : allLeads.filter(l => l.status === currentLeadFilter);
 
   if(!filtered.length){
-    container.innerHTML = `<div class="empty-state">
-      ${allLeads.length ? 'No leads with this status.' : 'No enquiries yet. Once visitors reach out, they\'ll appear here.'}
-    </div>`;
+    container.innerHTML = `<div class="empty-state">${allLeads.length ? 'No leads with this status.' : 'No enquiries yet. Once visitors reach out, they\'ll appear here.'}</div>`;
     return;
   }
+
+  const bizName = $('bizName')?.value || 'us';
 
   container.innerHTML = filtered.map(lead => {
     const isUnread = !lead.viewed_by_owner;
     const phoneDigits = (lead.visitor_phone || '').replace(/[^\d]/g, '');
     const timeAgo = getTimeAgo(lead.created_at);
-
     const waText = encodeURIComponent(
-      `Hi ${lead.visitor_name}, this is ${document.getElementById('bizName')?.value || 'us'} — thanks for your enquiry. How can we help?`
+      `Hi ${lead.visitor_name}, this is ${bizName} — thanks for your enquiry. How can we help?`
     );
 
     return `
@@ -1007,79 +773,42 @@ function renderLeads(){
           ${lead.visitor_email ? `<span>✉️ ${escapeHtml(lead.visitor_email)}</span>` : ''}
         </div>
         <div class="lead-actions">
-          ${phoneDigits ? `
-            <a class="lead-btn whatsapp"
-               href="https://wa.me/${phoneDigits}?text=${waText}"
-               target="_blank" rel="noopener"
-               data-action="reply">
-              💬 Reply on WhatsApp
-            </a>
-            <a class="lead-btn call" href="tel:${escapeHtml(lead.visitor_phone)}">
-              📞 Call
-            </a>
-          ` : ''}
-          ${lead.visitor_email ? `
-            <a class="lead-btn email"
-               href="mailto:${escapeHtml(lead.visitor_email)}?subject=Re: Your enquiry&body=Hi ${encodeURIComponent(lead.visitor_name)},%0D%0A%0D%0AThanks for reaching out..."
-               data-action="reply">
-              ✉️ Email
-            </a>
-          ` : ''}
-          ${lead.status !== 'converted' ? `
-            <button class="lead-btn convert" data-action="convert" data-id="${lead.id}">✓ Mark Converted</button>
-          ` : ''}
-          ${lead.status !== 'lost' ? `
-            <button class="lead-btn lost" data-action="lost" data-id="${lead.id}">✗ Mark Lost</button>
-          ` : ''}
+          ${phoneDigits ? `<a class="lead-btn whatsapp" href="https://wa.me/${phoneDigits}?text=${waText}" target="_blank" rel="noopener" data-action="reply">💬 Reply on WhatsApp</a>` : ''}
+          ${phoneDigits ? `<a class="lead-btn call" href="tel:${escapeHtml(lead.visitor_phone)}">📞 Call</a>` : ''}
+          ${lead.visitor_email ? `<a class="lead-btn email" href="mailto:${escapeHtml(lead.visitor_email)}?subject=Re: Your enquiry" data-action="reply">✉️ Email</a>` : ''}
+          ${lead.status !== 'converted' ? `<button class="lead-btn convert" data-action="convert" data-id="${lead.id}">✓ Mark Converted</button>` : ''}
+          ${lead.status !== 'lost' ? `<button class="lead-btn lost" data-action="lost" data-id="${lead.id}">✗ Mark Lost</button>` : ''}
         </div>
       </div>
     `;
   }).join('');
 
-  // Attach handlers
   container.querySelectorAll('.lead-item').forEach(el => {
     el.addEventListener('click', (e) => {
-      // Don't mark as viewed when clicking action buttons/links
       if(e.target.closest('a') || e.target.closest('button')) return;
       markLeadViewed(el.dataset.id);
     });
   });
-
   container.querySelectorAll('[data-action="reply"]').forEach(el => {
     el.addEventListener('click', () => markLeadContacted(el.closest('.lead-item').dataset.id));
   });
-
   container.querySelectorAll('[data-action="convert"]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      updateLeadStatus(btn.dataset.id, 'converted');
-    });
+    btn.addEventListener('click', (e) => { e.stopPropagation(); updateLeadStatus(btn.dataset.id, 'converted'); });
   });
-
   container.querySelectorAll('[data-action="lost"]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      updateLeadStatus(btn.dataset.id, 'lost');
-    });
+    btn.addEventListener('click', (e) => { e.stopPropagation(); updateLeadStatus(btn.dataset.id, 'lost'); });
   });
 }
 
 async function markLeadViewed(id){
   const lead = allLeads.find(l => l.id === id);
   if(!lead || lead.viewed_by_owner) return;
-
   await supabase.from('enquiries').update({ viewed_by_owner: true }).eq('id', id);
   lead.viewed_by_owner = true;
-
-  // Update UI without full reload
   const unread = allLeads.filter(l => !l.viewed_by_owner).length;
-  const badge = document.getElementById('leadsBadge');
-  if(unread > 0){
-    badge.textContent = unread + ' new';
-  } else {
-    badge.classList.add('hidden');
-  }
-
+  const badge = $('leadsBadge');
+  if(unread > 0) badge.textContent = unread + ' new';
+  else badge.classList.add('hidden');
   const el = document.querySelector(`.lead-item[data-id="${id}"]`);
   if(el) el.classList.remove('unread');
 }
@@ -1087,44 +816,24 @@ async function markLeadViewed(id){
 async function markLeadContacted(id){
   const lead = allLeads.find(l => l.id === id);
   if(!lead) return;
-
-  // Set first_reply_at if not already set — this feeds the responsiveness score
   const updates = { viewed_by_owner: true };
   if(!lead.first_reply_at) updates.first_reply_at = new Date().toISOString();
   if(lead.status === 'new') updates.status = 'contacted';
-
   await supabase.from('enquiries').update(updates).eq('id', id);
-
-  // Refresh
   await loadLeads();
+  await loadScore();
 }
 
 async function updateLeadStatus(id, status){
-  const updates = { status, viewed_by_owner: true };
-  // If marking as converted/contacted and no reply yet, count this as the reply
   const lead = allLeads.find(l => l.id === id);
-  if(lead && !lead.first_reply_at && status !== 'lost'){
-    updates.first_reply_at = new Date().toISOString();
-  }
-
+  const updates = { status, viewed_by_owner: true };
+  if(lead && !lead.first_reply_at && status !== 'lost') updates.first_reply_at = new Date().toISOString();
   await supabase.from('enquiries').update(updates).eq('id', id);
   await loadLeads();
+  await loadScore();
   showToast('Lead updated', 'success');
 }
 
-function getTimeAgo(iso){
-  const diff = Date.now() - new Date(iso).getTime();
-  const min = Math.floor(diff / 60000);
-  if(min < 1) return 'Just now';
-  if(min < 60) return `${min}m ago`;
-  const hr = Math.floor(min / 60);
-  if(hr < 24) return `${hr}h ago`;
-  const day = Math.floor(hr / 24);
-  if(day < 7) return `${day}d ago`;
-  return new Date(iso).toLocaleDateString();
-}
-
-// Wire filter buttons
 document.querySelectorAll('.lead-filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.lead-filter-btn').forEach(b => b.classList.remove('active'));
@@ -1133,7 +842,110 @@ document.querySelectorAll('.lead-filter-btn').forEach(btn => {
     renderLeads();
   });
 });
-  
+
+// =========================================================
+// ANALYTICS
+// =========================================================
+async function loadAnalytics(){
+  const since = new Date(Date.now() - 30*24*60*60*1000).toISOString();
+  const [{ data: views }, { data: clicks }] = await Promise.all([
+    supabase.from('profile_views').select('viewed_at').eq('profile_id', currentUser.id).gte('viewed_at', since),
+    supabase.from('link_clicks').select('clicked_at, link_label').eq('profile_id', currentUser.id).gte('clicked_at', since)
+  ]);
+  const viewsList = views || [];
+  const clicksList = clicks || [];
+
+  $('statViews').textContent  = viewsList.length;
+  $('statClicks').textContent = clicksList.length;
+  const ctr = viewsList.length ? Math.round((clicksList.length / viewsList.length) * 100) : 0;
+  $('statCtr').textContent = ctr + '%';
+
+  const days = new Array(30).fill(0);
+  const today = new Date(); today.setHours(0,0,0,0);
+  viewsList.forEach(v => {
+    const d = new Date(v.viewed_at); d.setHours(0,0,0,0);
+    const idx = 29 - Math.floor((today - d) / (24*60*60*1000));
+    if(idx >= 0 && idx < 30) days[idx]++;
+  });
+  const max = Math.max(...days, 1);
+  $('viewsChart').innerHTML = days.map(c => {
+    const h = Math.max(3, (c / max) * 130);
+    return `<div class="bar" style="height:${h}px" data-count="${c} view${c===1?'':'s'}"></div>`;
+  }).join('');
+
+  const counts = {};
+  clicksList.forEach(c => {
+    const k = c.link_label || 'Unknown';
+    counts[k] = (counts[k] || 0) + 1;
+  });
+  const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]).slice(0,5);
+  if(sorted.length){
+    $('topLinks').innerHTML = sorted.map(([label, count]) =>
+      `<li><span class="tl-label">${escapeHtml(label)}</span><span class="tl-count">${count} click${count===1?'':'s'}</span></li>`
+    ).join('');
+    $('topLinksWrap').style.display = 'block';
+  } else {
+    $('topLinksWrap').style.display = 'none';
+  }
+}
+
+// =========================================================
+// SCORE
+// =========================================================
+async function loadScore(){
+  const { data } = await supabase
+    .from('business_scores').select('*').eq('id', currentUser.id).maybeSingle();
+
+  if(!data){
+    $('scoreBig').textContent = '—';
+    $('scoreTier').textContent = 'Not enough data yet';
+    return;
+  }
+
+  const total = Math.round(data.total_score || 0);
+  const tier = total >= 90 ? 'Platinum' : total >= 75 ? 'Gold' : total >= 60 ? 'Silver' : total >= 40 ? 'Bronze' : 'Listed';
+  const tierIcon = { Platinum:'🏆', Gold:'🥇', Silver:'🥈', Bronze:'🥉', Listed:'⚪' }[tier];
+
+  $('scoreBig').textContent = total;
+  $('scoreTier').innerHTML = `${tierIcon} ${tier} Tier`;
+
+  const rows = [
+    ['⭐ Rating quality',    data.rating_quality_pts,   25],
+    ['📝 Rating volume',     data.volume_pts,           15],
+    ['✅ Profile complete',  data.completeness_pts,     15],
+    ['⚡ Responsiveness',    data.responsiveness_pts,   15],
+    ['🛡 Verification',      data.verification_pts,     10],
+    ['🔄 Freshness',         data.freshness_pts,        10],
+    ['📈 Engagement',        data.engagement_pts,       10],
+  ];
+
+  $('scoreBreakdown').innerHTML = rows.map(([label, val, max]) => {
+    const pct = Math.min(100, (val / max) * 100);
+    const color = pct > 80 ? '#10b981' : pct > 50 ? '#f59e0b' : '#ef4444';
+    return `
+      <div style="margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:4px;">
+          <span style="font-weight:600;color:#374151;">${label}</span>
+          <span style="font-weight:700;color:${color};">${Math.round(val)}/${max}</span>
+        </div>
+        <div style="height:6px;background:#f1f5f9;border-radius:3px;overflow:hidden;">
+          <div style="height:100%;width:${pct}%;background:${color};border-radius:3px;"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const milestones = [[40,'Bronze'],[60,'Silver'],[75,'Gold'],[90,'Platinum']];
+  const next = milestones.find(([t]) => t > total);
+  $('scoreNext').innerHTML = next
+    ? `🎯 ${next[0] - total} more points to reach <b>${next[1]} Tier</b>`
+    : `🏆 You're at the top tier — keep it up!`;
+}
+
+// =========================================================
+// BOOT
+// =========================================================
+bootAuth();
 </script>
 </body>
 </html>
