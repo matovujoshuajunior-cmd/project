@@ -123,6 +123,41 @@ td .biz-mini-slug{font-size:.72rem;color:#9ca3af}
 .modal-actions{display:flex;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid #f1f5f9}
 .modal-actions .btn{flex:1;justify-content:center}
 
+/* Agency pill picker */
+.pill-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px;
+  background: #f9fafb;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  min-height: 44px;
+}
+.pill-picker:empty::before {
+  content: 'None selected — matches ALL';
+  color: #9ca3af;
+  font-size: .82rem;
+  font-style: italic;
+}
+.pill-option {
+  padding: 5px 12px;
+  border: 1.5px solid #e5e7eb;
+  background: #fff;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-weight: 600;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all .15s;
+}
+.pill-option:hover { border-color: #c7d2fe; color: #4f46e5; }
+.pill-option.selected {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  border-color: transparent;
+}
+  
 /* STATES */
 .access-denied{text-align:center;padding:60px 20px;max-width:600px;margin:0 auto}
 .access-denied h2{font-size:1.5rem;color:#dc2626;margin-bottom:12px}
@@ -237,6 +272,96 @@ td .biz-mini-slug{font-size:.72rem;color:#9ca3af}
     <!-- BUSINESSES -->
     <div class="card">
       <h2>🏪 Manage Businesses</h2>
+
+<!-- AGENCIES -->
+<div class="card">
+  <h2>
+    🤝 Partner Agencies
+    <button class="btn btn-primary btn-sm" id="newAgencyBtn">+ New Agency</button>
+  </h2>
+
+  <div class="ad-form hidden" id="agencyForm">
+    <h3 id="agencyFormTitle">New Agency</h3>
+    <input type="hidden" id="agencyId" />
+
+    <div class="row2">
+      <div class="form-group">
+        <label>Agency Name *</label>
+        <input type="text" id="agName" placeholder="e.g. BSRC Marketing" />
+      </div>
+      <div class="form-group">
+        <label>Contact Email *</label>
+        <input type="email" id="agEmail" placeholder="partner@example.com" />
+      </div>
+    </div>
+
+    <div class="row2">
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="tel" id="agPhone" placeholder="+256..." />
+      </div>
+      <div class="form-group">
+        <label>Website</label>
+        <input type="text" id="agWebsite" placeholder="example.com" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Industries Covered (leave empty for ALL)</label>
+      <div class="pill-picker" id="agIndustries"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Cities Covered (leave empty for ALL)</label>
+      <div class="pill-picker" id="agCities"></div>
+      <div style="margin-top:8px;display:flex;gap:6px;">
+        <input type="text" id="agNewCity" placeholder="Add city…" style="flex:1;padding:7px 10px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:.85rem;font-family:inherit" />
+        <button class="btn btn-ghost btn-sm" id="addCityBtn" type="button">Add</button>
+      </div>
+    </div>
+
+    <div class="row2">
+      <div class="form-group">
+        <label>Monthly Fee (UGX)</label>
+        <input type="number" id="agFee" value="0" />
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="agStatus">
+          <option value="active">Active</option>
+          <option value="paused">Paused</option>
+          <option value="terminated">Terminated</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Notes (internal)</label>
+      <textarea id="agNotes" rows="2" placeholder="Any context about this partner…"></textarea>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+      <button class="btn btn-primary" id="saveAgencyBtn">💾 Save Agency</button>
+      <button class="btn btn-ghost" id="cancelAgencyBtn">Cancel</button>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Agency</th>
+          <th>Territory</th>
+          <th style="text-align:center">Status</th>
+          <th style="text-align:right">Monthly Fee</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="agenciesTable"></tbody>
+    </table>
+  </div>
+</div>
+      
       <div class="filter-bar">
         <input type="text" id="searchBiz" placeholder="Search by name, email, industry, or location..." />
         <button class="btn btn-ghost btn-sm" id="refreshBizBtn">Refresh</button>
@@ -492,7 +617,7 @@ function formatDate(iso){
 // ============================================================
 // LOAD ALL
 // ============================================================
-async function loadAll(){
+let loadAll = async function(){
   await Promise.all([loadStats(), loadBiz(), loadAgencies(), loadConversions(), loadAds()]);
 }
 
@@ -1052,6 +1177,210 @@ $('saveAdBtn').addEventListener('click', async () => {
   closeAdForm();
   await loadAds();
 });
+// ============================================================
+// AGENCIES
+// ============================================================
+const INDUSTRIES_LIST = [
+  'Construction','Real Estate','IT & Technology','Marketing & Advertising',
+  'Legal Services','Accounting & Finance','Healthcare','Education & Training',
+  'Hospitality & Tourism','Retail & E-commerce','Transportation & Logistics',
+  'Manufacturing','Agriculture','Beauty & Wellness','Fitness & Sports',
+  'Media & Entertainment','Home Services','Other'
+];
+
+let allAgencies = [];
+let selectedIndustries = new Set();
+let selectedCities = new Set();
+
+async function loadAgencies(){
+  const { data, error } = await supabase
+    .from('agencies')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if(error){ console.warn('Agencies load error:', error.message); return; }
+  allAgencies = data || [];
+  renderAgencies();
+}
+
+function renderAgencies(){
+  const tbody = document.getElementById('agenciesTable');
+  if(!allAgencies.length){
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px;color:#9ca3af">No agencies yet. Click "+ New Agency" to add your first partner.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = allAgencies.map(ag => {
+    const initial = (ag.name || '?')[0].toUpperCase();
+    const industries = Array.isArray(ag.industries) && ag.industries.length
+      ? ag.industries.join(', ')
+      : 'All industries';
+    const cities = Array.isArray(ag.cities) && ag.cities.length
+      ? ag.cities.join(', ')
+      : 'All cities';
+    const statusCls = ag.status === 'active' ? 'active'
+                    : ag.status === 'paused' ? 'inactive' : 'inactive';
+
+    return `
+      <tr data-id="${ag.id}">
+        <td>
+          <div class="biz-cell">
+            <div class="biz-mini-logo">${initial}</div>
+            <div>
+              <div class="biz-mini-name">${escapeHtml(ag.name)}</div>
+              <div class="biz-mini-slug">${escapeHtml(ag.contact_email)}</div>
+            </div>
+          </div>
+        </td>
+        <td style="font-size:.8rem;color:#6b7280;max-width:260px">
+          <div><b>Industry:</b> ${escapeHtml(industries)}</div>
+          <div><b>Cities:</b> ${escapeHtml(cities)}</div>
+        </td>
+        <td style="text-align:center">
+          <span class="tag ${statusCls}">${ag.status}</span>
+        </td>
+        <td style="text-align:right;font-weight:700">
+          ${Number(ag.monthly_fee || 0).toLocaleString()}
+        </td>
+        <td style="text-align:right;white-space:nowrap">
+          <button class="mini-btn edit" data-action="edit">Edit</button>
+          <button class="mini-btn danger" data-action="delete">Delete</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  tbody.querySelectorAll('tr').forEach(row => {
+    const id = row.dataset.id;
+    const agency = allAgencies.find(a => a.id === id);
+
+    row.querySelector('[data-action="edit"]').addEventListener('click', () => openAgencyForm(agency));
+    row.querySelector('[data-action="delete"]').addEventListener('click', () => deleteAgency(agency));
+  });
+}
+
+function buildPillPicker(containerId, options, selectedSet){
+  const el = document.getElementById(containerId);
+  el.innerHTML = options.map(opt => `
+    <button type="button" class="pill-option ${selectedSet.has(opt) ? 'selected' : ''}" data-value="${escapeAttr(opt)}">
+      ${escapeHtml(opt)}
+    </button>
+  `).join('');
+
+  el.querySelectorAll('.pill-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const val = btn.dataset.value;
+      if(selectedSet.has(val)){
+        selectedSet.delete(val);
+        btn.classList.remove('selected');
+      } else {
+        selectedSet.add(val);
+        btn.classList.add('selected');
+      }
+    });
+  });
+}
+
+function openAgencyForm(agency){
+  document.getElementById('agencyForm').classList.remove('hidden');
+  document.getElementById('agencyFormTitle').textContent = agency ? 'Edit Agency' : 'New Agency';
+  document.getElementById('agencyId').value = agency?.id || '';
+  document.getElementById('agName').value = agency?.name || '';
+  document.getElementById('agEmail').value = agency?.contact_email || '';
+  document.getElementById('agPhone').value = agency?.contact_phone || '';
+  document.getElementById('agWebsite').value = agency?.website || '';
+  document.getElementById('agFee').value = agency?.monthly_fee || 0;
+  document.getElementById('agStatus').value = agency?.status || 'active';
+  document.getElementById('agNotes').value = agency?.notes || '';
+
+  selectedIndustries = new Set(agency?.industries || []);
+  selectedCities = new Set(agency?.cities || []);
+
+  buildPillPicker('agIndustries', INDUSTRIES_LIST, selectedIndustries);
+  buildPillPicker('agCities', Array.from(selectedCities), selectedCities);
+
+  document.getElementById('agencyForm').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function closeAgencyForm(){
+  document.getElementById('agencyForm').classList.add('hidden');
+  ['agencyId','agName','agEmail','agPhone','agWebsite','agNotes'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('agFee').value = 0;
+  document.getElementById('agStatus').value = 'active';
+  selectedIndustries = new Set();
+  selectedCities = new Set();
+}
+
+document.getElementById('newAgencyBtn').addEventListener('click', () => openAgencyForm(null));
+document.getElementById('cancelAgencyBtn').addEventListener('click', closeAgencyForm);
+
+document.getElementById('addCityBtn').addEventListener('click', () => {
+  const inp = document.getElementById('agNewCity');
+  const city = inp.value.trim();
+  if(!city) return;
+  if(selectedCities.has(city)){ inp.value = ''; return; }
+  selectedCities.add(city);
+  buildPillPicker('agCities', Array.from(selectedCities), selectedCities);
+  inp.value = '';
+});
+
+document.getElementById('saveAgencyBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('saveAgencyBtn');
+  const id = document.getElementById('agencyId').value;
+  const name = document.getElementById('agName').value.trim();
+  const contact_email = document.getElementById('agEmail').value.trim();
+
+  if(!name) return showToast('Agency name is required', 'error');
+  if(!contact_email) return showToast('Contact email is required', 'error');
+
+  const payload = {
+    name,
+    contact_email,
+    contact_phone: document.getElementById('agPhone').value.trim() || null,
+    website: document.getElementById('agWebsite').value.trim() || null,
+    industries: Array.from(selectedIndustries),
+    cities: Array.from(selectedCities),
+    monthly_fee: parseFloat(document.getElementById('agFee').value) || 0,
+    status: document.getElementById('agStatus').value,
+    notes: document.getElementById('agNotes').value.trim() || null,
+    updated_at: new Date().toISOString()
+  };
+
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+
+  let error;
+  if(id){
+    ({ error } = await supabase.from('agencies').update(payload).eq('id', id));
+  } else {
+    ({ error } = await supabase.from('agencies').insert(payload));
+  }
+
+  btn.disabled = false;
+  btn.textContent = '💾 Save Agency';
+
+  if(error) return showToast('Save failed: ' + error.message, 'error');
+  showToast(id ? '✅ Agency updated' : '✅ Agency created', 'success');
+  closeAgencyForm();
+  await loadAgencies();
+});
+
+async function deleteAgency(agency){
+  if(!confirm(`Delete agency "${agency.name}"?\n\nThis will NOT delete the businesses or enquiries — only the agency record.`)) return;
+
+  const { error } = await supabase.from('agencies').delete().eq('id', agency.id);
+  if(error) return showToast('Delete failed: ' + error.message, 'error');
+  showToast('🗑 Agency deleted', 'success');
+  await loadAgencies();
+}
+
+// Wire into loadAll
+const _originalLoadAll = loadAll;
+loadAll = async function(){
+  await _originalLoadAll();
+  await loadAgencies();
+};
+  
 </script>
 </body>
 </html>
