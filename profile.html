@@ -77,6 +77,134 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f8fafc;color:#1a1a2
 .spinner{width:36px;height:36px;border-radius:50%;border:3px solid #e5e7eb;border-top-color:#6366f1;animation:spin .7s linear infinite;margin:0 auto 16px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* Enquiry CTA in hero */
+.enquiry-cta {
+  margin-top: 18px;
+  padding: 13px 28px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: .95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(99,102,241,.3);
+}
+.enquiry-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(99,102,241,.4); }
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, .55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn .2s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 26px;
+  width: 100%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3);
+  animation: slideUp .25s ease;
+}
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.modal-head h3 { font-size: 1.15rem; font-weight: 800; }
+.modal-close {
+  background: #f3f4f6;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: .9rem;
+  cursor: pointer;
+  color: #6b7280;
+  font-weight: 700;
+}
+.modal-close:hover { background: #e5e7eb; }
+
+.modal-sub { font-size: .85rem; color: #6b7280; margin-bottom: 18px; line-height: 1.5; }
+
+.modal-card .form-group { margin-bottom: 14px; }
+.modal-card .form-group label {
+  display: block;
+  font-size: .78rem;
+  font-weight: 700;
+  color: #4b5563;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+}
+.modal-card .form-group input,
+.modal-card .form-group textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: .92rem;
+  background: #fafafa;
+  font-family: inherit;
+}
+.modal-card .form-group input:focus,
+.modal-card .form-group textarea:focus {
+  outline: none;
+  border-color: #6366f1;
+  background: #fff;
+}
+.modal-card .form-group textarea { resize: vertical; min-height: 90px; }
+
+.enquiry-submit {
+  width: 100%;
+  padding: 13px;
+  margin-top: 8px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: .95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.enquiry-submit:hover:not(:disabled) { opacity: .9; }
+.enquiry-submit:disabled { opacity: .6; cursor: not-allowed; }
+
+.modal-foot {
+  font-size: .72rem;
+  color: #9ca3af;
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* Success state */
+.enquiry-success {
+  text-align: center;
+  padding: 20px 0;
+}
+.enquiry-success .check {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+.enquiry-success h4 { font-size: 1.1rem; font-weight: 800; margin-bottom: 8px; }
+.enquiry-success p { font-size: .88rem; color: #6b7280; line-height: 1.5; }
+  
 @media(max-width:720px){
   .two-col{grid-template-columns:1fr}
   .contact-bar{grid-template-columns:1fr}
@@ -103,10 +231,12 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f8fafc;color:#1a1a2
   </div>
 
   <div id="profile" class="hidden">
-    <div class="profile-hero">
-      <div id="heroLogoWrap"></div>
-      <h1 class="hero-name" id="heroName"></h1>
-      <div class="hero-meta" id="heroMeta"></div>
+<div class="profile-hero">
+  <div id="heroLogoWrap"></div>
+  <h1 class="hero-name" id="heroName"></h1>
+  <div class="hero-meta" id="heroMeta"></div>
+  <button class="enquiry-cta" id="enquiryBtn">📩 Send an Enquiry</button>
+</div>
     </div>
 
     <div class="contact-bar" id="contactBar"></div>
@@ -128,6 +258,37 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f8fafc;color:#1a1a2
       <div class="hours-list" id="hoursList"></div>
     </div>
   </div>
+<!-- ENQUIRY MODAL -->
+<div class="modal-overlay hidden" id="enquiryModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Send an Enquiry</h3>
+      <button class="modal-close" id="closeEnquiryBtn">✕</button>
+    </div>
+    <p class="modal-sub">Your message goes directly to this business. They'll usually respond within 24 hours.</p>
+
+    <div class="form-group">
+      <label>Your Name *</label>
+      <input type="text" id="enqName" placeholder="John Doe" />
+    </div>
+    <div class="form-group">
+      <label>Phone / WhatsApp *</label>
+      <input type="tel" id="enqPhone" placeholder="+256..." />
+    </div>
+    <div class="form-group">
+      <label>Email (optional)</label>
+      <input type="email" id="enqEmail" placeholder="you@example.com" />
+    </div>
+    <div class="form-group">
+      <label>What do you need? *</label>
+      <textarea id="enqMessage" rows="4" placeholder="Describe what you're looking for..."></textarea>
+    </div>
+
+    <button class="enquiry-submit" id="submitEnquiryBtn">Send Enquiry →</button>
+    <p class="modal-foot">By sending, you agree to be contacted by this business.</p>
+  </div>
+</div>
+  
 </main>
 
 <script type="module">
@@ -326,6 +487,8 @@ function render(biz){
     profile_id: biz.id,
     referrer: document.referrer || null
   }).then(()=>{});
+// Store biz for the enquiry form
+window.__currentBiz = biz;
 }
 
 function renderHours(hours){
@@ -348,6 +511,81 @@ function showToastLocal(msg){
   setTimeout(()=>t.remove(), 2500);
 }
 
+// =========================================================
+// ENQUIRY FORM
+// =========================================================
+document.getElementById('enquiryBtn').addEventListener('click', () => {
+  const biz = window.__currentBiz;
+  if(!biz) return;
+
+  // Pre-fill message
+  const msg = document.getElementById('enqMessage');
+  if(!msg.value.trim()){
+    msg.value = `Hi ${biz.business_name}, I found your listing on BSRC Marketing Agency and I'm interested in your services. Please reach out.`;
+  }
+
+  document.getElementById('enquiryModal').classList.remove('hidden');
+  document.getElementById('enqName').focus();
+});
+
+document.getElementById('closeEnquiryBtn').addEventListener('click', () => {
+  document.getElementById('enquiryModal').classList.add('hidden');
+});
+
+// Click outside to close
+document.getElementById('enquiryModal').addEventListener('click', (e) => {
+  if(e.target.id === 'enquiryModal') {
+    document.getElementById('enquiryModal').classList.add('hidden');
+  }
+});
+
+document.getElementById('submitEnquiryBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('submitEnquiryBtn');
+  const biz = window.__currentBiz;
+  if(!biz) return;
+
+  const name    = document.getElementById('enqName').value.trim();
+  const phone   = document.getElementById('enqPhone').value.trim();
+  const email   = document.getElementById('enqEmail').value.trim();
+  const message = document.getElementById('enqMessage').value.trim();
+
+  if(!name)    return showToastLocal('Please enter your name');
+  if(!phone)   return showToastLocal('Please enter your phone number');
+  if(!message) return showToastLocal('Please describe what you need');
+
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  const { error } = await supabase.from('enquiries').insert({
+    profile_id: biz.id,
+    visitor_name: name,
+    visitor_phone: phone,
+    visitor_email: email || null,
+    message
+  });
+
+  btn.disabled = false;
+  btn.textContent = 'Send Enquiry →';
+
+  if(error){
+    console.error('Enquiry error:', error);
+    return showToastLocal('Could not send: ' + error.message);
+  }
+
+  // Show success state
+  document.querySelector('#enquiryModal .modal-card').innerHTML = `
+    <div class="enquiry-success">
+      <div class="check">✅</div>
+      <h4>Enquiry Sent!</h4>
+      <p>Your message has been delivered to <b>${escapeHtml(biz.business_name)}</b>.<br>
+      They typically respond within 24 hours.</p>
+      <button class="enquiry-submit" style="margin-top:20px;" onclick="document.getElementById('enquiryModal').classList.add('hidden');location.reload();">
+        Done
+      </button>
+    </div>
+  `;
+});
+    
 init();
 </script>
 </body>
