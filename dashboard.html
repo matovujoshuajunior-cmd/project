@@ -89,6 +89,149 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .toast.success{background:#16a34a}
 .toast.warn{background:#d97706}
 
+/* Leads */
+.leads-badge {
+  display: inline-block;
+  background: #ef4444;
+  color: #fff;
+  font-size: .68rem;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: 20px;
+  margin-left: 8px;
+  vertical-align: middle;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .7; }
+}
+
+.leads-filter {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.lead-filter-btn {
+  padding: 7px 14px;
+  border: 1.5px solid #e5e7eb;
+  background: #fff;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-weight: 700;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all .15s;
+}
+.lead-filter-btn:hover { border-color: #c7d2fe; color: #4f46e5; }
+.lead-filter-btn.active {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  border-color: transparent;
+}
+
+.lead-item {
+  border: 1.5px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 10px;
+  transition: border-color .15s, box-shadow .15s;
+  cursor: pointer;
+}
+.lead-item:hover { border-color: #c7d2fe; box-shadow: 0 4px 12px rgba(99,102,241,.08); }
+.lead-item.unread {
+  background: #fefce8;
+  border-color: #fde047;
+}
+.lead-item.unread::before {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  margin-left: -10px;
+  margin-top: 8px;
+}
+
+.lead-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.lead-name { font-weight: 700; font-size: .95rem; }
+.lead-time { font-size: .72rem; color: #9ca3af; }
+
+.lead-status {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: .68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+}
+.lead-status.new { background: #fee2e2; color: #dc2626; }
+.lead-status.contacted { background: #fef3c7; color: #92400e; }
+.lead-status.converted { background: #dcfce7; color: #16a34a; }
+.lead-status.lost { background: #f3f4f6; color: #6b7280; }
+
+.lead-message {
+  font-size: .88rem;
+  color: #4b5563;
+  line-height: 1.55;
+  padding: 10px 14px;
+  background: #f9fafb;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  white-space: pre-wrap;
+}
+
+.lead-contact {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: .82rem;
+  color: #6b7280;
+}
+.lead-contact a {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 600;
+}
+.lead-contact a:hover { text-decoration: underline; }
+
+.lead-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.lead-btn {
+  padding: 9px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: .78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+}
+.lead-btn:hover { transform: translateY(-1px); }
+.lead-btn.whatsapp { background: #dcfce7; color: #16a34a; }
+.lead-btn.email    { background: #eef2ff; color: #4f46e5; }
+.lead-btn.call     { background: #dbeafe; color: #1d4ed8; }
+.lead-btn.mark     { background: #f3f4f6; color: #374151; }
+.lead-btn.convert  { background: #dcfce7; color: #16a34a; }
+.lead-btn.lost     { background: #fee2e2; color: #dc2626; }
+  
 @media(max-width:640px){
   .row2{grid-template-columns:1fr}
   .hour-row{grid-template-columns:70px 1fr 1fr;grid-template-areas:"day open close" "day closed closed"}
@@ -140,6 +283,28 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
   <!-- DASHBOARD -->
   <div id="dashboardSection" class="hidden">
 
+<!-- LEADS INBOX -->
+<div class="card" id="leadsCard">
+  <h2>
+    <span>📩 Enquiries / Leads
+      <span id="leadsBadge" class="leads-badge hidden">0 new</span>
+    </span>
+    <span style="font-size:.72rem;color:#9ca3af;font-weight:500" id="leadsSubtitle"></span>
+  </h2>
+  <p class="hint">Reply quickly to boost your <b>responsiveness score</b> and rise in the ranking. Responding within 24 hours earns full points.</p>
+
+  <div class="leads-filter" id="leadsFilter">
+    <button class="lead-filter-btn active" data-filter="all">All</button>
+    <button class="lead-filter-btn" data-filter="new">New</button>
+    <button class="lead-filter-btn" data-filter="contacted">Contacted</button>
+    <button class="lead-filter-btn" data-filter="converted">Converted</button>
+  </div>
+
+  <div id="leadsList">
+    <div class="empty-state">No enquiries yet. Once visitors reach out, they'll appear here.</div>
+  </div>
+</div>
+    
     <!-- ANALYTICS -->
     <div class="card">
       <h2>📊 Your Analytics <span style="font-size:.72rem;color:#9ca3af;font-weight:500">Last 30 days</span></h2>
@@ -407,6 +572,7 @@ supabase.auth.onAuthStateChange(async (_, session) => {
 // =========================================================
 async function loadAll(){
   await loadProfile();
+  await loadLeads();
   await loadLinks();
   await loadHours();
   await loadAnalytics();
@@ -714,7 +880,7 @@ $('addLinkBtn').addEventListener('click', () => {
   c.prepend(r);
   r.querySelector('.edit-label').focus();
 });
-
+  
 // =========================================================
 // ANALYTICS
 // =========================================================
@@ -770,6 +936,204 @@ async function loadAnalytics(){
     $('topLinksWrap').style.display = 'none';
   }
 }
+// =========================================================
+// LEADS INBOX
+// =========================================================
+let allLeads = [];
+let currentLeadFilter = 'all';
+
+async function loadLeads(){
+  const { data, error } = await supabase
+    .from('enquiries')
+    .select('*')
+    .eq('profile_id', currentUser.id)
+    .order('created_at', { ascending: false })
+    .limit(100);
+
+  if(error){ console.error('Leads load error:', error); return; }
+  allLeads = data || [];
+
+  const unread = allLeads.filter(l => !l.viewed_by_owner).length;
+  const badge = document.getElementById('leadsBadge');
+  if(unread > 0){
+    badge.textContent = unread + ' new';
+    badge.classList.remove('hidden');
+  } else {
+    badge.classList.add('hidden');
+  }
+
+  const subtitle = document.getElementById('leadsSubtitle');
+  subtitle.textContent = allLeads.length
+    ? `${allLeads.length} total · ${unread} unread`
+    : '';
+
+  renderLeads();
+}
+
+function renderLeads(){
+  const container = document.getElementById('leadsList');
+  const filtered = currentLeadFilter === 'all'
+    ? allLeads
+    : allLeads.filter(l => l.status === currentLeadFilter);
+
+  if(!filtered.length){
+    container.innerHTML = `<div class="empty-state">
+      ${allLeads.length ? 'No leads with this status.' : 'No enquiries yet. Once visitors reach out, they\'ll appear here.'}
+    </div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(lead => {
+    const isUnread = !lead.viewed_by_owner;
+    const phoneDigits = (lead.visitor_phone || '').replace(/[^\d]/g, '');
+    const timeAgo = getTimeAgo(lead.created_at);
+
+    const waText = encodeURIComponent(
+      `Hi ${lead.visitor_name}, this is ${document.getElementById('bizName')?.value || 'us'} — thanks for your enquiry. How can we help?`
+    );
+
+    return `
+      <div class="lead-item ${isUnread ? 'unread' : ''}" data-id="${lead.id}">
+        <div class="lead-head">
+          <div>
+            <div class="lead-name">${escapeHtml(lead.visitor_name)}</div>
+            <div class="lead-time">${timeAgo}</div>
+          </div>
+          <span class="lead-status ${lead.status}">${lead.status}</span>
+        </div>
+        <div class="lead-message">${escapeHtml(lead.message)}</div>
+        <div class="lead-contact">
+          ${lead.visitor_phone ? `<span>📞 ${escapeHtml(lead.visitor_phone)}</span>` : ''}
+          ${lead.visitor_email ? `<span>✉️ ${escapeHtml(lead.visitor_email)}</span>` : ''}
+        </div>
+        <div class="lead-actions">
+          ${phoneDigits ? `
+            <a class="lead-btn whatsapp"
+               href="https://wa.me/${phoneDigits}?text=${waText}"
+               target="_blank" rel="noopener"
+               data-action="reply">
+              💬 Reply on WhatsApp
+            </a>
+            <a class="lead-btn call" href="tel:${escapeHtml(lead.visitor_phone)}">
+              📞 Call
+            </a>
+          ` : ''}
+          ${lead.visitor_email ? `
+            <a class="lead-btn email"
+               href="mailto:${escapeHtml(lead.visitor_email)}?subject=Re: Your enquiry&body=Hi ${encodeURIComponent(lead.visitor_name)},%0D%0A%0D%0AThanks for reaching out..."
+               data-action="reply">
+              ✉️ Email
+            </a>
+          ` : ''}
+          ${lead.status !== 'converted' ? `
+            <button class="lead-btn convert" data-action="convert" data-id="${lead.id}">✓ Mark Converted</button>
+          ` : ''}
+          ${lead.status !== 'lost' ? `
+            <button class="lead-btn lost" data-action="lost" data-id="${lead.id}">✗ Mark Lost</button>
+          ` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Attach handlers
+  container.querySelectorAll('.lead-item').forEach(el => {
+    el.addEventListener('click', (e) => {
+      // Don't mark as viewed when clicking action buttons/links
+      if(e.target.closest('a') || e.target.closest('button')) return;
+      markLeadViewed(el.dataset.id);
+    });
+  });
+
+  container.querySelectorAll('[data-action="reply"]').forEach(el => {
+    el.addEventListener('click', () => markLeadContacted(el.closest('.lead-item').dataset.id));
+  });
+
+  container.querySelectorAll('[data-action="convert"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      updateLeadStatus(btn.dataset.id, 'converted');
+    });
+  });
+
+  container.querySelectorAll('[data-action="lost"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      updateLeadStatus(btn.dataset.id, 'lost');
+    });
+  });
+}
+
+async function markLeadViewed(id){
+  const lead = allLeads.find(l => l.id === id);
+  if(!lead || lead.viewed_by_owner) return;
+
+  await supabase.from('enquiries').update({ viewed_by_owner: true }).eq('id', id);
+  lead.viewed_by_owner = true;
+
+  // Update UI without full reload
+  const unread = allLeads.filter(l => !l.viewed_by_owner).length;
+  const badge = document.getElementById('leadsBadge');
+  if(unread > 0){
+    badge.textContent = unread + ' new';
+  } else {
+    badge.classList.add('hidden');
+  }
+
+  const el = document.querySelector(`.lead-item[data-id="${id}"]`);
+  if(el) el.classList.remove('unread');
+}
+
+async function markLeadContacted(id){
+  const lead = allLeads.find(l => l.id === id);
+  if(!lead) return;
+
+  // Set first_reply_at if not already set — this feeds the responsiveness score
+  const updates = { viewed_by_owner: true };
+  if(!lead.first_reply_at) updates.first_reply_at = new Date().toISOString();
+  if(lead.status === 'new') updates.status = 'contacted';
+
+  await supabase.from('enquiries').update(updates).eq('id', id);
+
+  // Refresh
+  await loadLeads();
+}
+
+async function updateLeadStatus(id, status){
+  const updates = { status, viewed_by_owner: true };
+  // If marking as converted/contacted and no reply yet, count this as the reply
+  const lead = allLeads.find(l => l.id === id);
+  if(lead && !lead.first_reply_at && status !== 'lost'){
+    updates.first_reply_at = new Date().toISOString();
+  }
+
+  await supabase.from('enquiries').update(updates).eq('id', id);
+  await loadLeads();
+  showToast('Lead updated', 'success');
+}
+
+function getTimeAgo(iso){
+  const diff = Date.now() - new Date(iso).getTime();
+  const min = Math.floor(diff / 60000);
+  if(min < 1) return 'Just now';
+  if(min < 60) return `${min}m ago`;
+  const hr = Math.floor(min / 60);
+  if(hr < 24) return `${hr}h ago`;
+  const day = Math.floor(hr / 24);
+  if(day < 7) return `${day}d ago`;
+  return new Date(iso).toLocaleDateString();
+}
+
+// Wire filter buttons
+document.querySelectorAll('.lead-filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.lead-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentLeadFilter = btn.dataset.filter;
+    renderLeads();
+  });
+});
+  
 </script>
 </body>
 </html>
