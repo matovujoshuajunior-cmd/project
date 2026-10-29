@@ -686,30 +686,33 @@ async function loadProfile(){
   $('bizLogo').value        = profile.logo_url || '';
   $('allowOverflow').checked = profile.allow_partner_overflow !== false;
   updateLogoPreview(profile.logo_url);
-}
-$('bizLogo').addEventListener('input', e => updateLogoPreview(e.target.value));
-function updateLogoPreview(url){
-  const img = $('logoPreview');
-  if(url){ img.src = url; img.classList.remove('hidden'); } else img.classList.add('hidden');
-}
+
   // Preview button
-  if(profile.slug){
-    $('previewBtn').href = `profile.html?b=${encodeURIComponent(profile.slug)}`;
-    $('previewBtn').style.display = 'inline-flex';
-  } else {
-    $('previewBtn').style.display = 'none';
+  const previewBtn = document.getElementById('previewBtn');
+  if(previewBtn){
+    if(profile.slug){
+      previewBtn.href = `profile.html?b=${encodeURIComponent(profile.slug)}`;
+      previewBtn.style.display = 'inline-flex';
+    } else {
+      previewBtn.style.display = 'none';
+    }
   }
 
   // Deletion request status
-  if(profile.deletion_requested_at){
-    $('requestDeleteBtn').disabled = true;
-    $('requestDeleteBtn').textContent = '✓ Deletion Requested';
-    $('deletionStatus').innerHTML = `📩 Request submitted on <b>${new Date(profile.deletion_requested_at).toLocaleDateString()}</b>. An admin will process it soon.`;
-  } else {
-    $('requestDeleteBtn').disabled = false;
-    $('requestDeleteBtn').textContent = 'Request Account Deletion';
-    $('deletionStatus').textContent = '';
+  const requestDeleteBtn = document.getElementById('requestDeleteBtn');
+  const deletionStatus = document.getElementById('deletionStatus');
+  if(requestDeleteBtn && deletionStatus){
+    if(profile.deletion_requested_at){
+      requestDeleteBtn.disabled = true;
+      requestDeleteBtn.textContent = '✓ Deletion Requested';
+      deletionStatus.innerHTML = `📩 Request submitted on <b>${new Date(profile.deletion_requested_at).toLocaleDateString()}</b>. An admin will process it soon.`;
+    } else {
+      requestDeleteBtn.disabled = false;
+      requestDeleteBtn.textContent = 'Request Account Deletion';
+      deletionStatus.textContent = '';
+    }
   }
+}
   
 $('saveProfileBtn').addEventListener('click', async () => {
   const btn = $('saveProfileBtn');
