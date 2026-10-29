@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="Cache-Control" content="no-cache" />
 <meta name="robots" content="noindex, nofollow" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="mask-icon" href="/favicon.svg" color="#6366f1" />
+<meta name="theme-color" content="#6366f1" />
 <title>Business Dashboard</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -13,7 +16,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .container{max-width:900px;margin:0 auto;padding:24px}
 .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 .header h1{font-size:1.4rem;font-weight:700}
-.btn{padding:10px 20px;border:none;border-radius:10px;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s}
+.btn{padding:10px 20px;border:none;border-radius:10px;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
 .btn-primary{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
 .btn-primary:hover:not(:disabled){opacity:.9;transform:translateY(-1px)}
 .btn-primary:disabled{opacity:.55;cursor:not-allowed}
@@ -32,7 +35,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 
 .auth-tabs{display:flex;gap:8px;margin-bottom:20px}
-.auth-tab{flex:1;padding:12px;text-align:center;border-radius:10px;cursor:pointer;font-weight:600;font-size:.9rem;background:#e5e7eb;color:#6b7280;border:none;transition:all .2s}
+.auth-tab{flex:1;padding:12px;text-align:center;border-radius:10px;cursor:pointer;font-weight:600;font-size:.9rem;background:#e5e7eb;color:#6b7280;border:none;transition:all .2s;font-family:inherit}
 .auth-tab.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
 .help-panel{background:#fef2f2;border:1px solid #fecaca;color:#7f1d1d;padding:16px;border-radius:10px;font-size:.87rem;margin-bottom:16px;line-height:1.6}
 
@@ -101,7 +104,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .partner-block{margin:10px 0;padding:12px 14px;background:#fdf2f8;border-left:3px solid #db2777;border-radius:8px;font-size:.82rem;color:#831843}
 .partner-block-label{font-weight:800;font-size:.72rem;text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px;color:#db2777}
 
-/* Partner marketplace */
 .partner-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .agency-card{border:1.5px solid #f1f5f9;border-radius:14px;padding:20px;transition:border-color .15s,box-shadow .15s;display:flex;flex-direction:column;gap:10px}
 .agency-card:hover{border-color:#c7d2fe;box-shadow:0 8px 24px rgba(99,102,241,.1)}
@@ -177,7 +179,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .bench-label{font-size:.85rem;font-weight:600;color:#4b5563}
 .bench-value{font-size:1.05rem;font-weight:800;color:#6b7280}
 
-/* Inquiry modal */
 .modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;animation:fadeIn .2s ease}
 .modal-card{background:#fff;border-radius:18px;padding:26px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:slideUp .25s ease}
 @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
@@ -414,7 +415,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
         </div>
         <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
           <button class="btn btn-primary" id="saveProfileBtn">Save Information</button>
-          <a class="btn btn-ghost" id="previewBtn" target="_blank" rel="noopener" style="text-decoration:none">
+          <a class="btn btn-ghost" id="previewBtn" target="_blank" rel="noopener" style="text-decoration:none;display:none">
             👁 Preview my profile
           </a>
         </div>
@@ -425,9 +426,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
         <p class="hint">Uncheck "Closed" for days you're open.</p>
         <div class="hours-grid" id="hoursGrid"></div>
         <button class="btn btn-primary" id="saveHoursBtn" style="margin-top:16px;">Save Hours</button>
-        
       </div>
-            <div class="card" style="border:1.5px solid #fecaca">
+
+      <div class="card" style="border:1.5px solid #fecaca">
         <h2 style="color:#dc2626">⚠️ Danger Zone</h2>
         <p class="hint">Request permanent deletion of your business listing and all associated data. An admin will confirm within 48 hours.</p>
         <button class="btn btn-danger" id="requestDeleteBtn">Request Account Deletion</button>
@@ -468,7 +469,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 <div class="toast" id="toast"></div>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=22';
+import { supabase } from './supabase-client.js?v=25';
 
 const $ = id => document.getElementById(id);
 const authSection = $('authSection');
@@ -713,7 +714,11 @@ async function loadProfile(){
     }
   }
 }
-  
+$('bizLogo').addEventListener('input', e => updateLogoPreview(e.target.value));
+function updateLogoPreview(url){
+  const img = $('logoPreview');
+  if(url){ img.src = url; img.classList.remove('hidden'); } else img.classList.add('hidden');
+}
 $('saveProfileBtn').addEventListener('click', async () => {
   const btn = $('saveProfileBtn');
   let slug = $('bizSlug').value.trim();
@@ -742,7 +747,28 @@ $('saveProfileBtn').addEventListener('click', async () => {
   showToast('✅ Information saved!', 'success');
   await loadScore();
   await loadPressureLayer();
+  await loadProfile();
 });
+
+// Delete handler
+const requestDeleteBtnEl = document.getElementById('requestDeleteBtn');
+if(requestDeleteBtnEl){
+  requestDeleteBtnEl.addEventListener('click', async () => {
+    if(!confirm('Request deletion of your business listing?\n\nAn admin will remove all your data within 48 hours.')) return;
+    requestDeleteBtnEl.disabled = true;
+    requestDeleteBtnEl.textContent = 'Submitting…';
+    const { error } = await supabase.from('profiles')
+      .update({ deletion_requested_at: new Date().toISOString() })
+      .eq('id', currentUser.id);
+    if(error){
+      requestDeleteBtnEl.disabled = false;
+      requestDeleteBtnEl.textContent = 'Request Account Deletion';
+      return showToast('Failed: ' + error.message, 'error');
+    }
+    showToast('✅ Deletion request submitted. Admin will process it within 48 hours.', 'success', 6000);
+    await loadProfile();
+  });
+}
 
 // HOURS
 function defaultHours(){ const o = {}; DAYS.forEach(d => o[d] = { closed: d === 'sun', open: '09:00', close: '17:00' }); return o; }
@@ -781,23 +807,6 @@ $('saveHoursBtn').addEventListener('click', async () => {
   showToast('✅ Hours saved!', 'success');
   await loadScore();
 });
-
- $('requestDeleteBtn').addEventListener('click', async () => {
-  if(!confirm('Request deletion of your business listing?\n\nAn admin will remove all your data within 48 hours. You can cancel by logging in and replying to the confirmation email.')) return;
-  const btn = $('requestDeleteBtn');
-  btn.disabled = true;
-  btn.textContent = 'Submitting…';
-  const { error } = await supabase.from('profiles')
-    .update({ deletion_requested_at: new Date().toISOString() })
-    .eq('id', currentUser.id);
-  if(error){
-    btn.disabled = false;
-    btn.textContent = 'Request Account Deletion';
-    return showToast('Failed: ' + error.message, 'error');
-  }
-  showToast('✅ Deletion request submitted. An admin will process it within 48 hours.', 'success', 6000);
-  await loadProfile();
-}); 
 
 // LINKS
 async function loadLinks(){
@@ -1026,25 +1035,18 @@ document.querySelectorAll('.lead-filter-btn').forEach(btn => {
 // PARTNERS MARKETPLACE
 async function loadPartners(){
   if(!currentUser) return;
-  // All active agencies
   const { data: partners } = await supabase.from('agency_marketplace').select('*');
   allPartners = partners || [];
 
-  // How many leads each agency handled for this business
   const { data: agencyStats } = await supabase.from('enquiries')
-    .select('assigned_agency_id')
-    .eq('profile_id', currentUser.id)
-    .not('assigned_agency_id', 'is', null);
+    .select('assigned_agency_id').eq('profile_id', currentUser.id).not('assigned_agency_id', 'is', null);
   const handledMap = {};
   (agencyStats || []).forEach(e => {
     handledMap[e.assigned_agency_id] = (handledMap[e.assigned_agency_id] || 0) + 1;
   });
 
-  // My inquiries
   const { data: inquiries } = await supabase.from('partner_inquiries')
-    .select('*, agencies:agency_id(name)')
-    .eq('profile_id', currentUser.id)
-    .order('created_at', { ascending: false });
+    .select('*, agencies:agency_id(name)').eq('profile_id', currentUser.id).order('created_at', { ascending: false });
   myInquiries = inquiries || [];
 
   renderPartners(handledMap);
@@ -1070,18 +1072,13 @@ function renderPartners(handledMap){
             ${p.tagline ? `<div class="agency-tagline">${escapeHtml(p.tagline)}</div>` : ''}
           </div>
         </div>
-        ${services.length ? `
-          <div class="agency-services">
-            ${services.map(s => `<span class="service-chip">${escapeHtml(s)}</span>`).join('')}
-          </div>
-        ` : ''}
+        ${services.length ? `<div class="agency-services">${services.map(s => `<span class="service-chip">${escapeHtml(s)}</span>`).join('')}</div>` : ''}
         ${handled > 0 ? `<div class="agency-handled">✓ Already handled ${handled} lead${handled === 1 ? '' : 's'} for you</div>` : ''}
         <div class="agency-actions">
           <button class="btn-contact" data-agency-id="${p.id}" data-agency-name="${escapeAttr(p.name)}">Contact</button>
           ${p.portfolio_url ? `<a class="btn-portfolio" href="${escapeHtml(normalizeUrl(p.portfolio_url))}" target="_blank" rel="noopener">Portfolio ↗</a>` : ''}
         </div>
-      </div>
-    `;
+      </div>`;
   }).join('')}</div>`;
 
   container.querySelectorAll('.btn-contact').forEach(btn => {
@@ -1105,14 +1102,8 @@ function renderMyInquiries(){
         </div>
         <div class="inquiry-message">${escapeHtml(inq.message)}</div>
         <div style="font-size:.72rem;color:#9ca3af">Sent ${getTimeAgo(inq.created_at)}${inq.budget ? ' · Budget: ' + escapeHtml(inq.budget) : ''}</div>
-        ${inq.agency_reply ? `
-          <div class="inquiry-reply">
-            <div class="inquiry-reply-label">Reply from ${escapeHtml(agencyName)}</div>
-            ${escapeHtml(inq.agency_reply)}
-          </div>
-        ` : ''}
-      </div>
-    `;
+        ${inq.agency_reply ? `<div class="inquiry-reply"><div class="inquiry-reply-label">Reply from ${escapeHtml(agencyName)}</div>${escapeHtml(inq.agency_reply)}</div>` : ''}
+      </div>`;
   }).join('');
 }
 
@@ -1127,16 +1118,13 @@ function openInquiryModal(agencyId, agencyName){
   $('inquiryMessage').focus();
 }
 $('closeInquiryBtn').addEventListener('click', () => $('inquiryModal').classList.add('hidden'));
-$('inquiryModal').addEventListener('click', (e) => {
-  if(e.target.id === 'inquiryModal') $('inquiryModal').classList.add('hidden');
-});
+$('inquiryModal').addEventListener('click', (e) => { if(e.target.id === 'inquiryModal') $('inquiryModal').classList.add('hidden'); });
 $('sendInquiryBtn').addEventListener('click', async () => {
   const btn = $('sendInquiryBtn');
   const message = $('inquiryMessage').value.trim();
   const budget = $('inquiryBudget').value;
   if(!message) return showToast('Please describe what you need', 'error');
   if(!currentPartnerForInquiry) return;
-
   setLoading(btn, true, 'Sending…');
   const { error } = await supabase.from('partner_inquiries').insert({
     profile_id: currentUser.id,
@@ -1145,10 +1133,7 @@ $('sendInquiryBtn').addEventListener('click', async () => {
     budget: budget || null
   });
   setLoading(btn, false);
-  if(error){
-    console.error(error);
-    return showToast('Failed to send: ' + error.message, 'error');
-  }
+  if(error){ console.error(error); return showToast('Failed to send: ' + error.message, 'error'); }
   $('inquiryModal').classList.add('hidden');
   showToast('✅ Inquiry sent! They\'ll reply soon.', 'success', 4000);
   await loadPartners();
@@ -1240,8 +1225,7 @@ async function loadPressureLayer(){
   const avgLeadValue = setting?.value ? Number(setting.value) : 150000;
   const { data: partnerLeads } = await supabase.from('enquiries')
     .select('id, status, assigned_agency_id, partner_replied_at, created_at')
-    .eq('profile_id', currentUser.id)
-    .not('assigned_agency_id', 'is', null);
+    .eq('profile_id', currentUser.id).not('assigned_agency_id', 'is', null);
   const pl = partnerLeads || [];
   const handled = pl.length;
   const converted = pl.filter(l => l.status === 'converted').length;
@@ -1257,9 +1241,7 @@ async function loadPressureLayer(){
     $('piValue').textContent = formatUGX(estValue);
   }
   const { data: yourEnq } = await supabase.from('enquiries')
-    .select('created_at, first_reply_at')
-    .eq('profile_id', currentUser.id)
-    .not('first_reply_at', 'is', null);
+    .select('created_at, first_reply_at').eq('profile_id', currentUser.id).not('first_reply_at', 'is', null);
   const valid = (yourEnq || []).filter(e => new Date(e.first_reply_at) > new Date(e.created_at));
   const avgYourMin = valid.length
     ? Math.round(valid.reduce((sum, e) => sum + (new Date(e.first_reply_at) - new Date(e.created_at)) / 60000, 0) / valid.length)
