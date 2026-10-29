@@ -10,7 +10,7 @@
 .hidden{display:none!important}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2e;min-height:100vh}
 .container{max-width:900px;margin:0 auto;padding:24px}
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 .header h1{font-size:1.4rem;font-weight:700}
 .btn{padding:10px 20px;border:none;border-radius:10px;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s}
 .btn-primary{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
@@ -30,39 +30,128 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .form-group textarea{resize:vertical;min-height:90px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 
+/* Auth */
 .auth-tabs{display:flex;gap:8px;margin-bottom:20px}
 .auth-tab{flex:1;padding:12px;text-align:center;border-radius:10px;cursor:pointer;font-weight:600;font-size:.9rem;background:#e5e7eb;color:#6b7280;border:none;transition:all .2s}
 .auth-tab.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
 .help-panel{background:#fef2f2;border:1px solid #fecaca;color:#7f1d1d;padding:16px;border-radius:10px;font-size:.87rem;margin-bottom:16px;line-height:1.6}
 
-.links-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid #e5e7eb;margin-bottom:12px}
-.links-head h2{border:none;padding:0;margin:0}
-.links-count{font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:20px;background:#eef2ff;color:#4f46e5}
-.links-count.empty{background:#f3f4f6;color:#9ca3af}
-.link-item{display:grid;grid-template-columns:40px 1fr auto;gap:14px;align-items:center;padding:14px 4px;border-bottom:1px solid #f1f5f9}
-.link-item:last-child{border-bottom:none}
-.link-item.editing{background:#eef2ff;border-radius:12px;padding:16px;border-bottom:none;margin:6px 0;grid-template-columns:1fr}
-.link-icon-box{width:40px;height:40px;border-radius:10px;background:#eef2ff;color:#4f46e5;display:flex;align-items:center;justify-content:center;font-size:1.15rem}
-.link-body{min-width:0}
-.link-label{font-size:.95rem;font-weight:700}
-.link-url{font-size:.8rem;color:#6366f1;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.link-actions{display:flex;gap:6px;flex-wrap:wrap}
-.mini-btn{padding:8px 12px;border:none;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:transform .15s}
-.mini-btn:hover{transform:translateY(-1px)}
-.mini-btn.open{background:#dbeafe;color:#1d4ed8}
-.mini-btn.edit{background:#fef3c7;color:#92400e}
-.mini-btn.save{background:#6366f1;color:#fff}
-.mini-btn.cancel{background:#e5e7eb;color:#374151}
-.mini-btn.delete{background:#fee2e2;color:#dc2626}
-.link-edit-grid{display:grid;grid-template-columns:1fr 2fr;gap:12px;margin-bottom:12px}
+/* ============================================================
+   TAB NAVIGATION
+   ============================================================ */
+.tabs-nav{
+  display:flex;
+  gap:4px;
+  background:#fff;
+  border-radius:14px;
+  padding:6px;
+  box-shadow:0 4px 24px rgba(0,0,0,.06);
+  margin-bottom:20px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+.tabs-nav::-webkit-scrollbar{display:none}
 
-.hours-grid{display:flex;flex-direction:column;gap:8px}
-.hour-row{display:grid;grid-template-columns:70px 90px 1fr 1fr;gap:10px;align-items:center;padding:8px 12px;background:#f9fafb;border-radius:10px}
-.hour-row .day{font-weight:700;font-size:.85rem;text-transform:capitalize}
-.hour-row input[type="time"]{padding:8px 10px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:.85rem;background:#fff;font-family:inherit;width:100%}
-.hour-row .closed-label{font-size:.82rem;display:flex;align-items:center;gap:6px;color:#6b7280;font-weight:600;cursor:pointer}
-.hour-row.is-closed input[type="time"]{opacity:.3;pointer-events:none}
+.tab-btn{
+  flex:1;
+  min-width:fit-content;
+  padding:12px 16px;
+  border:none;
+  background:transparent;
+  border-radius:10px;
+  font-size:.85rem;
+  font-weight:700;
+  color:#6b7280;
+  cursor:pointer;
+  transition:all .15s;
+  white-space:nowrap;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  font-family:inherit;
+}
+.tab-btn:hover{color:#4f46e5;background:#f3f4f6}
+.tab-btn.active{
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  color:#fff;
+  box-shadow:0 4px 12px rgba(99,102,241,.3);
+}
+.tab-btn.active:hover{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
 
+.tab-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:#ef4444;
+  color:#fff;
+  font-size:.65rem;
+  font-weight:800;
+  padding:2px 6px;
+  border-radius:10px;
+  min-width:18px;
+  height:18px;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+.tab-btn.active .tab-badge{
+  background:#fff;
+  color:#6366f1;
+}
+
+.tab-panel{animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:520px){
+  .tab-btn{padding:11px 10px;font-size:.78rem;gap:4px}
+  .tab-btn .tab-label-full{display:none}
+}
+
+/* ============================================================
+   SCORE
+   ============================================================ */
+.score-display{text-align:center;padding:20px 0}
+.score-circle{
+  width:140px;
+  height:140px;
+  margin:0 auto 16px;
+  border-radius:50%;
+  background:conic-gradient(#6366f1 var(--score-deg,0deg), #e5e7eb 0deg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  box-shadow:0 4px 20px rgba(99,102,241,.15);
+}
+.score-circle::before{
+  content:'';
+  position:absolute;
+  inset:12px;
+  background:#fff;
+  border-radius:50%;
+}
+#scoreBig{
+  position:relative;
+  font-size:2.6rem;
+  font-weight:800;
+  color:#6366f1;
+  line-height:1;
+}
+.score-circle-sub{
+  position:relative;
+  font-size:.7rem;
+  color:#9ca3af;
+  font-weight:700;
+  margin-top:2px;
+}
+#scoreTier{font-size:1.05rem;font-weight:800;color:#6b7280;margin-top:8px}
+#scoreBreakdown{margin-top:20px}
+#scoreNext{margin-top:16px;padding:14px;background:#eef2ff;border-radius:10px;font-size:.85rem;color:#4f46e5;font-weight:600;text-align:center}
+
+/* ============================================================
+   ANALYTICS
+   ============================================================ */
 .stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px}
 .stat-card{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-radius:14px;padding:18px;text-align:center}
 .stat-card .num{font-size:1.8rem;font-weight:800;color:#4f46e5;line-height:1}
@@ -77,24 +166,18 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .top-links .tl-label{font-weight:600}
 .top-links .tl-count{color:#6366f1;font-weight:700}
 
-/* Score */
-.score-hero{text-align:center;padding:20px 0}
-#scoreBig{font-size:3rem;font-weight:800;color:#6366f1;line-height:1}
-#scoreTier{font-size:.95rem;font-weight:700;margin-top:8px;color:#6b7280}
-#scoreBreakdown{margin-top:8px}
-#scoreNext{margin-top:16px;padding:14px;background:#eef2ff;border-radius:10px;font-size:.85rem;color:#4f46e5;font-weight:600}
-
-/* Leads */
-.leads-badge{display:inline-block;background:#ef4444;color:#fff;font-size:.68rem;font-weight:800;padding:3px 9px;border-radius:20px;margin-left:8px;vertical-align:middle;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+/* ============================================================
+   LEADS
+   ============================================================ */
 .leads-filter{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
-.lead-filter-btn{padding:7px 14px;border:1.5px solid #e5e7eb;background:#fff;border-radius:20px;font-size:.78rem;font-weight:700;color:#6b7280;cursor:pointer;transition:all .15s}
+.lead-filter-btn{padding:7px 14px;border:1.5px solid #e5e7eb;background:#fff;border-radius:20px;font-size:.78rem;font-weight:700;color:#6b7280;cursor:pointer;transition:all .15s;font-family:inherit}
 .lead-filter-btn:hover{border-color:#c7d2fe;color:#4f46e5}
 .lead-filter-btn.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-color:transparent}
+
 .lead-item{border:1.5px solid #f1f5f9;border-radius:12px;padding:16px;margin-bottom:10px;transition:border-color .15s,box-shadow .15s;cursor:pointer}
 .lead-item:hover{border-color:#c7d2fe;box-shadow:0 4px 12px rgba(99,102,241,.08)}
 .lead-item.unread{background:#fefce8;border-color:#fde047}
-.lead-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+.lead-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px}
 .lead-name{font-weight:700;font-size:.95rem}
 .lead-time{font-size:.72rem;color:#9ca3af}
 .lead-status{padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.3px}
@@ -105,13 +188,57 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .lead-message{font-size:.88rem;color:#4b5563;line-height:1.55;padding:10px 14px;background:#f9fafb;border-radius:8px;margin-bottom:12px;white-space:pre-wrap}
 .lead-contact{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:.82rem;color:#6b7280}
 .lead-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.lead-btn{padding:9px 14px;border:none;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;transition:transform .15s;display:inline-flex;align-items:center;gap:5px;text-decoration:none}
+.lead-btn{padding:9px 14px;border:none;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;transition:transform .15s;display:inline-flex;align-items:center;gap:5px;text-decoration:none;font-family:inherit}
 .lead-btn:hover{transform:translateY(-1px)}
 .lead-btn.whatsapp{background:#dcfce7;color:#16a34a}
 .lead-btn.email{background:#eef2ff;color:#4f46e5}
 .lead-btn.call{background:#dbeafe;color:#1d4ed8}
 .lead-btn.convert{background:#dcfce7;color:#16a34a}
 .lead-btn.lost{background:#fee2e2;color:#dc2626}
+.partner-block{margin:10px 0;padding:12px 14px;background:#fdf2f8;border-left:3px solid #db2777;border-radius:8px;font-size:.82rem;color:#831843}
+.partner-block-label{font-weight:800;font-size:.72rem;text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px;color:#db2777}
+
+/* ============================================================
+   LINKS
+   ============================================================ */
+.links-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid #e5e7eb;margin-bottom:12px}
+.links-head h2{border:none;padding:0;margin:0}
+.links-count{font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:20px;background:#eef2ff;color:#4f46e5}
+.links-count.empty{background:#f3f4f6;color:#9ca3af}
+.link-item{display:grid;grid-template-columns:40px 1fr auto;gap:14px;align-items:center;padding:14px 4px;border-bottom:1px solid #f1f5f9}
+.link-item:last-child{border-bottom:none}
+.link-item.editing{background:#eef2ff;border-radius:12px;padding:16px;border-bottom:none;margin:6px 0;grid-template-columns:1fr}
+.link-icon-box{width:40px;height:40px;border-radius:10px;background:#eef2ff;color:#4f46e5;display:flex;align-items:center;justify-content:center;font-size:1.15rem}
+.link-body{min-width:0}
+.link-label{font-size:.95rem;font-weight:700}
+.link-url{font-size:.8rem;color:#6366f1;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.link-actions{display:flex;gap:6px;flex-wrap:wrap}
+.mini-btn{padding:8px 12px;border:none;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:transform .15s;font-family:inherit}
+.mini-btn:hover{transform:translateY(-1px)}
+.mini-btn.open{background:#dbeafe;color:#1d4ed8}
+.mini-btn.edit{background:#fef3c7;color:#92400e}
+.mini-btn.save{background:#6366f1;color:#fff}
+.mini-btn.cancel{background:#e5e7eb;color:#374151}
+.mini-btn.delete{background:#fee2e2;color:#dc2626}
+.link-edit-grid{display:grid;grid-template-columns:1fr 2fr;gap:12px;margin-bottom:12px}
+
+/* ============================================================
+   HOURS
+   ============================================================ */
+.hours-grid{display:flex;flex-direction:column;gap:8px}
+.hour-row{display:grid;grid-template-columns:70px 90px 1fr 1fr;gap:10px;align-items:center;padding:8px 12px;background:#f9fafb;border-radius:10px}
+.hour-row .day{font-weight:700;font-size:.85rem;text-transform:capitalize}
+.hour-row input[type="time"]{padding:8px 10px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:.85rem;background:#fff;font-family:inherit;width:100%}
+.hour-row .closed-label{font-size:.82rem;display:flex;align-items:center;gap:6px;color:#6b7280;font-weight:600;cursor:pointer}
+.hour-row.is-closed input[type="time"]{opacity:.3;pointer-events:none}
+
+/* Opt-out */
+.optout-box{padding:14px;background:#f0fdf4;border-radius:10px;border:1.5px solid #bbf7d0;margin-bottom:16px}
+.optout-box label{display:flex;align-items:flex-start;gap:12px;cursor:pointer;margin-bottom:0;font-weight:400}
+.optout-box input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:#16a34a;flex-shrink:0;cursor:pointer}
+.optout-box .optout-text{flex:1}
+.optout-box b{display:block;font-size:.9rem;color:#1a1a2e;font-weight:700}
+.optout-box .optout-sub{display:block;font-size:.78rem;color:#6b7280;margin-top:4px;line-height:1.55}
 
 .empty-state{text-align:center;padding:32px 20px;color:#9ca3af;font-size:.9rem}
 .logo-preview{width:64px;height:64px;border-radius:12px;object-fit:cover;margin-top:8px;border:2px solid #e5e7eb}
@@ -129,6 +256,8 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
   .link-item{grid-template-columns:40px 1fr}
   .link-actions{grid-column:2}
   .link-edit-grid{grid-template-columns:1fr}
+  .score-circle{width:120px;height:120px}
+  #scoreBig{font-size:2.2rem}
 }
 </style>
 </head>
@@ -140,6 +269,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
     <button id="logoutBtn" class="btn btn-danger hidden">Log Out</button>
   </div>
 
+  <!-- AUTH -->
   <div id="authSection">
     <div class="card">
       <div class="auth-tabs">
@@ -154,7 +284,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
         <div class="form-group"><label>Email</label><input type="email" id="loginEmail" autocomplete="email" placeholder="you@example.com" /></div>
         <div class="form-group"><label>Password</label><input type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••" /></div>
         <button class="btn btn-primary" id="loginBtn" style="width:100%">Log In</button>
-        <button type="button" id="forgotBtn" style="background:none;border:none;color:#6366f1;font-size:.85rem;cursor:pointer;padding:12px 0 0;text-decoration:underline;width:100%">Forgot password?</button>
+        <button type="button" id="forgotBtn" style="background:none;border:none;color:#6366f1;font-size:.85rem;cursor:pointer;padding:12px 0 0;text-decoration:underline;width:100%;font-family:inherit">Forgot password?</button>
       </div>
       <div id="signupForm" class="hidden">
         <div class="form-group"><label>Business Name</label><input type="text" id="signupBusinessName" placeholder="My Awesome Business" /></div>
@@ -165,102 +295,151 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
     </div>
   </div>
 
+  <!-- DASHBOARD WITH TABS -->
   <div id="dashboardSection" class="hidden">
 
-    <!-- SCORE -->
-    <div class="card">
-      <h2>🏆 Your Business Score</h2>
-      <div class="score-hero">
-        <div id="scoreBig">—</div>
-        <div id="scoreTier">Loading…</div>
-      </div>
-      <div id="scoreBreakdown"></div>
-      <div id="scoreNext"></div>
+    <div class="tabs-nav" id="tabsNav">
+      <button class="tab-btn active" data-tab="analytics">
+        📊 <span>Analytics & Score</span>
+      </button>
+      <button class="tab-btn" data-tab="leads">
+        📩 <span>Leads</span>
+        <span class="tab-badge hidden" id="tabLeadsBadge">0</span>
+      </button>
+      <button class="tab-btn" data-tab="links">
+        🔗 <span>Links</span>
+      </button>
+      <button class="tab-btn" data-tab="profile">
+        ⚙️ <span>Profile</span>
+      </button>
     </div>
 
-    <!-- LEADS -->
-    <div class="card">
-      <h2>
-        <span>📩 Enquiries / Leads <span id="leadsBadge" class="leads-badge hidden">0 new</span></span>
-        <span style="font-size:.72rem;color:#9ca3af;font-weight:500" id="leadsSubtitle"></span>
-      </h2>
-      <p class="hint">Reply quickly to boost your responsiveness score. Respond within 24 hours for full points.</p>
-      <div class="leads-filter">
-        <button class="lead-filter-btn active" data-filter="all">All</button>
-        <button class="lead-filter-btn" data-filter="new">New</button>
-        <button class="lead-filter-btn" data-filter="contacted">Contacted</button>
-        <button class="lead-filter-btn" data-filter="converted">Converted</button>
+    <!-- ============================================================
+         TAB: ANALYTICS & SCORE
+         ============================================================ -->
+    <div class="tab-panel" data-panel="analytics">
+      <div class="card">
+        <h2>🏆 Your Business Score</h2>
+        <div class="score-display">
+          <div class="score-circle" id="scoreCircle">
+            <div>
+              <div id="scoreBig">—</div>
+              <div class="score-circle-sub" id="scoreSub">/ 100</div>
+            </div>
+          </div>
+          <div id="scoreTier">Loading…</div>
+        </div>
+        <div id="scoreBreakdown"></div>
+        <div id="scoreNext"></div>
       </div>
-      <div id="leadsList"><div class="empty-state">No enquiries yet.</div></div>
-    </div>
 
-    <!-- ANALYTICS -->
-    <div class="card">
-      <h2>📊 Your Analytics <span style="font-size:.72rem;color:#9ca3af;font-weight:500">Last 30 days</span></h2>
-      <div class="stats-grid">
-        <div class="stat-card"><div class="num" id="statViews">0</div><div class="lbl">Views</div></div>
-        <div class="stat-card"><div class="num" id="statClicks">0</div><div class="lbl">Clicks</div></div>
-        <div class="stat-card"><div class="num" id="statCtr">0%</div><div class="lbl">Click Rate</div></div>
-      </div>
-      <div class="chart" id="viewsChart"></div>
-      <div class="chart-labels"><span>30 days ago</span><span>Today</span></div>
-      <div id="topLinksWrap">
-        <h3 style="font-size:.85rem;font-weight:700;margin-bottom:10px;color:#374151;">Top Performing Links</h3>
-        <ul class="top-links" id="topLinks"></ul>
-      </div>
-    </div>
-
-    <!-- PROFILE -->
-    <div class="card">
-      <h2>📋 Business Information</h2>
-      <div class="row2">
-        <div class="form-group"><label>Business Name</label><input type="text" id="bizName" /></div>
-        <div class="form-group"><label>Industry / Category</label>
-          <select id="bizIndustry">
-            <option value="">Select…</option>
-            <option>Construction</option><option>Real Estate</option><option>IT &amp; Technology</option>
-            <option>Marketing &amp; Advertising</option><option>Legal Services</option><option>Accounting &amp; Finance</option>
-            <option>Healthcare</option><option>Education &amp; Training</option><option>Hospitality &amp; Tourism</option>
-            <option>Retail &amp; E-commerce</option><option>Transportation &amp; Logistics</option><option>Manufacturing</option>
-            <option>Agriculture</option><option>Beauty &amp; Wellness</option><option>Fitness &amp; Sports</option>
-            <option>Media &amp; Entertainment</option><option>Home Services</option><option>Other</option>
-          </select>
+      <div class="card">
+        <h2>📊 Analytics <span style="font-size:.72rem;color:#9ca3af;font-weight:500">Last 30 days</span></h2>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="num" id="statViews">0</div><div class="lbl">Views</div></div>
+          <div class="stat-card"><div class="num" id="statClicks">0</div><div class="lbl">Clicks</div></div>
+          <div class="stat-card"><div class="num" id="statCtr">0%</div><div class="lbl">Click Rate</div></div>
+        </div>
+        <div class="chart" id="viewsChart"></div>
+        <div class="chart-labels"><span>30 days ago</span><span>Today</span></div>
+        <div id="topLinksWrap">
+          <h3 style="font-size:.85rem;font-weight:700;margin-bottom:10px;color:#374151">Top Performing Links</h3>
+          <ul class="top-links" id="topLinks"></ul>
         </div>
       </div>
-      <div class="form-group"><label>Public URL (slug)</label>
-        <div style="display:flex;gap:8px;align-items:center;">
-          <span style="font-size:.8rem;color:#9ca3af;white-space:nowrap;">profile.html?b=</span>
-          <input type="text" id="bizSlug" placeholder="my-business" />
+    </div>
+
+    <!-- ============================================================
+         TAB: LEADS
+         ============================================================ -->
+    <div class="tab-panel hidden" data-panel="leads">
+      <div class="card">
+        <h2>
+          📩 Enquiries / Leads
+          <span style="font-size:.72rem;color:#9ca3af;font-weight:500" id="leadsSubtitle"></span>
+        </h2>
+        <p class="hint">Reply within 24 hours to earn full responsiveness points. Unanswered enquiries route to a partner agency after 4h (unless you opted out).</p>
+
+        <div class="leads-filter">
+          <button class="lead-filter-btn active" data-filter="all">All</button>
+          <button class="lead-filter-btn" data-filter="new">New</button>
+          <button class="lead-filter-btn" data-filter="contacted">Contacted</button>
+          <button class="lead-filter-btn" data-filter="converted">Converted</button>
         </div>
+
+        <div id="leadsList"><div class="empty-state">No enquiries yet.</div></div>
       </div>
-      <div class="form-group"><label>Location</label><input type="text" id="bizLocation" placeholder="e.g. Kampala, Uganda" /></div>
-      <div class="form-group"><label>Description (About)</label><textarea id="bizDescription" placeholder="Tell visitors who you are..."></textarea></div>
-      <div class="form-group"><label>Services Offered</label><textarea id="bizServices" placeholder="One service per line, e.g.&#10;Residential construction&#10;Commercial renovation&#10;Roofing"></textarea></div>
-      <div class="row2">
-        <div class="form-group"><label>Contact Email</label><input type="email" id="bizEmail" /></div>
-        <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" id="bizPhone" placeholder="+256..." /></div>
-      </div>
-      <div class="form-group"><label>Logo URL</label><input type="url" id="bizLogo" placeholder="https://..." /><img id="logoPreview" class="logo-preview hidden" alt="" /></div>
-      <button class="btn btn-primary" id="saveProfileBtn">Save Information</button>
     </div>
 
-    <!-- HOURS -->
-    <div class="card">
-      <h2>🕐 Business Hours</h2>
-      <p class="hint">Uncheck "Closed" for days you're open. Visitors see these on your profile.</p>
-      <div class="hours-grid" id="hoursGrid"></div>
-      <button class="btn btn-primary" id="saveHoursBtn" style="margin-top:16px;">Save Hours</button>
+    <!-- ============================================================
+         TAB: LINKS
+         ============================================================ -->
+    <div class="tab-panel hidden" data-panel="links">
+      <div class="card">
+        <div class="links-head">
+          <h2>🔗 Your Active Links</h2>
+          <span id="linksCount" class="links-count empty">0 active</span>
+        </div>
+        <p class="hint">Visitors click these to reach your site, YouTube, socials. Auto-https:// added if missing.</p>
+        <div id="linksContainer"><div class="empty-state">No links yet.</div></div>
+        <button class="btn btn-ghost btn-full" id="addLinkBtn">+ Add New Link</button>
+      </div>
     </div>
 
-    <!-- LINKS -->
-    <div class="card">
-      <div class="links-head">
-        <h2>🔗 Your Active Links</h2>
-        <span id="linksCount" class="links-count empty">0 active</span>
+    <!-- ============================================================
+         TAB: PROFILE & HOURS
+         ============================================================ -->
+    <div class="tab-panel hidden" data-panel="profile">
+      <div class="card">
+        <h2>📋 Business Information</h2>
+        <div class="row2">
+          <div class="form-group"><label>Business Name</label><input type="text" id="bizName" /></div>
+          <div class="form-group"><label>Industry / Category</label>
+            <select id="bizIndustry">
+              <option value="">Select…</option>
+              <option>Construction</option><option>Real Estate</option><option>IT &amp; Technology</option>
+              <option>Marketing &amp; Advertising</option><option>Legal Services</option><option>Accounting &amp; Finance</option>
+              <option>Healthcare</option><option>Education &amp; Training</option><option>Hospitality &amp; Tourism</option>
+              <option>Retail &amp; E-commerce</option><option>Transportation &amp; Logistics</option><option>Manufacturing</option>
+              <option>Agriculture</option><option>Beauty &amp; Wellness</option><option>Fitness &amp; Sports</option>
+              <option>Media &amp; Entertainment</option><option>Home Services</option><option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group"><label>Public URL (slug)</label>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:.8rem;color:#9ca3af;white-space:nowrap;">profile.html?b=</span>
+            <input type="text" id="bizSlug" placeholder="my-business" />
+          </div>
+        </div>
+        <div class="form-group"><label>Location</label><input type="text" id="bizLocation" placeholder="e.g. Kampala, Uganda" /></div>
+        <div class="form-group"><label>Description (About)</label><textarea id="bizDescription" placeholder="Tell visitors who you are..."></textarea></div>
+        <div class="form-group"><label>Services Offered</label><textarea id="bizServices" placeholder="One service per line"></textarea></div>
+        <div class="row2">
+          <div class="form-group"><label>Contact Email</label><input type="email" id="bizEmail" /></div>
+          <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" id="bizPhone" placeholder="+256..." /></div>
+        </div>
+        <div class="form-group"><label>Logo URL</label><input type="url" id="bizLogo" placeholder="https://..." /><img id="logoPreview" class="logo-preview hidden" alt="" /></div>
+
+        <div class="optout-box">
+          <label>
+            <input type="checkbox" id="allowOverflow" checked />
+            <span class="optout-text">
+              <b>Allow partner agency to handle overflow</b>
+              <span class="optout-sub">If you don't respond to an enquiry within 4 hours, a verified partner agency can reply on your behalf. You'll always see exactly what they said. Turn off to handle every enquiry yourself.</span>
+            </span>
+          </label>
+        </div>
+
+        <button class="btn btn-primary" id="saveProfileBtn">Save Information</button>
       </div>
-      <p class="hint">Visitors click these to reach your site, YouTube, socials. Auto-https:// added if missing.</p>
-      <div id="linksContainer"><div class="empty-state">No links yet.</div></div>
-      <button class="btn btn-ghost btn-full" id="addLinkBtn">+ Add New Link</button>
+
+      <div class="card">
+        <h2>🕐 Business Hours</h2>
+        <p class="hint">Uncheck "Closed" for days you're open. Visitors see these on your profile.</p>
+        <div class="hours-grid" id="hoursGrid"></div>
+        <button class="btn btn-primary" id="saveHoursBtn" style="margin-top:16px;">Save Hours</button>
+      </div>
     </div>
 
   </div>
@@ -269,9 +448,10 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 <div class="toast" id="toast"></div>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=15';
+import { supabase } from './supabase-client.js?v=18';
 
 const $ = id => document.getElementById(id);
+
 const authSection = $('authSection');
 const dashboardSection = $('dashboardSection');
 const logoutBtn = $('logoutBtn');
@@ -340,14 +520,55 @@ const DAYS = ['mon','tue','wed','thu','fri','sat','sun'];
 const DAY_LABELS = { mon:'Monday', tue:'Tuesday', wed:'Wednesday', thu:'Thursday', fri:'Friday', sat:'Saturday', sun:'Sunday' };
 
 // =========================================================
-// AUTH — getSession first, then listen
+// TABS
+// =========================================================
+function switchTab(tabName){
+  const validTabs = ['analytics','leads','links','profile'];
+  if(!validTabs.includes(tabName)) tabName = 'analytics';
+
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tabName);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => {
+    const isTarget = p.dataset.panel === tabName;
+    p.classList.toggle('hidden', !isTarget);
+    if(isTarget){
+      // Re-trigger animation
+      p.style.animation = 'none';
+      void p.offsetWidth;
+      p.style.animation = '';
+    }
+  });
+  // Update URL hash
+  if(location.hash !== '#' + tabName){
+    history.replaceState(null, '', '#' + tabName);
+  }
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+});
+
+// Restore tab from URL hash on load
+window.addEventListener('DOMContentLoaded', () => {
+  const initial = location.hash.replace('#','') || 'analytics';
+  switchTab(initial);
+});
+
+// Support browser back/forward
+window.addEventListener('hashchange', () => {
+  switchTab(location.hash.replace('#','') || 'analytics');
+});
+
+// =========================================================
+// AUTH
 // =========================================================
 async function bootAuth(){
   const { data: { session } } = await supabase.auth.getSession();
   handleAuthState(session);
 
   supabase.auth.onAuthStateChange((event, s) => {
-    if(event === 'INITIAL_SESSION') return; // already handled above
+    if(event === 'INITIAL_SESSION') return;
     handleAuthState(s);
   });
 }
@@ -367,7 +588,6 @@ function handleAuthState(session){
   }
 }
 
-// Auth form tabs
 document.querySelectorAll('.auth-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.auth-tab').forEach(x => x.classList.remove('active'));
@@ -491,6 +711,7 @@ async function loadProfile(){
   $('bizEmail').value       = profile.contact_email || '';
   $('bizPhone').value       = profile.phone || '';
   $('bizLogo').value        = profile.logo_url || '';
+  $('allowOverflow').checked = profile.allow_partner_overflow !== false;
   updateLogoPreview(profile.logo_url);
 }
 
@@ -524,6 +745,7 @@ $('saveProfileBtn').addEventListener('click', async () => {
     contact_email: $('bizEmail').value.trim(),
     phone:         $('bizPhone').value.trim(),
     logo_url:      $('bizLogo').value.trim(),
+    allow_partner_overflow: $('allowOverflow').checked,
     updated_at:    new Date().toISOString()
   };
 
@@ -726,10 +948,23 @@ async function loadLeads(){
   if(error){ console.error('Leads load error:', error); return; }
   allLeads = data || [];
 
+  // Fetch agency names for any assigned leads
+  const agencyIds = [...new Set(allLeads.filter(l => l.assigned_agency_id).map(l => l.assigned_agency_id))];
+  window.__agencyMap = {};
+  if(agencyIds.length){
+    const { data: agencies } = await supabase
+      .from('agency_public_info').select('id, name').in('id', agencyIds);
+    (agencies || []).forEach(a => window.__agencyMap[a.id] = a.name);
+  }
+
   const unread = allLeads.filter(l => !l.viewed_by_owner).length;
-  const badge = $('leadsBadge');
-  if(unread > 0){ badge.textContent = unread + ' new'; badge.classList.remove('hidden'); }
-  else badge.classList.add('hidden');
+  const badge = $('tabLeadsBadge');
+  if(unread > 0){
+    badge.textContent = unread;
+    badge.classList.remove('hidden');
+  } else {
+    badge.classList.add('hidden');
+  }
 
   $('leadsSubtitle').textContent = allLeads.length
     ? `${allLeads.length} total · ${unread} unread` : '';
@@ -757,6 +992,7 @@ function renderLeads(){
     const waText = encodeURIComponent(
       `Hi ${lead.visitor_name}, this is ${bizName} — thanks for your enquiry. How can we help?`
     );
+    const agencyName = lead.assigned_agency_id ? (window.__agencyMap?.[lead.assigned_agency_id] || 'Partner agency') : null;
 
     return `
       <div class="lead-item ${isUnread ? 'unread' : ''}" data-id="${lead.id}">
@@ -772,6 +1008,13 @@ function renderLeads(){
           ${lead.visitor_phone ? `<span>📞 ${escapeHtml(lead.visitor_phone)}</span>` : ''}
           ${lead.visitor_email ? `<span>✉️ ${escapeHtml(lead.visitor_email)}</span>` : ''}
         </div>
+        ${lead.assigned_agency_id ? `
+          <div class="partner-block">
+            <div class="partner-block-label">🤝 Handled by partner agency</div>
+            <div><b>${escapeHtml(agencyName)}</b> responded on your behalf${lead.partner_replied_at ? ' · ' + getTimeAgo(lead.partner_replied_at) : ''}.</div>
+            ${lead.partner_response ? `<div style="margin-top:8px;padding:8px 10px;background:#fff;border-radius:6px;color:#4b5563">${escapeHtml(lead.partner_response)}</div>` : ''}
+          </div>
+        ` : ''}
         <div class="lead-actions">
           ${phoneDigits ? `<a class="lead-btn whatsapp" href="https://wa.me/${phoneDigits}?text=${waText}" target="_blank" rel="noopener" data-action="reply">💬 Reply on WhatsApp</a>` : ''}
           ${phoneDigits ? `<a class="lead-btn call" href="tel:${escapeHtml(lead.visitor_phone)}">📞 Call</a>` : ''}
@@ -806,8 +1049,8 @@ async function markLeadViewed(id){
   await supabase.from('enquiries').update({ viewed_by_owner: true }).eq('id', id);
   lead.viewed_by_owner = true;
   const unread = allLeads.filter(l => !l.viewed_by_owner).length;
-  const badge = $('leadsBadge');
-  if(unread > 0) badge.textContent = unread + ' new';
+  const badge = $('tabLeadsBadge');
+  if(unread > 0) badge.textContent = unread;
   else badge.classList.add('hidden');
   const el = document.querySelector(`.lead-item[data-id="${id}"]`);
   if(el) el.classList.remove('unread');
@@ -899,15 +1142,21 @@ async function loadScore(){
   if(!data){
     $('scoreBig').textContent = '—';
     $('scoreTier').textContent = 'Not enough data yet';
+    $('scoreCircle').style.setProperty('--score-deg', '0deg');
     return;
   }
 
   const total = Math.round(data.total_score || 0);
   const tier = total >= 90 ? 'Platinum' : total >= 75 ? 'Gold' : total >= 60 ? 'Silver' : total >= 40 ? 'Bronze' : 'Listed';
   const tierIcon = { Platinum:'🏆', Gold:'🥇', Silver:'🥈', Bronze:'🥉', Listed:'⚪' }[tier];
+  const tierColor = { Platinum:'#7c3aed', Gold:'#d97706', Silver:'#6b7280', Bronze:'#92400e', Listed:'#9ca3af' }[tier];
 
   $('scoreBig').textContent = total;
-  $('scoreTier').innerHTML = `${tierIcon} ${tier} Tier`;
+  $('scoreTier').innerHTML = `<span style="color:${tierColor}">${tierIcon} ${tier} Tier</span>`;
+
+  // Update circular progress
+  const degrees = (total / 100) * 360;
+  $('scoreCircle').style.setProperty('--score-deg', degrees + 'deg');
 
   const rows = [
     ['⭐ Rating quality',    data.rating_quality_pts,   25],
