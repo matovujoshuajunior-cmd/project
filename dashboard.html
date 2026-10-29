@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="Cache-Control" content="no-cache" />
+<meta name="robots" content="noindex, nofollow" />
 <title>Business Dashboard</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -30,128 +31,33 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .form-group textarea{resize:vertical;min-height:90px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 
-/* Auth */
 .auth-tabs{display:flex;gap:8px;margin-bottom:20px}
 .auth-tab{flex:1;padding:12px;text-align:center;border-radius:10px;cursor:pointer;font-weight:600;font-size:.9rem;background:#e5e7eb;color:#6b7280;border:none;transition:all .2s}
 .auth-tab.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
 .help-panel{background:#fef2f2;border:1px solid #fecaca;color:#7f1d1d;padding:16px;border-radius:10px;font-size:.87rem;margin-bottom:16px;line-height:1.6}
 
-/* ============================================================
-   TAB NAVIGATION
-   ============================================================ */
-.tabs-nav{
-  display:flex;
-  gap:4px;
-  background:#fff;
-  border-radius:14px;
-  padding:6px;
-  box-shadow:0 4px 24px rgba(0,0,0,.06);
-  margin-bottom:20px;
-  overflow-x:auto;
-  scrollbar-width:none;
-  -ms-overflow-style:none;
-}
+.tabs-nav{display:flex;gap:4px;background:#fff;border-radius:14px;padding:6px;box-shadow:0 4px 24px rgba(0,0,0,.06);margin-bottom:20px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
 .tabs-nav::-webkit-scrollbar{display:none}
-
-.tab-btn{
-  flex:1;
-  min-width:fit-content;
-  padding:12px 16px;
-  border:none;
-  background:transparent;
-  border-radius:10px;
-  font-size:.85rem;
-  font-weight:700;
-  color:#6b7280;
-  cursor:pointer;
-  transition:all .15s;
-  white-space:nowrap;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
-  font-family:inherit;
-}
+.tab-btn{flex:1;min-width:fit-content;padding:12px 16px;border:none;background:transparent;border-radius:10px;font-size:.85rem;font-weight:700;color:#6b7280;cursor:pointer;transition:all .15s;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:6px;font-family:inherit}
 .tab-btn:hover{color:#4f46e5;background:#f3f4f6}
-.tab-btn.active{
-  background:linear-gradient(135deg,#6366f1,#8b5cf6);
-  color:#fff;
-  box-shadow:0 4px 12px rgba(99,102,241,.3);
-}
+.tab-btn.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;box-shadow:0 4px 12px rgba(99,102,241,.3)}
 .tab-btn.active:hover{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
-
-.tab-badge{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  background:#ef4444;
-  color:#fff;
-  font-size:.65rem;
-  font-weight:800;
-  padding:2px 6px;
-  border-radius:10px;
-  min-width:18px;
-  height:18px;
-  animation:pulse 2s infinite;
-}
+.tab-badge{display:inline-flex;align-items:center;justify-content:center;background:#ef4444;color:#fff;font-size:.65rem;font-weight:800;padding:2px 6px;border-radius:10px;min-width:18px;height:18px;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
-.tab-btn.active .tab-badge{
-  background:#fff;
-  color:#6366f1;
-}
-
+.tab-btn.active .tab-badge{background:#fff;color:#6366f1}
 .tab-panel{animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:520px){.tab-btn{padding:11px 10px;font-size:.78rem;gap:4px}}
 
-@media(max-width:520px){
-  .tab-btn{padding:11px 10px;font-size:.78rem;gap:4px}
-  .tab-btn .tab-label-full{display:none}
-}
-
-/* ============================================================
-   SCORE
-   ============================================================ */
 .score-display{text-align:center;padding:20px 0}
-.score-circle{
-  width:140px;
-  height:140px;
-  margin:0 auto 16px;
-  border-radius:50%;
-  background:conic-gradient(#6366f1 var(--score-deg,0deg), #e5e7eb 0deg);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  box-shadow:0 4px 20px rgba(99,102,241,.15);
-}
-.score-circle::before{
-  content:'';
-  position:absolute;
-  inset:12px;
-  background:#fff;
-  border-radius:50%;
-}
-#scoreBig{
-  position:relative;
-  font-size:2.6rem;
-  font-weight:800;
-  color:#6366f1;
-  line-height:1;
-}
-.score-circle-sub{
-  position:relative;
-  font-size:.7rem;
-  color:#9ca3af;
-  font-weight:700;
-  margin-top:2px;
-}
+.score-circle{width:140px;height:140px;margin:0 auto 16px;border-radius:50%;background:conic-gradient(#6366f1 var(--score-deg,0deg),#e5e7eb 0deg);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 4px 20px rgba(99,102,241,.15)}
+.score-circle::before{content:'';position:absolute;inset:12px;background:#fff;border-radius:50%}
+#scoreBig{position:relative;font-size:2.6rem;font-weight:800;color:#6366f1;line-height:1}
+.score-circle-sub{position:relative;font-size:.7rem;color:#9ca3af;font-weight:700;margin-top:2px}
 #scoreTier{font-size:1.05rem;font-weight:800;color:#6b7280;margin-top:8px}
 #scoreBreakdown{margin-top:20px}
 #scoreNext{margin-top:16px;padding:14px;background:#eef2ff;border-radius:10px;font-size:.85rem;color:#4f46e5;font-weight:600;text-align:center}
 
-/* ============================================================
-   ANALYTICS
-   ============================================================ */
 .stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px}
 .stat-card{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-radius:14px;padding:18px;text-align:center}
 .stat-card .num{font-size:1.8rem;font-weight:800;color:#4f46e5;line-height:1}
@@ -166,14 +72,10 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .top-links .tl-label{font-weight:600}
 .top-links .tl-count{color:#6366f1;font-weight:700}
 
-/* ============================================================
-   LEADS
-   ============================================================ */
 .leads-filter{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
 .lead-filter-btn{padding:7px 14px;border:1.5px solid #e5e7eb;background:#fff;border-radius:20px;font-size:.78rem;font-weight:700;color:#6b7280;cursor:pointer;transition:all .15s;font-family:inherit}
 .lead-filter-btn:hover{border-color:#c7d2fe;color:#4f46e5}
 .lead-filter-btn.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-color:transparent}
-
 .lead-item{border:1.5px solid #f1f5f9;border-radius:12px;padding:16px;margin-bottom:10px;transition:border-color .15s,box-shadow .15s;cursor:pointer}
 .lead-item:hover{border-color:#c7d2fe;box-shadow:0 4px 12px rgba(99,102,241,.08)}
 .lead-item.unread{background:#fefce8;border-color:#fde047}
@@ -198,9 +100,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .partner-block{margin:10px 0;padding:12px 14px;background:#fdf2f8;border-left:3px solid #db2777;border-radius:8px;font-size:.82rem;color:#831843}
 .partner-block-label{font-weight:800;font-size:.72rem;text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px;color:#db2777}
 
-/* ============================================================
-   LINKS
-   ============================================================ */
 .links-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid #e5e7eb;margin-bottom:12px}
 .links-head h2{border:none;padding:0;margin:0}
 .links-count{font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:20px;background:#eef2ff;color:#4f46e5}
@@ -222,9 +121,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .mini-btn.delete{background:#fee2e2;color:#dc2626}
 .link-edit-grid{display:grid;grid-template-columns:1fr 2fr;gap:12px;margin-bottom:12px}
 
-/* ============================================================
-   HOURS
-   ============================================================ */
 .hours-grid{display:flex;flex-direction:column;gap:8px}
 .hour-row{display:grid;grid-template-columns:70px 90px 1fr 1fr;gap:10px;align-items:center;padding:8px 12px;background:#f9fafb;border-radius:10px}
 .hour-row .day{font-weight:700;font-size:.85rem;text-transform:capitalize}
@@ -232,13 +128,30 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .hour-row .closed-label{font-size:.82rem;display:flex;align-items:center;gap:6px;color:#6b7280;font-weight:600;cursor:pointer}
 .hour-row.is-closed input[type="time"]{opacity:.3;pointer-events:none}
 
-/* Opt-out */
 .optout-box{padding:14px;background:#f0fdf4;border-radius:10px;border:1.5px solid #bbf7d0;margin-bottom:16px}
 .optout-box label{display:flex;align-items:flex-start;gap:12px;cursor:pointer;margin-bottom:0;font-weight:400}
 .optout-box input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:#16a34a;flex-shrink:0;cursor:pointer}
 .optout-box .optout-text{flex:1}
 .optout-box b{display:block;font-size:.9rem;color:#1a1a2e;font-weight:700}
 .optout-box .optout-sub{display:block;font-size:.78rem;color:#6b7280;margin-top:4px;line-height:1.55}
+
+/* Pressure layer */
+.away-banner{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border:1.5px solid #c7d2fe;border-radius:14px;padding:16px 18px;margin-bottom:20px;animation:slideDown .4s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.impact-stat{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-radius:12px;padding:18px;text-align:center}
+.impact-stat.green{background:linear-gradient(135deg,#f0fdf4,#dcfce7)}
+.impact-stat.green .impact-num{color:#16a34a}
+.impact-stat.green .impact-lbl{color:#22c55e}
+.impact-stat.amber{background:linear-gradient(135deg,#fef3c7,#fde68a)}
+.impact-stat.amber .impact-num{color:#d97706}
+.impact-stat.amber .impact-lbl{color:#f59e0b}
+.impact-num{font-size:1.7rem;font-weight:800;color:#4f46e5;line-height:1}
+.impact-lbl{font-size:.7rem;font-weight:700;color:#6366f1;text-transform:uppercase;letter-spacing:.4px;margin-top:6px}
+.bench-row{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:#f9fafb;border-radius:10px;margin-bottom:8px}
+.bench-row.target{background:#f0fdf4}
+.bench-label{font-size:.85rem;font-weight:600;color:#4b5563}
+.bench-value{font-size:1.05rem;font-weight:800;color:#6b7280}
 
 .empty-state{text-align:center;padding:32px 20px;color:#9ca3af;font-size:.9rem}
 .logo-preview{width:64px;height:64px;border-radius:12px;object-fit:cover;margin-top:8px;border:2px solid #e5e7eb}
@@ -258,6 +171,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
   .link-edit-grid{grid-template-columns:1fr}
   .score-circle{width:120px;height:120px}
   #scoreBig{font-size:2.2rem}
+  .impact-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -269,7 +183,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
     <button id="logoutBtn" class="btn btn-danger hidden">Log Out</button>
   </div>
 
-  <!-- AUTH -->
   <div id="authSection">
     <div class="card">
       <div class="auth-tabs">
@@ -277,8 +190,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
         <button class="auth-tab" data-tab="signup">Sign Up</button>
       </div>
       <div id="helpPanel" class="help-panel hidden">
-        <strong>⚠️ That email already has an account.</strong>
-        Delete the old user from Supabase (Authentication → Users), or log in with your old password.
+        <strong>⚠️ That email already has an account.</strong> Delete the old user from Supabase, or log in with your old password.
       </div>
       <div id="loginForm">
         <div class="form-group"><label>Email</label><input type="email" id="loginEmail" autocomplete="email" placeholder="you@example.com" /></div>
@@ -295,29 +207,16 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
     </div>
   </div>
 
-  <!-- DASHBOARD WITH TABS -->
   <div id="dashboardSection" class="hidden">
-
-    <div class="tabs-nav" id="tabsNav">
-      <button class="tab-btn active" data-tab="analytics">
-        📊 <span>Analytics & Score</span>
-      </button>
-      <button class="tab-btn" data-tab="leads">
-        📩 <span>Leads</span>
-        <span class="tab-badge hidden" id="tabLeadsBadge">0</span>
-      </button>
-      <button class="tab-btn" data-tab="links">
-        🔗 <span>Links</span>
-      </button>
-      <button class="tab-btn" data-tab="profile">
-        ⚙️ <span>Profile</span>
-      </button>
+    <div class="tabs-nav">
+      <button class="tab-btn active" data-tab="analytics">📊 <span>Analytics & Score</span></button>
+      <button class="tab-btn" data-tab="leads">📩 <span>Leads</span><span class="tab-badge hidden" id="tabLeadsBadge">0</span></button>
+      <button class="tab-btn" data-tab="links">🔗 <span>Links</span></button>
+      <button class="tab-btn" data-tab="profile">⚙️ <span>Profile</span></button>
     </div>
 
-    <!-- ============================================================
-         TAB: ANALYTICS & SCORE
-         ============================================================ -->
     <div class="tab-panel" data-panel="analytics">
+      <div class="away-banner hidden" id="awayBanner"></div>
       <div class="card">
         <h2>🏆 Your Business Score</h2>
         <div class="score-display">
@@ -331,6 +230,38 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
         </div>
         <div id="scoreBreakdown"></div>
         <div id="scoreNext"></div>
+      </div>
+
+      <div class="card">
+        <h2>🤝 Partner Impact <span style="font-size:.72rem;color:#9ca3af;font-weight:500">Since joining</span></h2>
+        <div id="partnerImpactEmpty">
+          <div class="empty-state" style="padding:24px 20px">
+            <div style="font-size:2.4rem;margin-bottom:8px">🤝</div>
+            <div style="font-weight:700;color:#374151;margin-bottom:6px">No partner activity yet</div>
+            <div style="font-size:.85rem;line-height:1.55;color:#6b7280;max-width:380px;margin:0 auto">
+              If you don't reply to an enquiry within 4 hours, a verified partner agency steps in to save the lead. You'll see their work here.
+            </div>
+          </div>
+        </div>
+        <div id="partnerImpactData" class="hidden">
+          <div class="impact-grid">
+            <div class="impact-stat"><div class="impact-num" id="piHandled">0</div><div class="impact-lbl">Leads Handled</div></div>
+            <div class="impact-stat green"><div class="impact-num" id="piConverted">0</div><div class="impact-lbl">Converted</div></div>
+            <div class="impact-stat amber"><div class="impact-num" id="piValue">0</div><div class="impact-lbl">Est. Value (UGX)</div></div>
+          </div>
+          <div style="margin-top:16px;padding:14px;background:#fdf2f8;border-left:3px solid #db2777;border-radius:8px;font-size:.85rem;color:#831843;line-height:1.55">
+            <b>💡 Want this for every lead?</b> Partner agencies offer automated follow-up, CRM, and analytics — the same tools that responded on your behalf. <a href="#" onclick="document.querySelector('[data-tab=leads]').click();return false" style="color:#db2777;font-weight:700">See what they said →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>⚡ Response Speed <span style="font-size:.72rem;color:#9ca3af;font-weight:500">Last 90 days</span></h2>
+        <p class="hint">Faster responses mean higher score and more routed leads saved from partners.</p>
+        <div class="bench-row"><div class="bench-label">Your average</div><div class="bench-value" id="rbYou">—</div></div>
+        <div class="bench-row"><div class="bench-label">Platform average</div><div class="bench-value" id="rbPlatform">—</div></div>
+        <div class="bench-row target"><div class="bench-label">🥇 Managed-tier target</div><div class="bench-value" id="rbTarget">12 min</div></div>
+        <div id="rbMessage" style="margin-top:14px;padding:12px 14px;background:#eef2ff;border-radius:10px;font-size:.85rem;color:#4f46e5;font-weight:600;line-height:1.5"></div>
       </div>
 
       <div class="card">
@@ -349,31 +280,20 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
       </div>
     </div>
 
-    <!-- ============================================================
-         TAB: LEADS
-         ============================================================ -->
     <div class="tab-panel hidden" data-panel="leads">
       <div class="card">
-        <h2>
-          📩 Enquiries / Leads
-          <span style="font-size:.72rem;color:#9ca3af;font-weight:500" id="leadsSubtitle"></span>
-        </h2>
+        <h2>📩 Enquiries / Leads <span style="font-size:.72rem;color:#9ca3af;font-weight:500" id="leadsSubtitle"></span></h2>
         <p class="hint">Reply within 24 hours to earn full responsiveness points. Unanswered enquiries route to a partner agency after 4h (unless you opted out).</p>
-
         <div class="leads-filter">
           <button class="lead-filter-btn active" data-filter="all">All</button>
           <button class="lead-filter-btn" data-filter="new">New</button>
           <button class="lead-filter-btn" data-filter="contacted">Contacted</button>
           <button class="lead-filter-btn" data-filter="converted">Converted</button>
         </div>
-
         <div id="leadsList"><div class="empty-state">No enquiries yet.</div></div>
       </div>
     </div>
 
-    <!-- ============================================================
-         TAB: LINKS
-         ============================================================ -->
     <div class="tab-panel hidden" data-panel="links">
       <div class="card">
         <div class="links-head">
@@ -386,9 +306,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
       </div>
     </div>
 
-    <!-- ============================================================
-         TAB: PROFILE & HOURS
-         ============================================================ -->
     <div class="tab-panel hidden" data-panel="profile">
       <div class="card">
         <h2>📋 Business Information</h2>
@@ -420,7 +337,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
           <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" id="bizPhone" placeholder="+256..." /></div>
         </div>
         <div class="form-group"><label>Logo URL</label><input type="url" id="bizLogo" placeholder="https://..." /><img id="logoPreview" class="logo-preview hidden" alt="" /></div>
-
         <div class="optout-box">
           <label>
             <input type="checkbox" id="allowOverflow" checked />
@@ -430,28 +346,25 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
             </span>
           </label>
         </div>
-
         <button class="btn btn-primary" id="saveProfileBtn">Save Information</button>
       </div>
 
       <div class="card">
         <h2>🕐 Business Hours</h2>
-        <p class="hint">Uncheck "Closed" for days you're open. Visitors see these on your profile.</p>
+        <p class="hint">Uncheck "Closed" for days you're open.</p>
         <div class="hours-grid" id="hoursGrid"></div>
         <button class="btn btn-primary" id="saveHoursBtn" style="margin-top:16px;">Save Hours</button>
       </div>
     </div>
-
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=18';
+import { supabase } from './supabase-client.js?v=20';
 
 const $ = id => document.getElementById(id);
-
 const authSection = $('authSection');
 const dashboardSection = $('dashboardSection');
 const logoutBtn = $('logoutBtn');
@@ -462,9 +375,6 @@ let currentUser = null;
 let allLeads = [];
 let currentLeadFilter = 'all';
 
-// =========================================================
-// HELPERS
-// =========================================================
 function showToast(msg, type='info', d=3200){
   toastEl.textContent = msg;
   toastEl.className = 'toast show ' + (type==='error'?'error':type==='success'?'success':type==='warn'?'warn':'');
@@ -486,10 +396,7 @@ function normalizeUrl(raw){
 function displayUrl(u){ return u ? String(u).replace(/^https?:\/\//i,'').replace(/\/$/,'') : ''; }
 function escapeHtml(s){ return s == null ? '' : String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function escapeAttr(s){ return s == null ? '' : String(s).replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
-function slugify(s){
-  return String(s || '').toLowerCase().trim()
-    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,50);
-}
+function slugify(s){ return String(s || '').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,50); }
 function linkIcon(label){
   const l = (label || '').toLowerCase();
   if(l.includes('website')||l.includes('site')) return '🌐';
@@ -515,64 +422,46 @@ function getTimeAgo(iso){
   if(day < 7) return `${day}d ago`;
   return new Date(iso).toLocaleDateString();
 }
+function formatUGX(v){
+  if(v >= 1000000) return (v/1000000).toFixed(1) + 'M';
+  if(v >= 1000) return Math.round(v/1000) + 'K';
+  return String(v);
+}
+function formatMinutes(m){
+  if(m < 60) return m + ' min';
+  const h = Math.floor(m / 60);
+  const rem = m % 60;
+  return rem ? `${h}h ${rem}m` : `${h}h`;
+}
 
 const DAYS = ['mon','tue','wed','thu','fri','sat','sun'];
 const DAY_LABELS = { mon:'Monday', tue:'Tuesday', wed:'Wednesday', thu:'Thursday', fri:'Friday', sat:'Saturday', sun:'Sunday' };
 
-// =========================================================
 // TABS
-// =========================================================
 function switchTab(tabName){
   const validTabs = ['analytics','leads','links','profile'];
   if(!validTabs.includes(tabName)) tabName = 'analytics';
-
-  document.querySelectorAll('.tab-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.tab === tabName);
-  });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabName));
   document.querySelectorAll('.tab-panel').forEach(p => {
     const isTarget = p.dataset.panel === tabName;
     p.classList.toggle('hidden', !isTarget);
-    if(isTarget){
-      // Re-trigger animation
-      p.style.animation = 'none';
-      void p.offsetWidth;
-      p.style.animation = '';
-    }
+    if(isTarget){ p.style.animation = 'none'; void p.offsetWidth; p.style.animation = ''; }
   });
-  // Update URL hash
-  if(location.hash !== '#' + tabName){
-    history.replaceState(null, '', '#' + tabName);
-  }
+  if(location.hash !== '#' + tabName) history.replaceState(null, '', '#' + tabName);
 }
+document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+window.addEventListener('DOMContentLoaded', () => switchTab(location.hash.replace('#','') || 'analytics'));
+window.addEventListener('hashchange', () => switchTab(location.hash.replace('#','') || 'analytics'));
 
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
-});
-
-// Restore tab from URL hash on load
-window.addEventListener('DOMContentLoaded', () => {
-  const initial = location.hash.replace('#','') || 'analytics';
-  switchTab(initial);
-});
-
-// Support browser back/forward
-window.addEventListener('hashchange', () => {
-  switchTab(location.hash.replace('#','') || 'analytics');
-});
-
-// =========================================================
 // AUTH
-// =========================================================
 async function bootAuth(){
   const { data: { session } } = await supabase.auth.getSession();
   handleAuthState(session);
-
   supabase.auth.onAuthStateChange((event, s) => {
     if(event === 'INITIAL_SESSION') return;
     handleAuthState(s);
   });
 }
-
 function handleAuthState(session){
   currentUser = session?.user ?? null;
   if(currentUser){
@@ -587,7 +476,6 @@ function handleAuthState(session){
     logoutBtn.classList.add('hidden');
   }
 }
-
 document.querySelectorAll('.auth-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.auth-tab').forEach(x => x.classList.remove('active'));
@@ -598,25 +486,18 @@ document.querySelectorAll('.auth-tab').forEach(tab => {
     helpPanel.classList.add('hidden');
   });
 });
-
 $('signupBtn').addEventListener('click', async () => {
   const btn = $('signupBtn');
   const businessName = $('signupBusinessName').value.trim();
   const email = $('signupEmail').value.trim().toLowerCase();
   const password = $('signupPassword').value;
-
   if(!businessName || !email || !password) return showToast('Fill all fields', 'error');
   if(password.length < 6) return showToast('Password must be at least 6 characters', 'error');
-
   setLoading(btn, true, 'Creating account…');
-  const { data, error } = await supabase.auth.signUp({
-    email, password, options:{ data:{ business_name: businessName } }
-  });
+  const { data, error } = await supabase.auth.signUp({ email, password, options:{ data:{ business_name: businessName } } });
   setLoading(btn, false);
-
   if(error){
     if(error.message.toLowerCase().includes('already')) return showToast('Email already registered', 'error');
-    if(error.message.toLowerCase().includes('rate')) return showToast('Too many attempts. Try later.', 'error');
     return showToast('Signup failed: ' + error.message, 'error');
   }
   if(data?.user && Array.isArray(data.user.identities) && data.user.identities.length === 0){
@@ -625,18 +506,16 @@ $('signupBtn').addEventListener('click', async () => {
   }
   if(data?.session) return showToast('✅ Account created!', 'success');
   if(data?.user){
-    showToast('📧 Account created. Check your email to confirm.', 'success', 6000);
+    showToast('📧 Check your email to confirm.', 'success', 6000);
     document.querySelector('.auth-tab[data-tab="login"]').click();
     $('loginEmail').value = email;
   }
 });
-
 $('loginBtn').addEventListener('click', async () => {
   const btn = $('loginBtn');
   const email = $('loginEmail').value.trim().toLowerCase();
   const password = $('loginPassword').value;
   if(!email || !password) return showToast('Fill all fields', 'error');
-
   setLoading(btn, true, 'Logging in…');
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   setLoading(btn, false);
@@ -649,30 +528,19 @@ $('loginBtn').addEventListener('click', async () => {
     if(msg.includes('email not confirmed')) return showToast('Please confirm your email first.', 'error', 5000);
     return showToast('Login failed: ' + error.message, 'error');
   }
-  helpPanel.classList.add('hidden');
 });
-
 $('forgotBtn').addEventListener('click', async () => {
   const email = $('loginEmail').value.trim().toLowerCase();
   if(!email) return showToast('Enter your email above first', 'error');
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.origin + window.location.pathname
-  });
+  const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + window.location.pathname });
   if(error) return showToast('Could not send reset email: ' + error.message, 'error');
   showToast('📧 Password reset email sent.', 'success', 6000);
 });
-
 $('loginPassword').addEventListener('keydown', e => { if(e.key === 'Enter') $('loginBtn').click(); });
 $('signupPassword').addEventListener('keydown', e => { if(e.key === 'Enter') $('signupBtn').click(); });
+logoutBtn.addEventListener('click', async () => { await supabase.auth.signOut(); showToast('Logged out'); });
 
-logoutBtn.addEventListener('click', async () => {
-  await supabase.auth.signOut();
-  showToast('Logged out');
-});
-
-// =========================================================
 // LOAD
-// =========================================================
 async function loadAll(){
   await loadProfile();
   await loadLeads();
@@ -680,28 +548,20 @@ async function loadAll(){
   await loadHours();
   await loadAnalytics();
   await loadScore();
+  await loadPressureLayer();
 }
 
-// =========================================================
 // PROFILE
-// =========================================================
 async function loadProfile(){
   if(!currentUser) return;
-
-  let { data: profile } = await supabase
-    .from('profiles').select('*').eq('id', currentUser.id).maybeSingle();
-
+  let { data: profile } = await supabase.from('profiles').select('*').eq('id', currentUser.id).maybeSingle();
   if(!profile){
     const fallback = currentUser.user_metadata?.business_name || 'My Business';
     const slug = slugify(fallback) + '-' + currentUser.id.substring(0,4);
-    const { data } = await supabase.from('profiles').insert({
-      id: currentUser.id, business_name: fallback, slug
-    }).select().single();
+    const { data } = await supabase.from('profiles').insert({ id: currentUser.id, business_name: fallback, slug }).select().single();
     profile = data;
   }
-
   if(!profile) return;
-
   $('bizName').value        = profile.business_name || '';
   $('bizIndustry').value    = profile.industry || '';
   $('bizSlug').value        = profile.slug || '';
@@ -714,27 +574,18 @@ async function loadProfile(){
   $('allowOverflow').checked = profile.allow_partner_overflow !== false;
   updateLogoPreview(profile.logo_url);
 }
-
 $('bizLogo').addEventListener('input', e => updateLogoPreview(e.target.value));
 function updateLogoPreview(url){
   const img = $('logoPreview');
-  if(url){ img.src = url; img.classList.remove('hidden'); }
-  else img.classList.add('hidden');
+  if(url){ img.src = url; img.classList.remove('hidden'); } else img.classList.add('hidden');
 }
-
 $('saveProfileBtn').addEventListener('click', async () => {
   const btn = $('saveProfileBtn');
   let slug = $('bizSlug').value.trim();
   if(!slug) slug = slugify($('bizName').value) + '-' + currentUser.id.substring(0,4);
   slug = slugify(slug);
-
-  const { data: existing } = await supabase
-    .from('profiles').select('id').eq('slug', slug).neq('id', currentUser.id).maybeSingle();
-  if(existing){
-    slug = slug + '-' + Math.random().toString(36).substring(2,6);
-    showToast('Slug was taken — using ' + slug, 'warn', 4000);
-  }
-
+  const { data: existing } = await supabase.from('profiles').select('id').eq('slug', slug).neq('id', currentUser.id).maybeSingle();
+  if(existing){ slug = slug + '-' + Math.random().toString(36).substring(2,6); showToast('Slug taken — using ' + slug, 'warn', 4000); }
   const updates = {
     business_name: $('bizName').value.trim(),
     industry:      $('bizIndustry').value || null,
@@ -748,7 +599,6 @@ $('saveProfileBtn').addEventListener('click', async () => {
     allow_partner_overflow: $('allowOverflow').checked,
     updated_at:    new Date().toISOString()
   };
-
   setLoading(btn, true, 'Saving…');
   const { error } = await supabase.from('profiles').update(updates).eq('id', currentUser.id);
   setLoading(btn, false);
@@ -756,40 +606,29 @@ $('saveProfileBtn').addEventListener('click', async () => {
   $('bizSlug').value = slug;
   showToast('✅ Information saved!', 'success');
   await loadScore();
+  await loadPressureLayer();
 });
 
-// =========================================================
 // HOURS
-// =========================================================
-function defaultHours(){
-  const o = {};
-  DAYS.forEach(d => o[d] = { closed: d === 'sun', open: '09:00', close: '17:00' });
-  return o;
-}
+function defaultHours(){ const o = {}; DAYS.forEach(d => o[d] = { closed: d === 'sun', open: '09:00', close: '17:00' }); return o; }
 async function loadHours(){
-  const { data } = await supabase
-    .from('profiles').select('opening_hours').eq('id', currentUser.id).single();
-  const hours = data?.opening_hours && Object.keys(data.opening_hours).length
-    ? data.opening_hours : defaultHours();
+  const { data } = await supabase.from('profiles').select('opening_hours').eq('id', currentUser.id).single();
+  const hours = data?.opening_hours && Object.keys(data.opening_hours).length ? data.opening_hours : defaultHours();
   renderHours(hours);
 }
 function renderHours(hours){
   const grid = $('hoursGrid');
   grid.innerHTML = DAYS.map(d => {
     const h = hours[d] || { closed: false, open: '09:00', close: '17:00' };
-    return `
-      <div class="hour-row ${h.closed ? 'is-closed' : ''}" data-day="${d}">
-        <div class="day">${DAY_LABELS[d]}</div>
-        <label class="closed-label"><input type="checkbox" class="closed-cb" ${h.closed ? 'checked' : ''} /> Closed</label>
-        <input type="time" class="open-in" value="${h.open || '09:00'}" />
-        <input type="time" class="close-in" value="${h.close || '17:00'}" />
-      </div>
-    `;
+    return `<div class="hour-row ${h.closed ? 'is-closed' : ''}" data-day="${d}">
+      <div class="day">${DAY_LABELS[d]}</div>
+      <label class="closed-label"><input type="checkbox" class="closed-cb" ${h.closed ? 'checked' : ''} /> Closed</label>
+      <input type="time" class="open-in" value="${h.open || '09:00'}" />
+      <input type="time" class="close-in" value="${h.close || '17:00'}" />
+    </div>`;
   }).join('');
   grid.querySelectorAll('.closed-cb').forEach(cb => {
-    cb.addEventListener('change', () => {
-      cb.closest('.hour-row').classList.toggle('is-closed', cb.checked);
-    });
+    cb.addEventListener('change', () => cb.closest('.hour-row').classList.toggle('is-closed', cb.checked));
   });
 }
 $('saveHoursBtn').addEventListener('click', async () => {
@@ -798,11 +637,7 @@ $('saveHoursBtn').addEventListener('click', async () => {
   document.querySelectorAll('.hour-row').forEach(row => {
     const day = row.dataset.day;
     const closed = row.querySelector('.closed-cb').checked;
-    hours[day] = {
-      closed,
-      open: closed ? '' : row.querySelector('.open-in').value,
-      close: closed ? '' : row.querySelector('.close-in').value
-    };
+    hours[day] = { closed, open: closed ? '' : row.querySelector('.open-in').value, close: closed ? '' : row.querySelector('.close-in').value };
   });
   setLoading(btn, true, 'Saving…');
   const { error } = await supabase.from('profiles').update({ opening_hours: hours }).eq('id', currentUser.id);
@@ -812,13 +647,9 @@ $('saveHoursBtn').addEventListener('click', async () => {
   await loadScore();
 });
 
-// =========================================================
 // LINKS
-// =========================================================
 async function loadLinks(){
-  const { data: links } = await supabase
-    .from('business_links').select('*')
-    .eq('profile_id', currentUser.id).order('sort_order');
+  const { data: links } = await supabase.from('business_links').select('*').eq('profile_id', currentUser.id).order('sort_order');
   renderLinks(links || []);
 }
 function renderLinks(links){
@@ -844,11 +675,10 @@ function buildViewRow(link){
       <div class="link-url">${escapeHtml(displayUrl(link.url))}</div>
     </div>
     <div class="link-actions">
-      <button class="mini-btn open"   data-action="open">🔗 Open</button>
-      <button class="mini-btn edit"   data-action="edit">✏️ Edit</button>
+      <button class="mini-btn open" data-action="open">🔗 Open</button>
+      <button class="mini-btn edit" data-action="edit">✏️ Edit</button>
       <button class="mini-btn delete" data-action="delete">🗑 Delete</button>
-    </div>
-  `;
+    </div>`;
   row.querySelectorAll('button').forEach(b => b.addEventListener('click', () => handleLinkAction(row, b.dataset.action, link)));
   return row;
 }
@@ -865,8 +695,7 @@ function buildEditRow(id, label, url, isNew){
     <div class="link-actions">
       <button class="mini-btn save" data-action="save">💾 Save</button>
       <button class="mini-btn cancel" data-action="cancel">✕ Cancel</button>
-    </div>
-  `;
+    </div>`;
   const urlIn = row.querySelector('.edit-url');
   urlIn.addEventListener('blur', () => { if(urlIn.value.trim()) urlIn.value = normalizeUrl(urlIn.value); });
   row.querySelectorAll('button').forEach(b => b.addEventListener('click', () => handleLinkAction(row, b.dataset.action, null)));
@@ -875,7 +704,6 @@ function buildEditRow(id, label, url, isNew){
 async function handleLinkAction(row, action, original){
   const id = row.dataset.id || '';
   const isNew = row.dataset.isNew === '1';
-
   if(action === 'open'){
     const url = normalizeUrl(original?.url || '');
     if(!url) return showToast('No URL', 'error');
@@ -935,72 +763,41 @@ $('addLinkBtn').addEventListener('click', () => {
   r.querySelector('.edit-label').focus();
 });
 
-// =========================================================
 // LEADS
-// =========================================================
 async function loadLeads(){
-  const { data, error } = await supabase
-    .from('enquiries').select('*')
-    .eq('profile_id', currentUser.id)
-    .order('created_at', { ascending: false })
-    .limit(100);
-
+  const { data, error } = await supabase.from('enquiries').select('*').eq('profile_id', currentUser.id).order('created_at', { ascending: false }).limit(100);
   if(error){ console.error('Leads load error:', error); return; }
   allLeads = data || [];
-
-  // Fetch agency names for any assigned leads
   const agencyIds = [...new Set(allLeads.filter(l => l.assigned_agency_id).map(l => l.assigned_agency_id))];
   window.__agencyMap = {};
   if(agencyIds.length){
-    const { data: agencies } = await supabase
-      .from('agency_public_info').select('id, name').in('id', agencyIds);
+    const { data: agencies } = await supabase.from('agency_public_info').select('id, name').in('id', agencyIds);
     (agencies || []).forEach(a => window.__agencyMap[a.id] = a.name);
   }
-
   const unread = allLeads.filter(l => !l.viewed_by_owner).length;
   const badge = $('tabLeadsBadge');
-  if(unread > 0){
-    badge.textContent = unread;
-    badge.classList.remove('hidden');
-  } else {
-    badge.classList.add('hidden');
-  }
-
-  $('leadsSubtitle').textContent = allLeads.length
-    ? `${allLeads.length} total · ${unread} unread` : '';
-
+  if(unread > 0){ badge.textContent = unread; badge.classList.remove('hidden'); } else badge.classList.add('hidden');
+  $('leadsSubtitle').textContent = allLeads.length ? `${allLeads.length} total · ${unread} unread` : '';
   renderLeads();
 }
-
 function renderLeads(){
   const container = $('leadsList');
-  const filtered = currentLeadFilter === 'all'
-    ? allLeads
-    : allLeads.filter(l => l.status === currentLeadFilter);
-
+  const filtered = currentLeadFilter === 'all' ? allLeads : allLeads.filter(l => l.status === currentLeadFilter);
   if(!filtered.length){
-    container.innerHTML = `<div class="empty-state">${allLeads.length ? 'No leads with this status.' : 'No enquiries yet. Once visitors reach out, they\'ll appear here.'}</div>`;
+    container.innerHTML = `<div class="empty-state">${allLeads.length ? 'No leads with this status.' : 'No enquiries yet.'}</div>`;
     return;
   }
-
   const bizName = $('bizName')?.value || 'us';
-
   container.innerHTML = filtered.map(lead => {
     const isUnread = !lead.viewed_by_owner;
     const phoneDigits = (lead.visitor_phone || '').replace(/[^\d]/g, '');
     const timeAgo = getTimeAgo(lead.created_at);
-    const waText = encodeURIComponent(
-      `Hi ${lead.visitor_name}, this is ${bizName} — thanks for your enquiry. How can we help?`
-    );
+    const waText = encodeURIComponent(`Hi ${lead.visitor_name}, this is ${bizName} — thanks for your enquiry. How can we help?`);
     const agencyName = lead.assigned_agency_id ? (window.__agencyMap?.[lead.assigned_agency_id] || 'Partner agency') : null;
-
     return `
       <div class="lead-item ${isUnread ? 'unread' : ''}" data-id="${lead.id}">
         <div class="lead-head">
-          <div>
-            <div class="lead-name">${escapeHtml(lead.visitor_name)}</div>
-            <div class="lead-time">${timeAgo}</div>
-          </div>
+          <div><div class="lead-name">${escapeHtml(lead.visitor_name)}</div><div class="lead-time">${timeAgo}</div></div>
           <span class="lead-status ${lead.status}">${lead.status}</span>
         </div>
         <div class="lead-message">${escapeHtml(lead.message)}</div>
@@ -1022,15 +819,10 @@ function renderLeads(){
           ${lead.status !== 'converted' ? `<button class="lead-btn convert" data-action="convert" data-id="${lead.id}">✓ Mark Converted</button>` : ''}
           ${lead.status !== 'lost' ? `<button class="lead-btn lost" data-action="lost" data-id="${lead.id}">✗ Mark Lost</button>` : ''}
         </div>
-      </div>
-    `;
+      </div>`;
   }).join('');
-
   container.querySelectorAll('.lead-item').forEach(el => {
-    el.addEventListener('click', (e) => {
-      if(e.target.closest('a') || e.target.closest('button')) return;
-      markLeadViewed(el.dataset.id);
-    });
+    el.addEventListener('click', (e) => { if(e.target.closest('a') || e.target.closest('button')) return; markLeadViewed(el.dataset.id); });
   });
   container.querySelectorAll('[data-action="reply"]').forEach(el => {
     el.addEventListener('click', () => markLeadContacted(el.closest('.lead-item').dataset.id));
@@ -1042,7 +834,6 @@ function renderLeads(){
     btn.addEventListener('click', (e) => { e.stopPropagation(); updateLeadStatus(btn.dataset.id, 'lost'); });
   });
 }
-
 async function markLeadViewed(id){
   const lead = allLeads.find(l => l.id === id);
   if(!lead || lead.viewed_by_owner) return;
@@ -1050,12 +841,10 @@ async function markLeadViewed(id){
   lead.viewed_by_owner = true;
   const unread = allLeads.filter(l => !l.viewed_by_owner).length;
   const badge = $('tabLeadsBadge');
-  if(unread > 0) badge.textContent = unread;
-  else badge.classList.add('hidden');
+  if(unread > 0) badge.textContent = unread; else badge.classList.add('hidden');
   const el = document.querySelector(`.lead-item[data-id="${id}"]`);
   if(el) el.classList.remove('unread');
 }
-
 async function markLeadContacted(id){
   const lead = allLeads.find(l => l.id === id);
   if(!lead) return;
@@ -1063,20 +852,16 @@ async function markLeadContacted(id){
   if(!lead.first_reply_at) updates.first_reply_at = new Date().toISOString();
   if(lead.status === 'new') updates.status = 'contacted';
   await supabase.from('enquiries').update(updates).eq('id', id);
-  await loadLeads();
-  await loadScore();
+  await loadLeads(); await loadScore(); await loadPressureLayer();
 }
-
 async function updateLeadStatus(id, status){
   const lead = allLeads.find(l => l.id === id);
   const updates = { status, viewed_by_owner: true };
   if(lead && !lead.first_reply_at && status !== 'lost') updates.first_reply_at = new Date().toISOString();
   await supabase.from('enquiries').update(updates).eq('id', id);
-  await loadLeads();
-  await loadScore();
+  await loadLeads(); await loadScore(); await loadPressureLayer();
   showToast('Lead updated', 'success');
 }
-
 document.querySelectorAll('.lead-filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.lead-filter-btn').forEach(b => b.classList.remove('active'));
@@ -1086,9 +871,7 @@ document.querySelectorAll('.lead-filter-btn').forEach(btn => {
   });
 });
 
-// =========================================================
 // ANALYTICS
-// =========================================================
 async function loadAnalytics(){
   const since = new Date(Date.now() - 30*24*60*60*1000).toISOString();
   const [{ data: views }, { data: clicks }] = await Promise.all([
@@ -1097,12 +880,10 @@ async function loadAnalytics(){
   ]);
   const viewsList = views || [];
   const clicksList = clicks || [];
-
   $('statViews').textContent  = viewsList.length;
   $('statClicks').textContent = clicksList.length;
   const ctr = viewsList.length ? Math.round((clicksList.length / viewsList.length) * 100) : 0;
   $('statCtr').textContent = ctr + '%';
-
   const days = new Array(30).fill(0);
   const today = new Date(); today.setHours(0,0,0,0);
   viewsList.forEach(v => {
@@ -1115,85 +896,165 @@ async function loadAnalytics(){
     const h = Math.max(3, (c / max) * 130);
     return `<div class="bar" style="height:${h}px" data-count="${c} view${c===1?'':'s'}"></div>`;
   }).join('');
-
   const counts = {};
-  clicksList.forEach(c => {
-    const k = c.link_label || 'Unknown';
-    counts[k] = (counts[k] || 0) + 1;
-  });
+  clicksList.forEach(c => { const k = c.link_label || 'Unknown'; counts[k] = (counts[k] || 0) + 1; });
   const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]).slice(0,5);
   if(sorted.length){
-    $('topLinks').innerHTML = sorted.map(([label, count]) =>
-      `<li><span class="tl-label">${escapeHtml(label)}</span><span class="tl-count">${count} click${count===1?'':'s'}</span></li>`
-    ).join('');
+    $('topLinks').innerHTML = sorted.map(([label, count]) => `<li><span class="tl-label">${escapeHtml(label)}</span><span class="tl-count">${count} click${count===1?'':'s'}</span></li>`).join('');
     $('topLinksWrap').style.display = 'block';
   } else {
     $('topLinksWrap').style.display = 'none';
   }
 }
 
-// =========================================================
 // SCORE
-// =========================================================
 async function loadScore(){
-  const { data } = await supabase
-    .from('business_scores').select('*').eq('id', currentUser.id).maybeSingle();
-
+  const { data } = await supabase.from('business_scores').select('*').eq('id', currentUser.id).maybeSingle();
   if(!data){
     $('scoreBig').textContent = '—';
     $('scoreTier').textContent = 'Not enough data yet';
     $('scoreCircle').style.setProperty('--score-deg', '0deg');
     return;
   }
-
   const total = Math.round(data.total_score || 0);
   const tier = total >= 90 ? 'Platinum' : total >= 75 ? 'Gold' : total >= 60 ? 'Silver' : total >= 40 ? 'Bronze' : 'Listed';
   const tierIcon = { Platinum:'🏆', Gold:'🥇', Silver:'🥈', Bronze:'🥉', Listed:'⚪' }[tier];
   const tierColor = { Platinum:'#7c3aed', Gold:'#d97706', Silver:'#6b7280', Bronze:'#92400e', Listed:'#9ca3af' }[tier];
-
   $('scoreBig').textContent = total;
   $('scoreTier').innerHTML = `<span style="color:${tierColor}">${tierIcon} ${tier} Tier</span>`;
-
-  // Update circular progress
-  const degrees = (total / 100) * 360;
-  $('scoreCircle').style.setProperty('--score-deg', degrees + 'deg');
-
+  $('scoreCircle').style.setProperty('--score-deg', ((total / 100) * 360) + 'deg');
   const rows = [
-    ['⭐ Rating quality',    data.rating_quality_pts,   25],
-    ['📝 Rating volume',     data.volume_pts,           15],
-    ['✅ Profile complete',  data.completeness_pts,     15],
-    ['⚡ Responsiveness',    data.responsiveness_pts,   15],
-    ['🛡 Verification',      data.verification_pts,     10],
-    ['🔄 Freshness',         data.freshness_pts,        10],
-    ['📈 Engagement',        data.engagement_pts,       10],
+    ['⭐ Rating quality', data.rating_quality_pts, 25],
+    ['📝 Rating volume', data.volume_pts, 15],
+    ['✅ Profile complete', data.completeness_pts, 15],
+    ['⚡ Responsiveness', data.responsiveness_pts, 15],
+    ['🛡 Verification', data.verification_pts, 10],
+    ['🔄 Freshness', data.freshness_pts, 10],
+    ['📈 Engagement', data.engagement_pts, 10],
   ];
-
   $('scoreBreakdown').innerHTML = rows.map(([label, val, max]) => {
     const pct = Math.min(100, (val / max) * 100);
     const color = pct > 80 ? '#10b981' : pct > 50 ? '#f59e0b' : '#ef4444';
-    return `
-      <div style="margin-bottom:10px;">
-        <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:4px;">
-          <span style="font-weight:600;color:#374151;">${label}</span>
-          <span style="font-weight:700;color:${color};">${Math.round(val)}/${max}</span>
-        </div>
-        <div style="height:6px;background:#f1f5f9;border-radius:3px;overflow:hidden;">
-          <div style="height:100%;width:${pct}%;background:${color};border-radius:3px;"></div>
-        </div>
+    return `<div style="margin-bottom:10px;">
+      <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:4px;">
+        <span style="font-weight:600;color:#374151;">${label}</span>
+        <span style="font-weight:700;color:${color};">${Math.round(val)}/${max}</span>
       </div>
-    `;
+      <div style="height:6px;background:#f1f5f9;border-radius:3px;overflow:hidden;">
+        <div style="height:100%;width:${pct}%;background:${color};border-radius:3px;"></div>
+      </div>
+    </div>`;
   }).join('');
-
   const milestones = [[40,'Bronze'],[60,'Silver'],[75,'Gold'],[90,'Platinum']];
   const next = milestones.find(([t]) => t > total);
-  $('scoreNext').innerHTML = next
-    ? `🎯 ${next[0] - total} more points to reach <b>${next[1]} Tier</b>`
-    : `🏆 You're at the top tier — keep it up!`;
+  $('scoreNext').innerHTML = next ? `🎯 ${next[0] - total} more points to reach <b>${next[1]} Tier</b>` : `🏆 You're at the top tier — keep it up!`;
 }
 
-// =========================================================
-// BOOT
-// =========================================================
+// PRESSURE LAYER
+async function loadPressureLayer(){
+  if(!currentUser) return;
+
+  const { data: setting } = await supabase.from('platform_settings').select('value').eq('key', 'avg_lead_value_ugx').maybeSingle();
+  const avgLeadValue = setting?.value ? Number(setting.value) : 150000;
+
+  const { data: partnerLeads } = await supabase.from('enquiries')
+    .select('id, status, assigned_agency_id, partner_replied_at, created_at')
+    .eq('profile_id', currentUser.id)
+    .not('assigned_agency_id', 'is', null);
+
+  const pl = partnerLeads || [];
+  const handled = pl.length;
+  const converted = pl.filter(l => l.status === 'converted').length;
+  const estValue = converted * avgLeadValue;
+
+  if(handled === 0){
+    $('partnerImpactEmpty').classList.remove('hidden');
+    $('partnerImpactData').classList.add('hidden');
+  } else {
+    $('partnerImpactEmpty').classList.add('hidden');
+    $('partnerImpactData').classList.remove('hidden');
+    $('piHandled').textContent = handled;
+    $('piConverted').textContent = converted;
+    $('piValue').textContent = formatUGX(estValue);
+  }
+
+  const { data: yourEnq } = await supabase.from('enquiries')
+    .select('created_at, first_reply_at')
+    .eq('profile_id', currentUser.id)
+    .not('first_reply_at', 'is', null);
+
+  const valid = (yourEnq || []).filter(e => new Date(e.first_reply_at) > new Date(e.created_at));
+  const avgYourMin = valid.length
+    ? Math.round(valid.reduce((sum, e) => sum + (new Date(e.first_reply_at) - new Date(e.created_at)) / 60000, 0) / valid.length)
+    : null;
+
+  const { data: benchmark } = await supabase.from('platform_benchmarks').select('*').maybeSingle();
+  const platformAvg = benchmark?.avg_response_minutes || null;
+  const targetMin = 12;
+
+  const elYou = $('rbYou'), elPlat = $('rbPlatform'), elTarget = $('rbTarget'), elMsg = $('rbMessage');
+  elYou.textContent = avgYourMin === null ? '—' : formatMinutes(avgYourMin);
+  elPlat.textContent = platformAvg === null ? '—' : formatMinutes(platformAvg);
+  elTarget.textContent = formatMinutes(targetMin);
+
+  if(avgYourMin !== null){
+    if(avgYourMin <= targetMin * 1.5) elYou.style.color = '#16a34a';
+    else if(avgYourMin <= targetMin * 5) elYou.style.color = '#f59e0b';
+    else elYou.style.color = '#ef4444';
+  } else {
+    elYou.style.color = '#9ca3af';
+  }
+  elPlat.style.color = '#6b7280';
+  elTarget.style.color = '#16a34a';
+
+  if(avgYourMin === null){
+    elMsg.textContent = '📊 No replied enquiries yet. Reply to your first lead to start measuring.';
+  } else if(avgYourMin <= targetMin){
+    elMsg.innerHTML = `🏆 <b>Excellent.</b> You respond as fast as the managed tier. Keep it up.`;
+  } else if(avgYourMin <= 60){
+    elMsg.innerHTML = `⚡ <b>You're ${formatMinutes(avgYourMin - targetMin)} slower than the managed tier.</b> Automated follow-up can bring you under 12 min.`;
+  } else if(avgYourMin <= 240){
+    elMsg.innerHTML = `⚠️ <b>Leads go to partners after 4 hours.</b> At ${formatMinutes(avgYourMin)}, you're cutting it close.`;
+  } else {
+    elMsg.innerHTML = `🔴 <b>${formatMinutes(avgYourMin)} average response time</b> — most leads are being auto-routed. Automated follow-up can recover these.`;
+  }
+
+  const lastVisitKey = 'dashLastVisit_' + currentUser.id;
+  const lastVisit = localStorage.getItem(lastVisitKey);
+  const now = Date.now();
+  if(lastVisit){
+    const gapHours = (now - parseInt(lastVisit, 10)) / (60 * 60 * 1000);
+    if(gapHours >= 72){
+      const partnerSince = pl.filter(l => {
+        const t = new Date(l.partner_replied_at || l.created_at).getTime();
+        return t > parseInt(lastVisit, 10);
+      });
+      if(partnerSince.length > 0) showAwayBanner(partnerSince);
+    }
+  }
+  localStorage.setItem(lastVisitKey, String(now));
+}
+
+function showAwayBanner(leads){
+  const banner = $('awayBanner');
+  const count = leads.length;
+  const firstAgencyId = leads[0].assigned_agency_id;
+  const agencyName = window.__agencyMap?.[firstAgencyId] || 'a partner agency';
+  banner.innerHTML = `
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <div style="font-size:1.8rem">👋</div>
+      <div style="flex:1">
+        <div style="font-weight:800;font-size:.95rem;margin-bottom:4px;color:#1a1a2e">Welcome back</div>
+        <div style="font-size:.88rem;color:#4b5563;line-height:1.55">
+          While you were away, <b>${escapeHtml(agencyName)}</b> handled <b>${count}</b> ${count === 1 ? 'lead' : 'leads'} for you.
+          <a href="#leads" onclick="document.querySelector('[data-tab=leads]').click();return false" style="color:#4f46e5;font-weight:700;text-decoration:none">See what they said →</a>
+        </div>
+      </div>
+      <button onclick="this.closest('.away-banner').remove()" style="background:none;border:none;font-size:1.1rem;cursor:pointer;color:#9ca3af;padding:0">✕</button>
+    </div>`;
+  banner.classList.remove('hidden');
+}
+
 bootAuth();
 </script>
 </body>
