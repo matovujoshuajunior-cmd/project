@@ -128,10 +128,38 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f8fafc;color:#1a1a2
   .biz-action{width:100%}
   .btn-view{width:100%;justify-content:center}
   .biz-logo{width:52px;height:52px;font-size:1.2rem}
-  .search-box{flex-direction:column}
-  .search-box button{width:100%}
   .footer-grid{grid-template-columns:1fr}
   .footer-bottom{flex-direction:column;text-align:center}
+
+  /* HERO spacing on mobile */
+  .hero{padding:48px 16px 80px}
+  .hero h1{font-size:1.6rem;line-height:1.2}
+  .hero p{font-size:.92rem;margin-bottom:22px;padding:0 4px}
+
+  /* SEARCH BAR — fixed */
+  .search-box{
+    flex-direction:row;      /* stay horizontal */
+    max-width:100%;
+    margin:0 4px;
+    border-radius:12px;
+  }
+  .search-box input{
+    padding:14px 14px;
+    font-size:16px;         /* prevents iOS zoom */
+    min-width:0;            /* allows flex shrink */
+  }
+  .search-box button{
+    padding:14px 18px;
+    font-size:15px;
+    width:auto;
+    flex-shrink:0;
+    white-space:nowrap;
+  }
+}
+
+@media(max-width:380px){
+  .search-box input{padding:13px 12px}
+  .search-box button{padding:13px 14px;font-size:14px}
 }
 </style>
 </head>
