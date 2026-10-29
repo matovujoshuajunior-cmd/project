@@ -212,9 +212,15 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 <body>
 
 <div class="container">
-  <div class="header">
+    <div class="header">
     <h1>🤝 Partner Dashboard <span class="badge">AGENCY</span></h1>
-    <button id="logoutBtn" class="btn btn-danger hidden">Log Out</button>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button id="notifBell" class="notif-bell hidden" title="Notifications">
+        🔔
+        <span id="notifIndicator" class="hidden"></span>
+      </button>
+      <button id="logoutBtn" class="btn btn-danger hidden">Log Out</button>
+    </div>
   </div>
 
   <div id="loading" class="state"><div class="spinner"></div>Loading…</div>
@@ -713,6 +719,153 @@ document.querySelectorAll('[data-inq-filter]').forEach(btn => {
   });
 });
 
+ // =========================================================
+// NOTIFICATIONS
+// =========================================================
+let notifChannel = null;
+let notifPanelOpen = false;
+
+async function initNotifications(){
+  const bell = document.getElementById('notifBell');
+  const indicator = document.getElementById('notifIndicator');
+  if(!bell || !indicator || !currentUser) return;
+
+  bell.classList.remove('hidden');
+
+  // Initial unread count
+  await refreshNotifIndicator();
+
+  // Realtime subscription — instant, no polling
+  notifChannel = supabase.channel('user-notifications-' + currentUser.id)
+    .on('postgres_changes',
+      { event: 'INSERT', schema: 'public', table: 'notifications', filter: `user_id=eq.${currentUser.id}` },
+      payload => {
+        refreshNotifIndicator();
+        const n = payload.new;
+        showToast('🔔 ' + n.title, 'info', 4000);
+        if(notifPanelOpen) loadNotifPanel();
+      })
+    .on('postgres_changes',
+      { event: 'UPDATE', schema: 'public', table: 'notifications', filter: `user_id=eq.${currentUser.id}` },
+      () => { refreshNotifIndicator(); if(notifPanelOpen) loadNotifPanel(); })
+    .subscribe();
+
+  // Click to open panel
+  bell.addEventListener('click', toggleNotifPanel);
+
+  // Click outside to close
+  document.addEventListener('click', (e) => {
+    const panel = document.getElementById('notifPanel');
+    if(panel && !panel.contains(e.target) && !bell.contains(e.target)){
+      closeNotifPanel();
+    }
+  });
+}
+
+async function refreshNotifIndicator(){
+  if(!currentUser) return;
+  const indicator = document.getElementById('notifIndicator');
+  const bell = document.getElementById('notifBell');
+  if(!indicator || !bell) return;
+
+  const { count } = await supabase.from('notifications')
+    .select('*', { count: 'exact', head: true })
+    .eq('user_id', currentUser.id)
+    .eq('read', false);
+
+  if(count && count > 0){
+    indicator.className = 'notif-count';
+    indicator.textContent = count > 99 ? '99+' : count;
+    indicator.classList.remove('hidden');
+    bell.classList.add('has-unread');
+  } else {
+    indicator.classList.add('hidden');
+    bell.classList.remove('has-unread');
+  }
+}
+
+function toggleNotifPanel(){
+  if(notifPanelOpen){ closeNotifPanel(); return; }
+  openNotifPanel();
+}
+
+async function openNotifPanel(){
+  notifPanelOpen = true;
+  const existing = document.getElementById('notifPanel');
+  if(existing) existing.remove();
+
+  const panel = document.createElement('div');
+  panel.id = 'notifPanel';
+  panel.className = 'notif-panel';
+  panel.innerHTML = `
+    <div class="notif-head">
+      <h4>Notifications</h4>
+      <button class="notif-mark-all" id="markAllReadBtn">Mark all read</button>
+    </div>
+    <div class="notif-list" id="notifListEl">
+      <div class="notif-empty">Loading…</div>
+    </div>
+  `;
+  document.body.appendChild(panel);
+
+  document.getElementById('markAllReadBtn').addEventListener('click', async (e) => {
+    e.stopPropagation();
+    await supabase.from('notifications').update({ read: true }).eq('user_id', currentUser.id).eq('read', false);
+    await loadNotifPanel();
+    await refreshNotifIndicator();
+  });
+
+  await loadNotifPanel();
+}
+
+function closeNotifPanel(){
+  notifPanelOpen = false;
+  const panel = document.getElementById('notifPanel');
+  if(panel) panel.remove();
+}
+
+async function loadNotifPanel(){
+  const listEl = document.getElementById('notifListEl');
+  if(!listEl) return;
+
+  const { data: notifs } = await supabase.from('notifications')
+    .select('*').eq('user_id', currentUser.id)
+    .order('created_at', { ascending: false }).limit(20);
+
+  if(!notifs || !notifs.length){
+    listEl.innerHTML = '<div class="notif-empty">No notifications yet.</div>';
+    return;
+  }
+
+  listEl.innerHTML = notifs.map(n => {
+    const icon = {
+      enquiry: '📩', routed_lead: '🎯', partner_reply: '🤝',
+      partner_inquiry: '✉️', inquiry_reply: '💬'
+    }[n.type] || '🔔';
+    return `
+      <div class="notif-item ${n.read ? '' : 'unread'}" data-id="${n.id}" data-link="${escapeAttr(n.link || '')}">
+        <div class="notif-icon ${n.type}">${icon}</div>
+        <div class="notif-body">
+          <div class="notif-title">${escapeHtml(n.title)}</div>
+          ${n.body ? `<div class="notif-text">${escapeHtml(n.body)}</div>` : ''}
+          <div class="notif-time">${getTimeAgo(n.created_at)}</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  listEl.querySelectorAll('.notif-item').forEach(el => {
+    el.addEventListener('click', async () => {
+      const id = el.dataset.id;
+      const link = el.dataset.link;
+      await supabase.from('notifications').update({ read: true }).eq('id', id);
+      await refreshNotifIndicator();
+      closeNotifPanel();
+      if(link){
+        window.location.href = link;
+      }
+    });
+  });
+} 
 boot();
 </script>
 </body>
