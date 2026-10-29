@@ -412,7 +412,12 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
             </span>
           </label>
         </div>
-        <button class="btn btn-primary" id="saveProfileBtn">Save Information</button>
+        <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+          <button class="btn btn-primary" id="saveProfileBtn">Save Information</button>
+          <a class="btn btn-ghost" id="previewBtn" target="_blank" rel="noopener" style="text-decoration:none">
+            👁 Preview my profile
+          </a>
+        </div>
       </div>
 
       <div class="card">
@@ -420,6 +425,13 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
         <p class="hint">Uncheck "Closed" for days you're open.</p>
         <div class="hours-grid" id="hoursGrid"></div>
         <button class="btn btn-primary" id="saveHoursBtn" style="margin-top:16px;">Save Hours</button>
+        
+      </div>
+            <div class="card" style="border:1.5px solid #fecaca">
+        <h2 style="color:#dc2626">⚠️ Danger Zone</h2>
+        <p class="hint">Request permanent deletion of your business listing and all associated data. An admin will confirm within 48 hours.</p>
+        <button class="btn btn-danger" id="requestDeleteBtn">Request Account Deletion</button>
+        <div id="deletionStatus" style="margin-top:12px;font-size:.85rem;color:#6b7280"></div>
       </div>
     </div>
   </div>
@@ -680,6 +692,25 @@ function updateLogoPreview(url){
   const img = $('logoPreview');
   if(url){ img.src = url; img.classList.remove('hidden'); } else img.classList.add('hidden');
 }
+  // Preview button
+  if(profile.slug){
+    $('previewBtn').href = `profile.html?b=${encodeURIComponent(profile.slug)}`;
+    $('previewBtn').style.display = 'inline-flex';
+  } else {
+    $('previewBtn').style.display = 'none';
+  }
+
+  // Deletion request status
+  if(profile.deletion_requested_at){
+    $('requestDeleteBtn').disabled = true;
+    $('requestDeleteBtn').textContent = '✓ Deletion Requested';
+    $('deletionStatus').innerHTML = `📩 Request submitted on <b>${new Date(profile.deletion_requested_at).toLocaleDateString()}</b>. An admin will process it soon.`;
+  } else {
+    $('requestDeleteBtn').disabled = false;
+    $('requestDeleteBtn').textContent = 'Request Account Deletion';
+    $('deletionStatus').textContent = '';
+  }
+  
 $('saveProfileBtn').addEventListener('click', async () => {
   const btn = $('saveProfileBtn');
   let slug = $('bizSlug').value.trim();
@@ -747,6 +778,23 @@ $('saveHoursBtn').addEventListener('click', async () => {
   showToast('✅ Hours saved!', 'success');
   await loadScore();
 });
+
+ $('requestDeleteBtn').addEventListener('click', async () => {
+  if(!confirm('Request deletion of your business listing?\n\nAn admin will remove all your data within 48 hours. You can cancel by logging in and replying to the confirmation email.')) return;
+  const btn = $('requestDeleteBtn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting…';
+  const { error } = await supabase.from('profiles')
+    .update({ deletion_requested_at: new Date().toISOString() })
+    .eq('id', currentUser.id);
+  if(error){
+    btn.disabled = false;
+    btn.textContent = 'Request Account Deletion';
+    return showToast('Failed: ' + error.message, 'error');
+  }
+  showToast('✅ Deletion request submitted. An admin will process it within 48 hours.', 'success', 6000);
+  await loadProfile();
+}); 
 
 // LINKS
 async function loadLinks(){
