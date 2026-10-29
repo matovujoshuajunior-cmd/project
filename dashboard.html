@@ -47,7 +47,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .tab-btn.active .tab-badge{background:#fff;color:#6366f1}
 .tab-panel{animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:520px){.tab-btn{padding:11px 10px;font-size:.78rem;gap:4px}}
+@media(max-width:520px){.tab-btn{padding:11px 8px;font-size:.75rem;gap:3px}}
 
 .score-display{text-align:center;padding:20px 0}
 .score-circle{width:140px;height:140px;margin:0 auto 16px;border-radius:50%;background:conic-gradient(#6366f1 var(--score-deg,0deg),#e5e7eb 0deg);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 4px 20px rgba(99,102,241,.15)}
@@ -87,6 +87,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .lead-status.contacted{background:#fef3c7;color:#92400e}
 .lead-status.converted{background:#dcfce7;color:#16a34a}
 .lead-status.lost{background:#f3f4f6;color:#6b7280}
+.lead-status.closed{background:#f3f4f6;color:#6b7280}
 .lead-message{font-size:.88rem;color:#4b5563;line-height:1.55;padding:10px 14px;background:#f9fafb;border-radius:8px;margin-bottom:12px;white-space:pre-wrap}
 .lead-contact{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:.82rem;color:#6b7280}
 .lead-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
@@ -99,6 +100,30 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .lead-btn.lost{background:#fee2e2;color:#dc2626}
 .partner-block{margin:10px 0;padding:12px 14px;background:#fdf2f8;border-left:3px solid #db2777;border-radius:8px;font-size:.82rem;color:#831843}
 .partner-block-label{font-weight:800;font-size:.72rem;text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px;color:#db2777}
+
+/* Partner marketplace */
+.partner-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.agency-card{border:1.5px solid #f1f5f9;border-radius:14px;padding:20px;transition:border-color .15s,box-shadow .15s;display:flex;flex-direction:column;gap:10px}
+.agency-card:hover{border-color:#c7d2fe;box-shadow:0 8px 24px rgba(99,102,241,.1)}
+.agency-head{display:flex;align-items:center;gap:12px}
+.agency-logo{width:44px;height:44px;border-radius:11px;background:linear-gradient(135deg,#eef2ff,#e0e7ff);color:#4f46e5;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;flex-shrink:0}
+.agency-name{font-weight:800;font-size:.95rem;line-height:1.2}
+.agency-tagline{font-size:.78rem;color:#6b7280;margin-top:2px}
+.agency-services{display:flex;gap:5px;flex-wrap:wrap}
+.service-chip{font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:20px;background:#eef2ff;color:#4f46e5}
+.agency-handled{font-size:.75rem;color:#16a34a;font-weight:700;padding:6px 10px;background:#f0fdf4;border-radius:6px;display:inline-block}
+.agency-actions{display:flex;gap:8px;margin-top:auto;padding-top:8px}
+.agency-actions .btn-contact{flex:1;padding:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:9px;font-size:.82rem;font-weight:700;cursor:pointer;transition:opacity .15s;font-family:inherit}
+.agency-actions .btn-contact:hover{opacity:.9}
+.agency-actions .btn-portfolio{padding:10px 14px;background:#f3f4f6;color:#374151;border:none;border-radius:9px;font-size:.82rem;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;font-family:inherit}
+.agency-actions .btn-portfolio:hover{background:#e5e7eb}
+
+.inquiry-item{border:1.5px solid #f1f5f9;border-radius:12px;padding:16px;margin-bottom:10px}
+.inquiry-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;flex-wrap:wrap}
+.inquiry-agency{font-weight:800;font-size:.92rem;color:#1a1a2e}
+.inquiry-message{font-size:.85rem;color:#4b5563;line-height:1.55;padding:10px 14px;background:#f9fafb;border-radius:8px;margin-bottom:10px;white-space:pre-wrap}
+.inquiry-reply{padding:12px 14px;background:#eef2ff;border-left:3px solid #6366f1;border-radius:8px;margin-top:10px;font-size:.85rem;color:#374151}
+.inquiry-reply-label{font-size:.7rem;font-weight:800;color:#4f46e5;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px}
 
 .links-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid #e5e7eb;margin-bottom:12px}
 .links-head h2{border:none;padding:0;margin:0}
@@ -135,7 +160,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .optout-box b{display:block;font-size:.9rem;color:#1a1a2e;font-weight:700}
 .optout-box .optout-sub{display:block;font-size:.78rem;color:#6b7280;margin-top:4px;line-height:1.55}
 
-/* Pressure layer */
 .away-banner{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border:1.5px solid #c7d2fe;border-radius:14px;padding:16px 18px;margin-bottom:20px;animation:slideDown .4s ease}
 @keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 .impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
@@ -152,6 +176,16 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .bench-row.target{background:#f0fdf4}
 .bench-label{font-size:.85rem;font-weight:600;color:#4b5563}
 .bench-value{font-size:1.05rem;font-weight:800;color:#6b7280}
+
+/* Inquiry modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;animation:fadeIn .2s ease}
+.modal-card{background:#fff;border-radius:18px;padding:26px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:slideUp .25s ease}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.modal-head h3{font-size:1.15rem;font-weight:800}
+.modal-close{background:#f3f4f6;border:none;width:32px;height:32px;border-radius:50%;font-size:.9rem;cursor:pointer;color:#6b7280;font-weight:700}
+.modal-close:hover{background:#e5e7eb}
+.modal-sub{font-size:.85rem;color:#6b7280;margin-bottom:18px;line-height:1.5}
 
 .empty-state{text-align:center;padding:32px 20px;color:#9ca3af;font-size:.9rem}
 .logo-preview{width:64px;height:64px;border-radius:12px;object-fit:cover;margin-top:8px;border:2px solid #e5e7eb}
@@ -172,6 +206,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
   .score-circle{width:120px;height:120px}
   #scoreBig{font-size:2.2rem}
   .impact-grid{grid-template-columns:1fr}
+  .partner-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -209,12 +244,14 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 
   <div id="dashboardSection" class="hidden">
     <div class="tabs-nav">
-      <button class="tab-btn active" data-tab="analytics">📊 <span>Analytics & Score</span></button>
+      <button class="tab-btn active" data-tab="analytics">📊 <span>Analytics</span></button>
       <button class="tab-btn" data-tab="leads">📩 <span>Leads</span><span class="tab-badge hidden" id="tabLeadsBadge">0</span></button>
+      <button class="tab-btn" data-tab="partners">🤝 <span>Partners</span></button>
       <button class="tab-btn" data-tab="links">🔗 <span>Links</span></button>
       <button class="tab-btn" data-tab="profile">⚙️ <span>Profile</span></button>
     </div>
 
+    <!-- TAB: ANALYTICS -->
     <div class="tab-panel" data-panel="analytics">
       <div class="away-banner hidden" id="awayBanner"></div>
       <div class="card">
@@ -223,7 +260,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
           <div class="score-circle" id="scoreCircle">
             <div>
               <div id="scoreBig">—</div>
-              <div class="score-circle-sub" id="scoreSub">/ 100</div>
+              <div class="score-circle-sub">/ 100</div>
             </div>
           </div>
           <div id="scoreTier">Loading…</div>
@@ -250,14 +287,14 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
             <div class="impact-stat amber"><div class="impact-num" id="piValue">0</div><div class="impact-lbl">Est. Value (UGX)</div></div>
           </div>
           <div style="margin-top:16px;padding:14px;background:#fdf2f8;border-left:3px solid #db2777;border-radius:8px;font-size:.85rem;color:#831843;line-height:1.55">
-            <b>💡 Want this for every lead?</b> Partner agencies offer automated follow-up, CRM, and analytics — the same tools that responded on your behalf. <a href="#" onclick="document.querySelector('[data-tab=leads]').click();return false" style="color:#db2777;font-weight:700">See what they said →</a>
+            <b>💡 Want this for every lead?</b> Partner agencies offer automated follow-up, CRM, and analytics. <a href="#" onclick="document.querySelector('[data-tab=partners]').click();return false" style="color:#db2777;font-weight:700">See partner services →</a>
           </div>
         </div>
       </div>
 
       <div class="card">
         <h2>⚡ Response Speed <span style="font-size:.72rem;color:#9ca3af;font-weight:500">Last 90 days</span></h2>
-        <p class="hint">Faster responses mean higher score and more routed leads saved from partners.</p>
+        <p class="hint">Faster responses mean higher score and more routed leads saved.</p>
         <div class="bench-row"><div class="bench-label">Your average</div><div class="bench-value" id="rbYou">—</div></div>
         <div class="bench-row"><div class="bench-label">Platform average</div><div class="bench-value" id="rbPlatform">—</div></div>
         <div class="bench-row target"><div class="bench-label">🥇 Managed-tier target</div><div class="bench-value" id="rbTarget">12 min</div></div>
@@ -280,6 +317,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
       </div>
     </div>
 
+    <!-- TAB: LEADS -->
     <div class="tab-panel hidden" data-panel="leads">
       <div class="card">
         <h2>📩 Enquiries / Leads <span style="font-size:.72rem;color:#9ca3af;font-weight:500" id="leadsSubtitle"></span></h2>
@@ -294,6 +332,21 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
       </div>
     </div>
 
+    <!-- TAB: PARTNERS -->
+    <div class="tab-panel hidden" data-panel="partners">
+      <div class="card">
+        <h2>🤝 Recommended Partners</h2>
+        <p class="hint">Vetted agencies that can help you grow — websites, CRM, automated follow-up, and analytics. Some have already handled leads for you. Contact them directly, no middleman.</p>
+        <div id="partnersList"><div class="empty-state">Loading partners…</div></div>
+      </div>
+
+      <div class="card">
+        <h2>Your Inquiries</h2>
+        <div id="myInquiries"><div class="empty-state">You haven't contacted any partners yet.</div></div>
+      </div>
+    </div>
+
+    <!-- TAB: LINKS -->
     <div class="tab-panel hidden" data-panel="links">
       <div class="card">
         <div class="links-head">
@@ -306,6 +359,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
       </div>
     </div>
 
+    <!-- TAB: PROFILE -->
     <div class="tab-panel hidden" data-panel="profile">
       <div class="card">
         <h2>📋 Business Information</h2>
@@ -314,25 +368,24 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
           <div class="form-group"><label>Industry / Category</label>
             <select id="bizIndustry">
               <option value="">Select…</option>
-            
-<option>Construction &amp; Renovation</option>
-<option>Plumbing &amp; Electrical</option>
-<option>Painting &amp; Finishing</option>
-<option>Interior Design</option>
-<option>Cleaning Services</option>
-<option>Moving &amp; Logistics</option>
-<option>Security Services</option>
-<option>Solar &amp; Energy</option>
-<option>Landscaping &amp; Gardening</option>
-<option>Real Estate</option>
-<option>Guesthouses &amp; Hotels</option>
-<option>Tours &amp; Travel</option>
-<option>Restaurants &amp; Catering</option>
-<option>Event Venues &amp; Planners</option>
-<option>Legal Services</option>
-<option>Insurance</option>
-<option>IT &amp; Technology</option>
-<option>Other</option>
+              <option>Construction &amp; Renovation</option>
+              <option>Plumbing &amp; Electrical</option>
+              <option>Painting &amp; Finishing</option>
+              <option>Interior Design</option>
+              <option>Cleaning Services</option>
+              <option>Moving &amp; Logistics</option>
+              <option>Security Services</option>
+              <option>Solar &amp; Energy</option>
+              <option>Landscaping &amp; Gardening</option>
+              <option>Real Estate</option>
+              <option>Guesthouses &amp; Hotels</option>
+              <option>Tours &amp; Travel</option>
+              <option>Restaurants &amp; Catering</option>
+              <option>Event Venues &amp; Planners</option>
+              <option>Legal Services</option>
+              <option>Insurance</option>
+              <option>IT &amp; Technology</option>
+              <option>Other</option>
             </select>
           </div>
         </div>
@@ -372,10 +425,38 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
   </div>
 </div>
 
+<!-- INQUIRY MODAL -->
+<div class="modal-overlay hidden" id="inquiryModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3 id="inquiryModalTitle">Contact Partner</h3>
+      <button class="modal-close" id="closeInquiryBtn">✕</button>
+    </div>
+    <p class="modal-sub" id="inquiryModalSub"></p>
+    <div class="form-group">
+      <label>What do you need help with? *</label>
+      <textarea id="inquiryMessage" rows="4" placeholder="E.g. I need a website and automated follow-up for my leads…"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Approximate budget (optional)</label>
+      <select id="inquiryBudget">
+        <option value="">Not sure yet</option>
+        <option value="Under UGX 500K">Under UGX 500K</option>
+        <option value="UGX 500K – 1M">UGX 500K – 1M</option>
+        <option value="UGX 1M – 3M">UGX 1M – 3M</option>
+        <option value="UGX 3M – 5M">UGX 3M – 5M</option>
+        <option value="UGX 5M+">UGX 5M+</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" id="sendInquiryBtn" style="width:100%">Send Inquiry →</button>
+    <p style="font-size:.72rem;color:#9ca3af;text-align:center;margin-top:12px">Your contact info is shared with the agency so they can respond.</p>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=20';
+import { supabase } from './supabase-client.js?v=22';
 
 const $ = id => document.getElementById(id);
 const authSection = $('authSection');
@@ -387,6 +468,10 @@ const helpPanel = $('helpPanel');
 let currentUser = null;
 let allLeads = [];
 let currentLeadFilter = 'all';
+let allPartners = [];
+let myInquiries = [];
+let currentPartnerForInquiry = null;
+let currentProfile = null;
 
 function showToast(msg, type='info', d=3200){
   toastEl.textContent = msg;
@@ -452,7 +537,7 @@ const DAY_LABELS = { mon:'Monday', tue:'Tuesday', wed:'Wednesday', thu:'Thursday
 
 // TABS
 function switchTab(tabName){
-  const validTabs = ['analytics','leads','links','profile'];
+  const validTabs = ['analytics','leads','partners','links','profile'];
   if(!validTabs.includes(tabName)) tabName = 'analytics';
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabName));
   document.querySelectorAll('.tab-panel').forEach(p => {
@@ -461,6 +546,7 @@ function switchTab(tabName){
     if(isTarget){ p.style.animation = 'none'; void p.offsetWidth; p.style.animation = ''; }
   });
   if(location.hash !== '#' + tabName) history.replaceState(null, '', '#' + tabName);
+  if(tabName === 'partners') loadPartners();
 }
 document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
 window.addEventListener('DOMContentLoaded', () => switchTab(location.hash.replace('#','') || 'analytics'));
@@ -562,6 +648,7 @@ async function loadAll(){
   await loadAnalytics();
   await loadScore();
   await loadPressureLayer();
+  await loadPartners();
 }
 
 // PROFILE
@@ -575,6 +662,7 @@ async function loadProfile(){
     profile = data;
   }
   if(!profile) return;
+  currentProfile = profile;
   $('bizName').value        = profile.business_name || '';
   $('bizIndustry').value    = profile.industry || '';
   $('bizSlug').value        = profile.slug || '';
@@ -884,6 +972,137 @@ document.querySelectorAll('.lead-filter-btn').forEach(btn => {
   });
 });
 
+// PARTNERS MARKETPLACE
+async function loadPartners(){
+  if(!currentUser) return;
+  // All active agencies
+  const { data: partners } = await supabase.from('agency_marketplace').select('*');
+  allPartners = partners || [];
+
+  // How many leads each agency handled for this business
+  const { data: agencyStats } = await supabase.from('enquiries')
+    .select('assigned_agency_id')
+    .eq('profile_id', currentUser.id)
+    .not('assigned_agency_id', 'is', null);
+  const handledMap = {};
+  (agencyStats || []).forEach(e => {
+    handledMap[e.assigned_agency_id] = (handledMap[e.assigned_agency_id] || 0) + 1;
+  });
+
+  // My inquiries
+  const { data: inquiries } = await supabase.from('partner_inquiries')
+    .select('*, agencies:agency_id(name)')
+    .eq('profile_id', currentUser.id)
+    .order('created_at', { ascending: false });
+  myInquiries = inquiries || [];
+
+  renderPartners(handledMap);
+  renderMyInquiries();
+}
+
+function renderPartners(handledMap){
+  const container = $('partnersList');
+  if(!allPartners.length){
+    container.innerHTML = '<div class="empty-state">No partner agencies listed yet. Check back soon.</div>';
+    return;
+  }
+  container.innerHTML = `<div class="partner-grid">${allPartners.map(p => {
+    const initial = (p.name || '?')[0].toUpperCase();
+    const handled = handledMap[p.id] || 0;
+    const services = Array.isArray(p.services_offered) ? p.services_offered : [];
+    return `
+      <div class="agency-card">
+        <div class="agency-head">
+          <div class="agency-logo">${initial}</div>
+          <div>
+            <div class="agency-name">${escapeHtml(p.name)}</div>
+            ${p.tagline ? `<div class="agency-tagline">${escapeHtml(p.tagline)}</div>` : ''}
+          </div>
+        </div>
+        ${services.length ? `
+          <div class="agency-services">
+            ${services.map(s => `<span class="service-chip">${escapeHtml(s)}</span>`).join('')}
+          </div>
+        ` : ''}
+        ${handled > 0 ? `<div class="agency-handled">✓ Already handled ${handled} lead${handled === 1 ? '' : 's'} for you</div>` : ''}
+        <div class="agency-actions">
+          <button class="btn-contact" data-agency-id="${p.id}" data-agency-name="${escapeAttr(p.name)}">Contact</button>
+          ${p.portfolio_url ? `<a class="btn-portfolio" href="${escapeHtml(normalizeUrl(p.portfolio_url))}" target="_blank" rel="noopener">Portfolio ↗</a>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('')}</div>`;
+
+  container.querySelectorAll('.btn-contact').forEach(btn => {
+    btn.addEventListener('click', () => openInquiryModal(btn.dataset.agencyId, btn.dataset.agencyName));
+  });
+}
+
+function renderMyInquiries(){
+  const container = $('myInquiries');
+  if(!myInquiries.length){
+    container.innerHTML = '<div class="empty-state">You haven\'t contacted any partners yet.</div>';
+    return;
+  }
+  container.innerHTML = myInquiries.map(inq => {
+    const agencyName = inq.agencies?.name || 'Partner';
+    return `
+      <div class="inquiry-item">
+        <div class="inquiry-head">
+          <span class="inquiry-agency">${escapeHtml(agencyName)}</span>
+          <span class="lead-status ${inq.status}">${inq.status}</span>
+        </div>
+        <div class="inquiry-message">${escapeHtml(inq.message)}</div>
+        <div style="font-size:.72rem;color:#9ca3af">Sent ${getTimeAgo(inq.created_at)}${inq.budget ? ' · Budget: ' + escapeHtml(inq.budget) : ''}</div>
+        ${inq.agency_reply ? `
+          <div class="inquiry-reply">
+            <div class="inquiry-reply-label">Reply from ${escapeHtml(agencyName)}</div>
+            ${escapeHtml(inq.agency_reply)}
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+function openInquiryModal(agencyId, agencyName){
+  currentPartnerForInquiry = { id: agencyId, name: agencyName };
+  $('inquiryModalTitle').textContent = 'Contact ' + agencyName;
+  $('inquiryModalSub').textContent = 'Send a message describing what you need. They\'ll reply within 24 hours.';
+  const bizName = $('bizName').value.trim() || 'my business';
+  $('inquiryMessage').value = `Hi ${agencyName},\n\nI run ${bizName}. I'd like to learn more about your services and how they could help grow my business.`;
+  $('inquiryBudget').value = '';
+  $('inquiryModal').classList.remove('hidden');
+  $('inquiryMessage').focus();
+}
+$('closeInquiryBtn').addEventListener('click', () => $('inquiryModal').classList.add('hidden'));
+$('inquiryModal').addEventListener('click', (e) => {
+  if(e.target.id === 'inquiryModal') $('inquiryModal').classList.add('hidden');
+});
+$('sendInquiryBtn').addEventListener('click', async () => {
+  const btn = $('sendInquiryBtn');
+  const message = $('inquiryMessage').value.trim();
+  const budget = $('inquiryBudget').value;
+  if(!message) return showToast('Please describe what you need', 'error');
+  if(!currentPartnerForInquiry) return;
+
+  setLoading(btn, true, 'Sending…');
+  const { error } = await supabase.from('partner_inquiries').insert({
+    profile_id: currentUser.id,
+    agency_id: currentPartnerForInquiry.id,
+    message,
+    budget: budget || null
+  });
+  setLoading(btn, false);
+  if(error){
+    console.error(error);
+    return showToast('Failed to send: ' + error.message, 'error');
+  }
+  $('inquiryModal').classList.add('hidden');
+  showToast('✅ Inquiry sent! They\'ll reply soon.', 'success', 4000);
+  await loadPartners();
+});
+
 // ANALYTICS
 async function loadAnalytics(){
   const since = new Date(Date.now() - 30*24*60*60*1000).toISOString();
@@ -966,20 +1185,16 @@ async function loadScore(){
 // PRESSURE LAYER
 async function loadPressureLayer(){
   if(!currentUser) return;
-
   const { data: setting } = await supabase.from('platform_settings').select('value').eq('key', 'avg_lead_value_ugx').maybeSingle();
   const avgLeadValue = setting?.value ? Number(setting.value) : 150000;
-
   const { data: partnerLeads } = await supabase.from('enquiries')
     .select('id, status, assigned_agency_id, partner_replied_at, created_at')
     .eq('profile_id', currentUser.id)
     .not('assigned_agency_id', 'is', null);
-
   const pl = partnerLeads || [];
   const handled = pl.length;
   const converted = pl.filter(l => l.status === 'converted').length;
   const estValue = converted * avgLeadValue;
-
   if(handled === 0){
     $('partnerImpactEmpty').classList.remove('hidden');
     $('partnerImpactData').classList.add('hidden');
@@ -990,36 +1205,28 @@ async function loadPressureLayer(){
     $('piConverted').textContent = converted;
     $('piValue').textContent = formatUGX(estValue);
   }
-
   const { data: yourEnq } = await supabase.from('enquiries')
     .select('created_at, first_reply_at')
     .eq('profile_id', currentUser.id)
     .not('first_reply_at', 'is', null);
-
   const valid = (yourEnq || []).filter(e => new Date(e.first_reply_at) > new Date(e.created_at));
   const avgYourMin = valid.length
     ? Math.round(valid.reduce((sum, e) => sum + (new Date(e.first_reply_at) - new Date(e.created_at)) / 60000, 0) / valid.length)
     : null;
-
   const { data: benchmark } = await supabase.from('platform_benchmarks').select('*').maybeSingle();
   const platformAvg = benchmark?.avg_response_minutes || null;
   const targetMin = 12;
-
   const elYou = $('rbYou'), elPlat = $('rbPlatform'), elTarget = $('rbTarget'), elMsg = $('rbMessage');
   elYou.textContent = avgYourMin === null ? '—' : formatMinutes(avgYourMin);
   elPlat.textContent = platformAvg === null ? '—' : formatMinutes(platformAvg);
   elTarget.textContent = formatMinutes(targetMin);
-
   if(avgYourMin !== null){
     if(avgYourMin <= targetMin * 1.5) elYou.style.color = '#16a34a';
     else if(avgYourMin <= targetMin * 5) elYou.style.color = '#f59e0b';
     else elYou.style.color = '#ef4444';
-  } else {
-    elYou.style.color = '#9ca3af';
-  }
+  } else elYou.style.color = '#9ca3af';
   elPlat.style.color = '#6b7280';
   elTarget.style.color = '#16a34a';
-
   if(avgYourMin === null){
     elMsg.textContent = '📊 No replied enquiries yet. Reply to your first lead to start measuring.';
   } else if(avgYourMin <= targetMin){
@@ -1031,7 +1238,6 @@ async function loadPressureLayer(){
   } else {
     elMsg.innerHTML = `🔴 <b>${formatMinutes(avgYourMin)} average response time</b> — most leads are being auto-routed. Automated follow-up can recover these.`;
   }
-
   const lastVisitKey = 'dashLastVisit_' + currentUser.id;
   const lastVisit = localStorage.getItem(lastVisitKey);
   const now = Date.now();
