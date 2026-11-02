@@ -14,7 +14,7 @@
 .hidden{display:none!important}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2e;min-height:100vh}
 .container{max-width:900px;margin:0 auto;padding:24px}
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
 .header h1{font-size:1.4rem;font-weight:700}
 .btn{padding:10px 20px;border:none;border-radius:10px;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
 .btn-primary{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
@@ -34,24 +34,54 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .form-group textarea{resize:vertical;min-height:90px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 
+/* NOTIFICATION BELL */
+.notif-bell{position:relative;background:#f3f4f6;border:none;width:44px;height:44px;border-radius:12px;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.notif-bell:hover{background:#e5e7eb}
+.notif-bell.has-unread{background:#eef2ff}
+.notif-count{position:absolute;top:-4px;right:-4px;background:#ef4444;color:#fff;font-size:.62rem;font-weight:800;min-width:18px;height:18px;padding:0 5px;border-radius:10px;border:2px solid #fff;display:flex;align-items:center;justify-content:center;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.65}}
+.notif-panel{position:fixed;top:72px;right:24px;width:360px;max-width:calc(100vw - 32px);max-height:70vh;background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.25);z-index:1001;overflow:hidden;display:flex;flex-direction:column;animation:notifIn .2s ease}
+@keyframes notifIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.notif-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid #e5e7eb}
+.notif-head h4{font-size:.95rem;font-weight:800}
+.notif-mark-all{font-size:.75rem;font-weight:700;color:#6366f1;background:none;border:none;cursor:pointer;font-family:inherit}
+.notif-mark-all:hover{text-decoration:underline}
+.notif-list{overflow-y:auto;flex:1}
+.notif-item{display:flex;gap:12px;padding:14px 18px;border-bottom:1px solid #f1f5f9;cursor:pointer;transition:background .15s}
+.notif-item:hover{background:#f9fafb}
+.notif-item.unread{background:#fefce8}
+.notif-item.unread:hover{background:#fef9c3}
+.notif-icon{width:36px;height:36px;border-radius:10px;background:#eef2ff;color:#4f46e5;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.notif-icon.enquiry{background:#fef3c7;color:#92400e}
+.notif-icon.routed_lead{background:#dcfce7;color:#16a34a}
+.notif-icon.partner_reply,.notif-icon.inquiry_reply{background:#fdf2f8;color:#db2777}
+.notif-icon.partner_inquiry{background:#dbeafe;color:#1d4ed8}
+.notif-body{flex:1;min-width:0}
+.notif-title{font-size:.88rem;font-weight:700;color:#1a1a2e;line-height:1.3}
+.notif-text{font-size:.78rem;color:#6b7280;margin-top:3px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.notif-time{font-size:.7rem;color:#9ca3af;margin-top:4px}
+.notif-empty{padding:40px 20px;text-align:center;color:#9ca3af;font-size:.88rem}
+
+/* AUTH */
 .auth-tabs{display:flex;gap:8px;margin-bottom:20px}
 .auth-tab{flex:1;padding:12px;text-align:center;border-radius:10px;cursor:pointer;font-weight:600;font-size:.9rem;background:#e5e7eb;color:#6b7280;border:none;transition:all .2s;font-family:inherit}
 .auth-tab.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
 .help-panel{background:#fef2f2;border:1px solid #fecaca;color:#7f1d1d;padding:16px;border-radius:10px;font-size:.87rem;margin-bottom:16px;line-height:1.6}
 
+/* TABS */
 .tabs-nav{display:flex;gap:4px;background:#fff;border-radius:14px;padding:6px;box-shadow:0 4px 24px rgba(0,0,0,.06);margin-bottom:20px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
 .tabs-nav::-webkit-scrollbar{display:none}
 .tab-btn{flex:1;min-width:fit-content;padding:12px 16px;border:none;background:transparent;border-radius:10px;font-size:.85rem;font-weight:700;color:#6b7280;cursor:pointer;transition:all .15s;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:6px;font-family:inherit}
 .tab-btn:hover{color:#4f46e5;background:#f3f4f6}
 .tab-btn.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;box-shadow:0 4px 12px rgba(99,102,241,.3)}
 .tab-btn.active:hover{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
-.tab-badge{display:inline-flex;align-items:center;justify-content:center;background:#ef4444;color:#fff;font-size:.65rem;font-weight:800;padding:2px 6px;border-radius:10px;min-width:18px;height:18px;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+.tab-badge{display:inline-flex;align-items:center;justify-content:center;background:#ef4444;color:#fff;font-size:.65rem;font-weight:800;padding:2px 6px;border-radius:10px;min-width:18px;height:18px}
 .tab-btn.active .tab-badge{background:#fff;color:#6366f1}
 .tab-panel{animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:520px){.tab-btn{padding:11px 8px;font-size:.75rem;gap:3px}}
 
+/* SCORE */
 .score-display{text-align:center;padding:20px 0}
 .score-circle{width:140px;height:140px;margin:0 auto 16px;border-radius:50%;background:conic-gradient(#6366f1 var(--score-deg,0deg),#e5e7eb 0deg);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 4px 20px rgba(99,102,241,.15)}
 .score-circle::before{content:'';position:absolute;inset:12px;background:#fff;border-radius:50%}
@@ -61,6 +91,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 #scoreBreakdown{margin-top:20px}
 #scoreNext{margin-top:16px;padding:14px;background:#eef2ff;border-radius:10px;font-size:.85rem;color:#4f46e5;font-weight:600;text-align:center}
 
+/* STATS */
 .stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px}
 .stat-card{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-radius:14px;padding:18px;text-align:center}
 .stat-card .num{font-size:1.8rem;font-weight:800;color:#4f46e5;line-height:1}
@@ -75,6 +106,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .top-links .tl-label{font-weight:600}
 .top-links .tl-count{color:#6366f1;font-weight:700}
 
+/* LEADS */
 .leads-filter{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
 .lead-filter-btn{padding:7px 14px;border:1.5px solid #e5e7eb;background:#fff;border-radius:20px;font-size:.78rem;font-weight:700;color:#6b7280;cursor:pointer;transition:all .15s;font-family:inherit}
 .lead-filter-btn:hover{border-color:#c7d2fe;color:#4f46e5}
@@ -89,8 +121,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .lead-status.new{background:#fee2e2;color:#dc2626}
 .lead-status.contacted{background:#fef3c7;color:#92400e}
 .lead-status.converted{background:#dcfce7;color:#16a34a}
-.lead-status.lost{background:#f3f4f6;color:#6b7280}
-.lead-status.closed{background:#f3f4f6;color:#6b7280}
+.lead-status.lost,.lead-status.closed{background:#f3f4f6;color:#6b7280}
 .lead-message{font-size:.88rem;color:#4b5563;line-height:1.55;padding:10px 14px;background:#f9fafb;border-radius:8px;margin-bottom:12px;white-space:pre-wrap}
 .lead-contact{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:.82rem;color:#6b7280}
 .lead-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
@@ -104,6 +135,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .partner-block{margin:10px 0;padding:12px 14px;background:#fdf2f8;border-left:3px solid #db2777;border-radius:8px;font-size:.82rem;color:#831843}
 .partner-block-label{font-weight:800;font-size:.72rem;text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px;color:#db2777}
 
+/* PARTNERS */
 .partner-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .agency-card{border:1.5px solid #f1f5f9;border-radius:14px;padding:20px;transition:border-color .15s,box-shadow .15s;display:flex;flex-direction:column;gap:10px}
 .agency-card:hover{border-color:#c7d2fe;box-shadow:0 8px 24px rgba(99,102,241,.1)}
@@ -115,11 +147,10 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .service-chip{font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:20px;background:#eef2ff;color:#4f46e5}
 .agency-handled{font-size:.75rem;color:#16a34a;font-weight:700;padding:6px 10px;background:#f0fdf4;border-radius:6px;display:inline-block}
 .agency-actions{display:flex;gap:8px;margin-top:auto;padding-top:8px}
-.agency-actions .btn-contact{flex:1;padding:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:9px;font-size:.82rem;font-weight:700;cursor:pointer;transition:opacity .15s;font-family:inherit}
+.agency-actions .btn-contact{flex:1;padding:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:9px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit}
 .agency-actions .btn-contact:hover{opacity:.9}
 .agency-actions .btn-portfolio{padding:10px 14px;background:#f3f4f6;color:#374151;border:none;border-radius:9px;font-size:.82rem;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;font-family:inherit}
 .agency-actions .btn-portfolio:hover{background:#e5e7eb}
-
 .inquiry-item{border:1.5px solid #f1f5f9;border-radius:12px;padding:16px;margin-bottom:10px}
 .inquiry-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;flex-wrap:wrap}
 .inquiry-agency{font-weight:800;font-size:.92rem;color:#1a1a2e}
@@ -127,6 +158,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .inquiry-reply{padding:12px 14px;background:#eef2ff;border-left:3px solid #6366f1;border-radius:8px;margin-top:10px;font-size:.85rem;color:#374151}
 .inquiry-reply-label{font-size:.7rem;font-weight:800;color:#4f46e5;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px}
 
+/* LINKS */
 .links-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid #e5e7eb;margin-bottom:12px}
 .links-head h2{border:none;padding:0;margin:0}
 .links-count{font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:20px;background:#eef2ff;color:#4f46e5}
@@ -148,6 +180,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .mini-btn.delete{background:#fee2e2;color:#dc2626}
 .link-edit-grid{display:grid;grid-template-columns:1fr 2fr;gap:12px;margin-bottom:12px}
 
+/* HOURS */
 .hours-grid{display:flex;flex-direction:column;gap:8px}
 .hour-row{display:grid;grid-template-columns:70px 90px 1fr 1fr;gap:10px;align-items:center;padding:8px 12px;background:#f9fafb;border-radius:10px}
 .hour-row .day{font-weight:700;font-size:.85rem;text-transform:capitalize}
@@ -162,6 +195,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .optout-box b{display:block;font-size:.9rem;color:#1a1a2e;font-weight:700}
 .optout-box .optout-sub{display:block;font-size:.78rem;color:#6b7280;margin-top:4px;line-height:1.55}
 
+/* PRESSURE LAYER */
 .away-banner{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border:1.5px solid #c7d2fe;border-radius:14px;padding:16px 18px;margin-bottom:20px;animation:slideDown .4s ease}
 @keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 .impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
@@ -179,9 +213,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .bench-label{font-size:.85rem;font-weight:600;color:#4b5563}
 .bench-value{font-size:1.05rem;font-weight:800;color:#6b7280}
 
-.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;animation:fadeIn .2s ease}
-.modal-card{background:#fff;border-radius:18px;padding:26px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:slideUp .25s ease}
-@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
+.modal-card{background:#fff;border-radius:18px;padding:26px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .modal-head h3{font-size:1.15rem;font-weight:800}
 .modal-close{background:#f3f4f6;border:none;width:32px;height:32px;border-radius:50%;font-size:.9rem;cursor:pointer;color:#6b7280;font-weight:700}
@@ -208,107 +242,14 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
   #scoreBig{font-size:2.2rem}
   .impact-grid{grid-template-columns:1fr}
   .partner-grid{grid-template-columns:1fr}
+  .notif-panel{top:60px;right:8px;left:8px;width:auto}
 }
-/* Notification Bell */
-.notif-bell{
-  position:relative;
-  background:#f3f4f6;
-  border:none;
-  width:44px;height:44px;
-  border-radius:12px;
-  cursor:pointer;
-  font-size:1.2rem;
-  display:flex;align-items:center;justify-content:center;
-  transition:background .15s;
-}
-.notif-bell:hover{background:#e5e7eb}
-.notif-bell.has-unread{background:#eef2ff}
-.notif-dot{
-  position:absolute;
-  top:6px;right:6px;
-  width:10px;height:10px;
-  background:#ef4444;
-  border-radius:50%;
-  border:2px solid #fff;
-  animation:pulse 2s infinite;
-}
-.notif-count{
-  position:absolute;
-  top:-4px;right:-4px;
-  background:#ef4444;
-  color:#fff;
-  font-size:.62rem;
-  font-weight:800;
-  min-width:18px;height:18px;
-  padding:0 5px;
-  border-radius:10px;
-  border:2px solid #fff;
-  display:flex;align-items:center;justify-content:center;
-}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.65}}
-
-.notif-panel{
-  position:fixed;
-  top:72px;right:24px;
-  width:360px;
-  max-width:calc(100vw - 32px);
-  max-height:70vh;
-  background:#fff;
-  border-radius:16px;
-  box-shadow:0 20px 60px rgba(0,0,0,.25);
-  z-index:1001;
-  overflow:hidden;
-  display:flex;flex-direction:column;
-  animation:notifIn .2s ease;
-}
-@keyframes notifIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-.notif-head{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:14px 18px;
-  border-bottom:1px solid #e5e7eb;
-  flex-shrink:0;
-}
-.notif-head h4{font-size:.95rem;font-weight:800}
-.notif-mark-all{
-  font-size:.75rem;font-weight:700;color:#6366f1;
-  background:none;border:none;cursor:pointer;font-family:inherit;
-}
-.notif-mark-all:hover{text-decoration:underline}
-.notif-list{overflow-y:auto;flex:1}
-.notif-item{
-  display:flex;gap:12px;
-  padding:14px 18px;
-  border-bottom:1px solid #f1f5f9;
-  cursor:pointer;
-  transition:background .15s;
-}
-.notif-item:hover{background:#f9fafb}
-.notif-item.unread{background:#fefce8}
-.notif-item.unread:hover{background:#fef9c3}
-.notif-icon{
-  width:36px;height:36px;border-radius:10px;
-  background:#eef2ff;color:#4f46e5;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.1rem;flex-shrink:0;
-}
-.notif-icon.enquiry{background:#fef3c7;color:#92400e}
-.notif-icon.routed_lead{background:#dcfce7;color:#16a34a}
-.notif-icon.partner_reply{background:#fdf2f8;color:#db2777}
-.notif-icon.partner_inquiry{background:#dbeafe;color:#1d4ed8}
-.notif-icon.inquiry_reply{background:#fdf2f8;color:#db2777}
-.notif-body{flex:1;min-width:0}
-.notif-title{font-size:.88rem;font-weight:700;color:#1a1a2e;line-height:1.3}
-.notif-text{font-size:.78rem;color:#6b7280;margin-top:3px;line-height:1.4;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.notif-time{font-size:.7rem;color:#9ca3af;margin-top:4px}
-.notif-empty{padding:40px 20px;text-align:center;color:#9ca3af;font-size:.88rem}
-  
 </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header">
+  <div class="header">
     <h1>🏪 Business Dashboard</h1>
     <div style="display:flex;gap:8px;align-items:center">
       <button id="notifBell" class="notif-bell hidden" title="Notifications">
@@ -352,18 +293,12 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
       <button class="tab-btn" data-tab="profile">⚙️ <span>Profile</span></button>
     </div>
 
-    <!-- TAB: ANALYTICS -->
     <div class="tab-panel" data-panel="analytics">
       <div class="away-banner hidden" id="awayBanner"></div>
       <div class="card">
         <h2>🏆 Your Business Score</h2>
         <div class="score-display">
-          <div class="score-circle" id="scoreCircle">
-            <div>
-              <div id="scoreBig">—</div>
-              <div class="score-circle-sub">/ 100</div>
-            </div>
-          </div>
+          <div class="score-circle" id="scoreCircle"><div><div id="scoreBig">—</div><div class="score-circle-sub">/ 100</div></div></div>
           <div id="scoreTier">Loading…</div>
         </div>
         <div id="scoreBreakdown"></div>
@@ -376,9 +311,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
           <div class="empty-state" style="padding:24px 20px">
             <div style="font-size:2.4rem;margin-bottom:8px">🤝</div>
             <div style="font-weight:700;color:#374151;margin-bottom:6px">No partner activity yet</div>
-            <div style="font-size:.85rem;line-height:1.55;color:#6b7280;max-width:380px;margin:0 auto">
-              If you don't reply to an enquiry within 4 hours, a verified partner agency steps in to save the lead. You'll see their work here.
-            </div>
+            <div style="font-size:.85rem;line-height:1.55;color:#6b7280;max-width:380px;margin:0 auto">If you don't reply to an enquiry within 4 hours, a verified partner agency steps in to save the lead.</div>
           </div>
         </div>
         <div id="partnerImpactData" class="hidden">
@@ -418,7 +351,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
       </div>
     </div>
 
-    <!-- TAB: LEADS -->
     <div class="tab-panel hidden" data-panel="leads">
       <div class="card">
         <h2>📩 Enquiries / Leads <span style="font-size:.72rem;color:#9ca3af;font-weight:500" id="leadsSubtitle"></span></h2>
@@ -433,34 +365,30 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
       </div>
     </div>
 
-    <!-- TAB: PARTNERS -->
     <div class="tab-panel hidden" data-panel="partners">
       <div class="card">
         <h2>🤝 Recommended Partners</h2>
-        <p class="hint">Vetted agencies that can help you grow — websites, CRM, automated follow-up, and analytics. Some have already handled leads for you. Contact them directly, no middleman.</p>
+        <p class="hint">Vetted agencies that can help you grow. Some have already handled leads for you. Contact them directly, no middleman.</p>
         <div id="partnersList"><div class="empty-state">Loading partners…</div></div>
       </div>
-
       <div class="card">
         <h2>Your Inquiries</h2>
         <div id="myInquiries"><div class="empty-state">You haven't contacted any partners yet.</div></div>
       </div>
     </div>
 
-    <!-- TAB: LINKS -->
     <div class="tab-panel hidden" data-panel="links">
       <div class="card">
         <div class="links-head">
           <h2>🔗 Your Active Links</h2>
           <span id="linksCount" class="links-count empty">0 active</span>
         </div>
-        <p class="hint">Visitors click these to reach your site, YouTube, socials. Auto-https:// added if missing.</p>
+        <p class="hint">Visitors click these to reach your site, YouTube, socials.</p>
         <div id="linksContainer"><div class="empty-state">No links yet.</div></div>
         <button class="btn btn-ghost btn-full" id="addLinkBtn">+ Add New Link</button>
       </div>
     </div>
 
-    <!-- TAB: PROFILE -->
     <div class="tab-panel hidden" data-panel="profile">
       <div class="card">
         <h2>📋 Business Information</h2>
@@ -469,24 +397,15 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
           <div class="form-group"><label>Industry / Category</label>
             <select id="bizIndustry">
               <option value="">Select…</option>
-              <option>Construction &amp; Renovation</option>
-              <option>Plumbing &amp; Electrical</option>
-              <option>Painting &amp; Finishing</option>
-              <option>Interior Design</option>
-              <option>Cleaning Services</option>
-              <option>Moving &amp; Logistics</option>
-              <option>Security Services</option>
-              <option>Solar &amp; Energy</option>
-              <option>Landscaping &amp; Gardening</option>
-              <option>Real Estate</option>
-              <option>Guesthouses &amp; Hotels</option>
-              <option>Tours &amp; Travel</option>
-              <option>Restaurants &amp; Catering</option>
-              <option>Event Venues &amp; Planners</option>
-              <option>Legal Services</option>
-              <option>Insurance</option>
-              <option>IT &amp; Technology</option>
-              <option>Other</option>
+              <option>Construction &amp; Renovation</option><option>Plumbing &amp; Electrical</option>
+              <option>Painting &amp; Finishing</option><option>Interior Design</option>
+              <option>Cleaning Services</option><option>Moving &amp; Logistics</option>
+              <option>Security Services</option><option>Solar &amp; Energy</option>
+              <option>Landscaping &amp; Gardening</option><option>Real Estate</option>
+              <option>Guesthouses &amp; Hotels</option><option>Tours &amp; Travel</option>
+              <option>Restaurants &amp; Catering</option><option>Event Venues &amp; Planners</option>
+              <option>Legal Services</option><option>Insurance</option>
+              <option>IT &amp; Technology</option><option>Other</option>
             </select>
           </div>
         </div>
@@ -509,15 +428,13 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
             <input type="checkbox" id="allowOverflow" checked />
             <span class="optout-text">
               <b>Allow partner agency to handle overflow</b>
-              <span class="optout-sub">If you don't respond to an enquiry within 4 hours, a verified partner agency can reply on your behalf. You'll always see exactly what they said. Turn off to handle every enquiry yourself.</span>
+              <span class="optout-sub">If you don't respond to an enquiry within 4 hours, a verified partner agency can reply on your behalf. Turn off to handle every enquiry yourself.</span>
             </span>
           </label>
         </div>
         <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
           <button class="btn btn-primary" id="saveProfileBtn">Save Information</button>
-          <a class="btn btn-ghost" id="previewBtn" target="_blank" rel="noopener" style="text-decoration:none;display:none">
-            👁 Preview my profile
-          </a>
+          <a class="btn btn-ghost" id="previewBtn" target="_blank" rel="noopener" style="text-decoration:none;display:none">👁 Preview my profile</a>
         </div>
       </div>
 
@@ -538,7 +455,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
   </div>
 </div>
 
-<!-- INQUIRY MODAL -->
 <div class="modal-overlay hidden" id="inquiryModal">
   <div class="modal-card">
     <div class="modal-head">
@@ -569,7 +485,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 <div class="toast" id="toast"></div>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=25';
+import { supabase } from './supabase-client.js?v=26';
 
 const $ = id => document.getElementById(id);
 const authSection = $('authSection');
@@ -585,6 +501,8 @@ let allPartners = [];
 let myInquiries = [];
 let currentPartnerForInquiry = null;
 let currentProfile = null;
+let notifPollTimer = null;
+let notifPanelOpen = false;
 
 function showToast(msg, type='info', d=3200){
   toastEl.textContent = msg;
@@ -682,10 +600,12 @@ function handleAuthState(session){
     logoutBtn.classList.remove('hidden');
     helpPanel.classList.add('hidden');
     loadAll();
+    initNotifications();
   } else {
     authSection.classList.remove('hidden');
     dashboardSection.classList.add('hidden');
     logoutBtn.classList.add('hidden');
+    if(notifPollTimer){ clearInterval(notifPollTimer); notifPollTimer = null; }
   }
 }
 document.querySelectorAll('.auth-tab').forEach(tab => {
@@ -752,7 +672,118 @@ $('loginPassword').addEventListener('keydown', e => { if(e.key === 'Enter') $('l
 $('signupPassword').addEventListener('keydown', e => { if(e.key === 'Enter') $('signupBtn').click(); });
 logoutBtn.addEventListener('click', async () => { await supabase.auth.signOut(); showToast('Logged out'); });
 
-// LOAD
+// =========================================================
+// NOTIFICATIONS — polling + realtime
+// =========================================================
+async function initNotifications(){
+  const bell = document.getElementById('notifBell');
+  const indicator = document.getElementById('notifIndicator');
+  if(!bell || !indicator || !currentUser) return;
+  bell.classList.remove('hidden');
+  await refreshNotifIndicator();
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    if(session?.access_token && supabase.realtime?.setAuth){
+      supabase.realtime.setAuth(session.access_token);
+    }
+    supabase.channel('notif-' + currentUser.id + '-' + Date.now())
+      .on('postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'notifications', filter: `user_id=eq.${currentUser.id}` },
+        payload => {
+          refreshNotifIndicator();
+          if(payload.new?.title) showToast('🔔 ' + payload.new.title, 'info', 4000);
+          if(notifPanelOpen) loadNotifPanel();
+        })
+      .subscribe();
+  } catch(e) { console.warn('Realtime failed:', e); }
+  if(notifPollTimer) clearInterval(notifPollTimer);
+  notifPollTimer = setInterval(refreshNotifIndicator, 30000);
+  bell.addEventListener('click', toggleNotifPanel);
+  document.addEventListener('click', (e) => {
+    const panel = document.getElementById('notifPanel');
+    if(panel && !panel.contains(e.target) && !bell.contains(e.target)) closeNotifPanel();
+  });
+}
+async function refreshNotifIndicator(){
+  if(!currentUser) return;
+  const indicator = document.getElementById('notifIndicator');
+  const bell = document.getElementById('notifBell');
+  if(!indicator || !bell) return;
+  const { count } = await supabase.from('notifications')
+    .select('*', { count: 'exact', head: true })
+    .eq('user_id', currentUser.id).eq('read', false);
+  const prev = parseInt(bell.dataset.lastCount || '0', 10);
+  const curr = count || 0;
+  if(curr > 0){
+    indicator.className = 'notif-count';
+    indicator.textContent = curr > 99 ? '99+' : curr;
+    indicator.classList.remove('hidden');
+    bell.classList.add('has-unread');
+    if(curr > prev && prev >= 0) showToast('🔔 You have ' + curr + ' new notification' + (curr > 1 ? 's' : ''), 'info', 4000);
+  } else {
+    indicator.classList.add('hidden');
+    bell.classList.remove('has-unread');
+  }
+  bell.dataset.lastCount = String(curr);
+}
+function toggleNotifPanel(){
+  if(notifPanelOpen){ closeNotifPanel(); return; }
+  openNotifPanel();
+}
+async function openNotifPanel(){
+  notifPanelOpen = true;
+  document.getElementById('notifPanel')?.remove();
+  const panel = document.createElement('div');
+  panel.id = 'notifPanel';
+  panel.className = 'notif-panel';
+  panel.innerHTML = `<div class="notif-head"><h4>Notifications</h4><button class="notif-mark-all" id="markAllReadBtn">Mark all read</button></div><div class="notif-list" id="notifListEl"><div class="notif-empty">Loading…</div></div>`;
+  document.body.appendChild(panel);
+  document.getElementById('markAllReadBtn').addEventListener('click', async (e) => {
+    e.stopPropagation();
+    await supabase.from('notifications').update({ read: true }).eq('user_id', currentUser.id).eq('read', false);
+    await loadNotifPanel();
+    await refreshNotifIndicator();
+  });
+  await loadNotifPanel();
+}
+function closeNotifPanel(){
+  notifPanelOpen = false;
+  document.getElementById('notifPanel')?.remove();
+}
+async function loadNotifPanel(){
+  const listEl = document.getElementById('notifListEl');
+  if(!listEl) return;
+  const { data: notifs } = await supabase.from('notifications')
+    .select('*').eq('user_id', currentUser.id)
+    .order('created_at', { ascending: false }).limit(20);
+  if(!notifs || !notifs.length){
+    listEl.innerHTML = '<div class="notif-empty">No notifications yet.</div>';
+    return;
+  }
+  listEl.innerHTML = notifs.map(n => {
+    const icon = { enquiry:'📩', routed_lead:'🎯', partner_reply:'🤝', partner_inquiry:'✉️', inquiry_reply:'💬' }[n.type] || '🔔';
+    return `<div class="notif-item ${n.read ? '' : 'unread'}" data-id="${n.id}" data-link="${escapeAttr(n.link || '')}">
+      <div class="notif-icon ${n.type}">${icon}</div>
+      <div class="notif-body">
+        <div class="notif-title">${escapeHtml(n.title)}</div>
+        ${n.body ? `<div class="notif-text">${escapeHtml(n.body)}</div>` : ''}
+        <div class="notif-time">${getTimeAgo(n.created_at)}</div>
+      </div>
+    </div>`;
+  }).join('');
+  listEl.querySelectorAll('.notif-item').forEach(el => {
+    el.addEventListener('click', async () => {
+      await supabase.from('notifications').update({ read: true }).eq('id', el.dataset.id);
+      await refreshNotifIndicator();
+      closeNotifPanel();
+      if(el.dataset.link) window.location.href = el.dataset.link;
+    });
+  });
+}
+
+// =========================================================
+// LOAD ALL
+// =========================================================
 async function loadAll(){
   await loadProfile();
   await loadLeads();
@@ -787,26 +818,18 @@ async function loadProfile(){
   $('bizLogo').value        = profile.logo_url || '';
   $('allowOverflow').checked = profile.allow_partner_overflow !== false;
   updateLogoPreview(profile.logo_url);
-
-  // Preview button
   const previewBtn = document.getElementById('previewBtn');
   if(previewBtn){
-    if(profile.slug){
-      previewBtn.href = `profile.html?b=${encodeURIComponent(profile.slug)}`;
-      previewBtn.style.display = 'inline-flex';
-    } else {
-      previewBtn.style.display = 'none';
-    }
+    if(profile.slug){ previewBtn.href = `profile.html?b=${encodeURIComponent(profile.slug)}`; previewBtn.style.display = 'inline-flex'; }
+    else previewBtn.style.display = 'none';
   }
-
-  // Deletion request status
   const requestDeleteBtn = document.getElementById('requestDeleteBtn');
   const deletionStatus = document.getElementById('deletionStatus');
   if(requestDeleteBtn && deletionStatus){
     if(profile.deletion_requested_at){
       requestDeleteBtn.disabled = true;
       requestDeleteBtn.textContent = '✓ Deletion Requested';
-      deletionStatus.innerHTML = `📩 Request submitted on <b>${new Date(profile.deletion_requested_at).toLocaleDateString()}</b>. An admin will process it soon.`;
+      deletionStatus.innerHTML = `📩 Request submitted on <b>${new Date(profile.deletion_requested_at).toLocaleDateString()}</b>. Admin will process it soon.`;
     } else {
       requestDeleteBtn.disabled = false;
       requestDeleteBtn.textContent = 'Request Account Deletion';
@@ -845,27 +868,22 @@ $('saveProfileBtn').addEventListener('click', async () => {
   if(error) return showToast('Save failed: ' + error.message, 'error');
   $('bizSlug').value = slug;
   showToast('✅ Information saved!', 'success');
-  await loadScore();
-  await loadPressureLayer();
-  await loadProfile();
+  await loadScore(); await loadPressureLayer(); await loadProfile();
 });
 
-// Delete handler
 const requestDeleteBtnEl = document.getElementById('requestDeleteBtn');
 if(requestDeleteBtnEl){
   requestDeleteBtnEl.addEventListener('click', async () => {
     if(!confirm('Request deletion of your business listing?\n\nAn admin will remove all your data within 48 hours.')) return;
     requestDeleteBtnEl.disabled = true;
     requestDeleteBtnEl.textContent = 'Submitting…';
-    const { error } = await supabase.from('profiles')
-      .update({ deletion_requested_at: new Date().toISOString() })
-      .eq('id', currentUser.id);
+    const { error } = await supabase.from('profiles').update({ deletion_requested_at: new Date().toISOString() }).eq('id', currentUser.id);
     if(error){
       requestDeleteBtnEl.disabled = false;
       requestDeleteBtnEl.textContent = 'Request Account Deletion';
       return showToast('Failed: ' + error.message, 'error');
     }
-    showToast('✅ Deletion request submitted. Admin will process it within 48 hours.', 'success', 6000);
+    showToast('✅ Deletion request submitted.', 'success', 6000);
     await loadProfile();
   });
 }
@@ -1132,60 +1150,49 @@ document.querySelectorAll('.lead-filter-btn').forEach(btn => {
   });
 });
 
-// PARTNERS MARKETPLACE
+// PARTNERS
 async function loadPartners(){
   if(!currentUser) return;
   const { data: partners } = await supabase.from('agency_marketplace').select('*');
   allPartners = partners || [];
-
-  const { data: agencyStats } = await supabase.from('enquiries')
-    .select('assigned_agency_id').eq('profile_id', currentUser.id).not('assigned_agency_id', 'is', null);
+  const { data: agencyStats } = await supabase.from('enquiries').select('assigned_agency_id').eq('profile_id', currentUser.id).not('assigned_agency_id', 'is', null);
   const handledMap = {};
-  (agencyStats || []).forEach(e => {
-    handledMap[e.assigned_agency_id] = (handledMap[e.assigned_agency_id] || 0) + 1;
-  });
-
-  const { data: inquiries } = await supabase.from('partner_inquiries')
-    .select('*, agencies:agency_id(name)').eq('profile_id', currentUser.id).order('created_at', { ascending: false });
+  (agencyStats || []).forEach(e => { handledMap[e.assigned_agency_id] = (handledMap[e.assigned_agency_id] || 0) + 1; });
+  const { data: inquiries } = await supabase.from('partner_inquiries').select('*, agencies:agency_id(name)').eq('profile_id', currentUser.id).order('created_at', { ascending: false });
   myInquiries = inquiries || [];
-
   renderPartners(handledMap);
   renderMyInquiries();
 }
-
 function renderPartners(handledMap){
   const container = $('partnersList');
   if(!allPartners.length){
-    container.innerHTML = '<div class="empty-state">No partner agencies listed yet. Check back soon.</div>';
+    container.innerHTML = '<div class="empty-state">No partner agencies listed yet.</div>';
     return;
   }
   container.innerHTML = `<div class="partner-grid">${allPartners.map(p => {
     const initial = (p.name || '?')[0].toUpperCase();
     const handled = handledMap[p.id] || 0;
     const services = Array.isArray(p.services_offered) ? p.services_offered : [];
-    return `
-      <div class="agency-card">
-        <div class="agency-head">
-          <div class="agency-logo">${initial}</div>
-          <div>
-            <div class="agency-name">${escapeHtml(p.name)}</div>
-            ${p.tagline ? `<div class="agency-tagline">${escapeHtml(p.tagline)}</div>` : ''}
-          </div>
+    return `<div class="agency-card">
+      <div class="agency-head">
+        <div class="agency-logo">${initial}</div>
+        <div>
+          <div class="agency-name">${escapeHtml(p.name)}</div>
+          ${p.tagline ? `<div class="agency-tagline">${escapeHtml(p.tagline)}</div>` : ''}
         </div>
-        ${services.length ? `<div class="agency-services">${services.map(s => `<span class="service-chip">${escapeHtml(s)}</span>`).join('')}</div>` : ''}
-        ${handled > 0 ? `<div class="agency-handled">✓ Already handled ${handled} lead${handled === 1 ? '' : 's'} for you</div>` : ''}
-        <div class="agency-actions">
-          <button class="btn-contact" data-agency-id="${p.id}" data-agency-name="${escapeAttr(p.name)}">Contact</button>
-          ${p.portfolio_url ? `<a class="btn-portfolio" href="${escapeHtml(normalizeUrl(p.portfolio_url))}" target="_blank" rel="noopener">Portfolio ↗</a>` : ''}
-        </div>
-      </div>`;
+      </div>
+      ${services.length ? `<div class="agency-services">${services.map(s => `<span class="service-chip">${escapeHtml(s)}</span>`).join('')}</div>` : ''}
+      ${handled > 0 ? `<div class="agency-handled">✓ Already handled ${handled} lead${handled === 1 ? '' : 's'} for you</div>` : ''}
+      <div class="agency-actions">
+        <button class="btn-contact" data-agency-id="${p.id}" data-agency-name="${escapeAttr(p.name)}">Contact</button>
+        ${p.portfolio_url ? `<a class="btn-portfolio" href="${escapeHtml(normalizeUrl(p.portfolio_url))}" target="_blank" rel="noopener">Portfolio ↗</a>` : ''}
+      </div>
+    </div>`;
   }).join('')}</div>`;
-
   container.querySelectorAll('.btn-contact').forEach(btn => {
     btn.addEventListener('click', () => openInquiryModal(btn.dataset.agencyId, btn.dataset.agencyName));
   });
 }
-
 function renderMyInquiries(){
   const container = $('myInquiries');
   if(!myInquiries.length){
@@ -1194,19 +1201,17 @@ function renderMyInquiries(){
   }
   container.innerHTML = myInquiries.map(inq => {
     const agencyName = inq.agencies?.name || 'Partner';
-    return `
-      <div class="inquiry-item">
-        <div class="inquiry-head">
-          <span class="inquiry-agency">${escapeHtml(agencyName)}</span>
-          <span class="lead-status ${inq.status}">${inq.status}</span>
-        </div>
-        <div class="inquiry-message">${escapeHtml(inq.message)}</div>
-        <div style="font-size:.72rem;color:#9ca3af">Sent ${getTimeAgo(inq.created_at)}${inq.budget ? ' · Budget: ' + escapeHtml(inq.budget) : ''}</div>
-        ${inq.agency_reply ? `<div class="inquiry-reply"><div class="inquiry-reply-label">Reply from ${escapeHtml(agencyName)}</div>${escapeHtml(inq.agency_reply)}</div>` : ''}
-      </div>`;
+    return `<div class="inquiry-item">
+      <div class="inquiry-head">
+        <span class="inquiry-agency">${escapeHtml(agencyName)}</span>
+        <span class="lead-status ${inq.status}">${inq.status}</span>
+      </div>
+      <div class="inquiry-message">${escapeHtml(inq.message)}</div>
+      <div style="font-size:.72rem;color:#9ca3af">Sent ${getTimeAgo(inq.created_at)}${inq.budget ? ' · Budget: ' + escapeHtml(inq.budget) : ''}</div>
+      ${inq.agency_reply ? `<div class="inquiry-reply"><div class="inquiry-reply-label">Reply from ${escapeHtml(agencyName)}</div>${escapeHtml(inq.agency_reply)}</div>` : ''}
+    </div>`;
   }).join('');
 }
-
 function openInquiryModal(agencyId, agencyName){
   currentPartnerForInquiry = { id: agencyId, name: agencyName };
   $('inquiryModalTitle').textContent = 'Contact ' + agencyName;
@@ -1227,10 +1232,7 @@ $('sendInquiryBtn').addEventListener('click', async () => {
   if(!currentPartnerForInquiry) return;
   setLoading(btn, true, 'Sending…');
   const { error } = await supabase.from('partner_inquiries').insert({
-    profile_id: currentUser.id,
-    agency_id: currentPartnerForInquiry.id,
-    message,
-    budget: budget || null
+    profile_id: currentUser.id, agency_id: currentPartnerForInquiry.id, message, budget: budget || null
   });
   setLoading(btn, false);
   if(error){ console.error(error); return showToast('Failed to send: ' + error.message, 'error'); }
@@ -1315,7 +1317,7 @@ async function loadScore(){
   }).join('');
   const milestones = [[40,'Bronze'],[60,'Silver'],[75,'Gold'],[90,'Platinum']];
   const next = milestones.find(([t]) => t > total);
-  $('scoreNext').innerHTML = next ? `🎯 ${next[0] - total} more points to reach <b>${next[1]} Tier</b>` : `🏆 You're at the top tier — keep it up!`;
+  $('scoreNext').innerHTML = next ? `🎯 ${next[0] - total} more points to reach <b>${next[1]} Tier</b>` : `🏆 You're at the top tier!`;
 }
 
 // PRESSURE LAYER
@@ -1323,9 +1325,7 @@ async function loadPressureLayer(){
   if(!currentUser) return;
   const { data: setting } = await supabase.from('platform_settings').select('value').eq('key', 'avg_lead_value_ugx').maybeSingle();
   const avgLeadValue = setting?.value ? Number(setting.value) : 150000;
-  const { data: partnerLeads } = await supabase.from('enquiries')
-    .select('id, status, assigned_agency_id, partner_replied_at, created_at')
-    .eq('profile_id', currentUser.id).not('assigned_agency_id', 'is', null);
+  const { data: partnerLeads } = await supabase.from('enquiries').select('id, status, assigned_agency_id, partner_replied_at, created_at').eq('profile_id', currentUser.id).not('assigned_agency_id', 'is', null);
   const pl = partnerLeads || [];
   const handled = pl.length;
   const converted = pl.filter(l => l.status === 'converted').length;
@@ -1340,8 +1340,7 @@ async function loadPressureLayer(){
     $('piConverted').textContent = converted;
     $('piValue').textContent = formatUGX(estValue);
   }
-  const { data: yourEnq } = await supabase.from('enquiries')
-    .select('created_at, first_reply_at').eq('profile_id', currentUser.id).not('first_reply_at', 'is', null);
+  const { data: yourEnq } = await supabase.from('enquiries').select('created_at, first_reply_at').eq('profile_id', currentUser.id).not('first_reply_at', 'is', null);
   const valid = (yourEnq || []).filter(e => new Date(e.first_reply_at) > new Date(e.created_at));
   const avgYourMin = valid.length
     ? Math.round(valid.reduce((sum, e) => sum + (new Date(e.first_reply_at) - new Date(e.created_at)) / 60000, 0) / valid.length)
@@ -1363,13 +1362,13 @@ async function loadPressureLayer(){
   if(avgYourMin === null){
     elMsg.textContent = '📊 No replied enquiries yet. Reply to your first lead to start measuring.';
   } else if(avgYourMin <= targetMin){
-    elMsg.innerHTML = `🏆 <b>Excellent.</b> You respond as fast as the managed tier. Keep it up.`;
+    elMsg.innerHTML = `🏆 <b>Excellent.</b> You respond as fast as the managed tier.`;
   } else if(avgYourMin <= 60){
     elMsg.innerHTML = `⚡ <b>You're ${formatMinutes(avgYourMin - targetMin)} slower than the managed tier.</b> Automated follow-up can bring you under 12 min.`;
   } else if(avgYourMin <= 240){
     elMsg.innerHTML = `⚠️ <b>Leads go to partners after 4 hours.</b> At ${formatMinutes(avgYourMin)}, you're cutting it close.`;
   } else {
-    elMsg.innerHTML = `🔴 <b>${formatMinutes(avgYourMin)} average response time</b> — most leads are being auto-routed. Automated follow-up can recover these.`;
+    elMsg.innerHTML = `🔴 <b>${formatMinutes(avgYourMin)} average response time</b> — most leads are being auto-routed.`;
   }
   const lastVisitKey = 'dashLastVisit_' + currentUser.id;
   const lastVisit = localStorage.getItem(lastVisitKey);
@@ -1386,7 +1385,6 @@ async function loadPressureLayer(){
   }
   localStorage.setItem(lastVisitKey, String(now));
 }
-
 function showAwayBanner(leads){
   const banner = $('awayBanner');
   const count = leads.length;
@@ -1405,154 +1403,6 @@ function showAwayBanner(leads){
       <button onclick="this.closest('.away-banner').remove()" style="background:none;border:none;font-size:1.1rem;cursor:pointer;color:#9ca3af;padding:0">✕</button>
     </div>`;
   banner.classList.remove('hidden');
-}
-
-  // =========================================================
-// NOTIFICATIONS
-// =========================================================
-let notifChannel = null;
-let notifPanelOpen = false;
-
-async function initNotifications(){
-  const bell = document.getElementById('notifBell');
-  const indicator = document.getElementById('notifIndicator');
-  if(!bell || !indicator || !currentUser) return;
-
-  bell.classList.remove('hidden');
-
-  // Initial unread count
-  await refreshNotifIndicator();
-
-  // Realtime subscription — instant, no polling
-  notifChannel = supabase.channel('user-notifications-' + currentUser.id)
-    .on('postgres_changes',
-      { event: 'INSERT', schema: 'public', table: 'notifications', filter: `user_id=eq.${currentUser.id}` },
-      payload => {
-        refreshNotifIndicator();
-        const n = payload.new;
-        showToast('🔔 ' + n.title, 'info', 4000);
-        if(notifPanelOpen) loadNotifPanel();
-      })
-    .on('postgres_changes',
-      { event: 'UPDATE', schema: 'public', table: 'notifications', filter: `user_id=eq.${currentUser.id}` },
-      () => { refreshNotifIndicator(); if(notifPanelOpen) loadNotifPanel(); })
-    .subscribe();
-
-  // Click to open panel
-  bell.addEventListener('click', toggleNotifPanel);
-
-  // Click outside to close
-  document.addEventListener('click', (e) => {
-    const panel = document.getElementById('notifPanel');
-    if(panel && !panel.contains(e.target) && !bell.contains(e.target)){
-      closeNotifPanel();
-    }
-  });
-}
-
-async function refreshNotifIndicator(){
-  if(!currentUser) return;
-  const indicator = document.getElementById('notifIndicator');
-  const bell = document.getElementById('notifBell');
-  if(!indicator || !bell) return;
-
-  const { count } = await supabase.from('notifications')
-    .select('*', { count: 'exact', head: true })
-    .eq('user_id', currentUser.id)
-    .eq('read', false);
-
-  if(count && count > 0){
-    indicator.className = 'notif-count';
-    indicator.textContent = count > 99 ? '99+' : count;
-    indicator.classList.remove('hidden');
-    bell.classList.add('has-unread');
-  } else {
-    indicator.classList.add('hidden');
-    bell.classList.remove('has-unread');
-  }
-}
-
-function toggleNotifPanel(){
-  if(notifPanelOpen){ closeNotifPanel(); return; }
-  openNotifPanel();
-}
-
-async function openNotifPanel(){
-  notifPanelOpen = true;
-  const existing = document.getElementById('notifPanel');
-  if(existing) existing.remove();
-
-  const panel = document.createElement('div');
-  panel.id = 'notifPanel';
-  panel.className = 'notif-panel';
-  panel.innerHTML = `
-    <div class="notif-head">
-      <h4>Notifications</h4>
-      <button class="notif-mark-all" id="markAllReadBtn">Mark all read</button>
-    </div>
-    <div class="notif-list" id="notifListEl">
-      <div class="notif-empty">Loading…</div>
-    </div>
-  `;
-  document.body.appendChild(panel);
-
-  document.getElementById('markAllReadBtn').addEventListener('click', async (e) => {
-    e.stopPropagation();
-    await supabase.from('notifications').update({ read: true }).eq('user_id', currentUser.id).eq('read', false);
-    await loadNotifPanel();
-    await refreshNotifIndicator();
-  });
-
-  await loadNotifPanel();
-}
-
-function closeNotifPanel(){
-  notifPanelOpen = false;
-  const panel = document.getElementById('notifPanel');
-  if(panel) panel.remove();
-}
-
-async function loadNotifPanel(){
-  const listEl = document.getElementById('notifListEl');
-  if(!listEl) return;
-
-  const { data: notifs } = await supabase.from('notifications')
-    .select('*').eq('user_id', currentUser.id)
-    .order('created_at', { ascending: false }).limit(20);
-
-  if(!notifs || !notifs.length){
-    listEl.innerHTML = '<div class="notif-empty">No notifications yet.</div>';
-    return;
-  }
-
-  listEl.innerHTML = notifs.map(n => {
-    const icon = {
-      enquiry: '📩', routed_lead: '🎯', partner_reply: '🤝',
-      partner_inquiry: '✉️', inquiry_reply: '💬'
-    }[n.type] || '🔔';
-    return `
-      <div class="notif-item ${n.read ? '' : 'unread'}" data-id="${n.id}" data-link="${escapeAttr(n.link || '')}">
-        <div class="notif-icon ${n.type}">${icon}</div>
-        <div class="notif-body">
-          <div class="notif-title">${escapeHtml(n.title)}</div>
-          ${n.body ? `<div class="notif-text">${escapeHtml(n.body)}</div>` : ''}
-          <div class="notif-time">${getTimeAgo(n.created_at)}</div>
-        </div>
-      </div>`;
-  }).join('');
-
-  listEl.querySelectorAll('.notif-item').forEach(el => {
-    el.addEventListener('click', async () => {
-      const id = el.dataset.id;
-      const link = el.dataset.link;
-      await supabase.from('notifications').update({ read: true }).eq('id', id);
-      await refreshNotifIndicator();
-      closeNotifPanel();
-      if(link){
-        window.location.href = link;
-      }
-    });
-  });
 }
 
 bootAuth();
