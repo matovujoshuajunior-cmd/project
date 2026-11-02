@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="Cache-Control" content="no-cache" />
 <meta name="robots" content="noindex, nofollow" />
-<meta name="theme-color" content="#6366f1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="mask-icon" href="/favicon.svg" color="#6366f1" />
 <meta name="theme-color" content="#6366f1" />
@@ -26,36 +25,53 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7fa;color:#1a1a2
 .btn-ghost{background:transparent;color:#6366f1;border:1.5px solid #6366f1}
 .btn-ghost:hover{background:#6366f1;color:#fff}
 .btn-sm{padding:7px 13px;font-size:.78rem}
+
+/* NOTIFICATION BELL */
+.notif-bell{position:relative;background:#f3f4f6;border:none;width:44px;height:44px;border-radius:12px;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.notif-bell:hover{background:#e5e7eb}
+.notif-bell.has-unread{background:#eef2ff}
+.notif-count{position:absolute;top:-4px;right:-4px;background:#ef4444;color:#fff;font-size:.62rem;font-weight:800;min-width:18px;height:18px;padding:0 5px;border-radius:10px;border:2px solid #fff;display:flex;align-items:center;justify-content:center;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.65}}
+.notif-panel{position:fixed;top:72px;right:24px;width:360px;max-width:calc(100vw - 32px);max-height:70vh;background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.25);z-index:1001;overflow:hidden;display:flex;flex-direction:column;animation:notifIn .2s ease}
+@keyframes notifIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.notif-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid #e5e7eb}
+.notif-head h4{font-size:.95rem;font-weight:800}
+.notif-mark-all{font-size:.75rem;font-weight:700;color:#6366f1;background:none;border:none;cursor:pointer;font-family:inherit}
+.notif-list{overflow-y:auto;flex:1}
+.notif-item{display:flex;gap:12px;padding:14px 18px;border-bottom:1px solid #f1f5f9;cursor:pointer}
+.notif-item:hover{background:#f9fafb}
+.notif-item.unread{background:#fefce8}
+.notif-icon{width:36px;height:36px;border-radius:10px;background:#eef2ff;color:#4f46e5;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.notif-body{flex:1;min-width:0}
+.notif-title{font-size:.88rem;font-weight:700;line-height:1.3}
+.notif-text{font-size:.78rem;color:#6b7280;margin-top:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.notif-time{font-size:.7rem;color:#9ca3af;margin-top:4px}
+.notif-empty{padding:40px 20px;text-align:center;color:#9ca3af;font-size:.88rem}
+
 .card{background:#fff;border-radius:16px;padding:24px;box-shadow:0 4px 24px rgba(0,0,0,.06);margin-bottom:20px}
 .card h2{font-size:1.05rem;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .card .hint{font-size:.82rem;color:#9ca3af;margin:-8px 0 16px;line-height:1.55}
 
-.tabs-nav{display:flex;gap:4px;background:#fff;border-radius:14px;padding:6px;box-shadow:0 4px 24px rgba(0,0,0,.06);margin-bottom:20px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.tabs-nav{display:flex;gap:4px;background:#fff;border-radius:14px;padding:6px;box-shadow:0 4px 24px rgba(0,0,0,.06);margin-bottom:20px;overflow-x:auto;scrollbar-width:none}
 .tabs-nav::-webkit-scrollbar{display:none}
 .tab-btn{flex:1;min-width:fit-content;padding:12px 16px;border:none;background:transparent;border-radius:10px;font-size:.85rem;font-weight:700;color:#6b7280;cursor:pointer;transition:all .15s;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:6px;font-family:inherit}
 .tab-btn:hover{color:#4f46e5;background:#f3f4f6}
 .tab-btn.active{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;box-shadow:0 4px 12px rgba(99,102,241,.3)}
-.tab-btn.active:hover{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
 .tab-badge{display:inline-flex;align-items:center;justify-content:center;background:#ef4444;color:#fff;font-size:.65rem;font-weight:800;padding:2px 6px;border-radius:10px;min-width:18px;height:18px}
 .tab-btn.active .tab-badge{background:#fff;color:#6366f1}
 .tab-panel{animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:520px){.tab-btn{padding:11px 8px;font-size:.75rem;gap:3px}}
 
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
 .stat-card{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-radius:14px;padding:20px;text-align:center}
 .stat-card.alt{background:linear-gradient(135deg,#fdf2f8,#fce7f3)}
 .stat-card.alt .num{color:#db2777}
-.stat-card.alt .lbl{color:#ec4899}
 .stat-card.green{background:linear-gradient(135deg,#f0fdf4,#dcfce7)}
 .stat-card.green .num{color:#16a34a}
 .stat-card.green .lbl{color:#22c55e}
 .stat-card.amber{background:linear-gradient(135deg,#fef3c7,#fde68a)}
 .stat-card.amber .num{color:#d97706}
 .stat-card.amber .lbl{color:#f59e0b}
-.stat-card.red{background:linear-gradient(135deg,#fef2f2,#fecaca)}
-.stat-card.red .num{color:#dc2626}
-.stat-card.red .lbl{color:#ef4444}
 .stat-card .num{font-size:2rem;font-weight:800;color:#4f46e5;line-height:1}
 .stat-card .lbl{font-size:.72rem;font-weight:700;color:#6366f1;text-transform:uppercase;letter-spacing:.5px;margin-top:8px}
 
@@ -72,10 +88,6 @@ td .biz-mini-slug{font-size:.72rem;color:#9ca3af;margin-top:1px}
 .tag.inactive{background:#fee2e2;color:#dc2626}
 .tag.banned{background:#fca5a5;color:#7f1d1d}
 .tag.warning{background:#fef3c7;color:#92400e}
-.tag.platinum{background:linear-gradient(135deg,#a78bfa,#7c3aed);color:#fff}
-.tag.gold{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1a1a2e}
-.tag.silver{background:linear-gradient(135deg,#e5e7eb,#9ca3af);color:#1a1a2e}
-.tag.bronze{background:linear-gradient(135deg,#d97706,#92400e);color:#fff}
 input[type="number"].rank-input{width:60px;padding:6px 8px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:.85rem;text-align:center;font-family:inherit}
 input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-color:#10b981}
 .mini-btn{padding:6px 10px;border:none;border-radius:7px;font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block;font-family:inherit;transition:transform .15s}
@@ -129,7 +141,7 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
 .toast.success{background:#16a34a}
 .toast.warn{background:#d97706}
 
-.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;animation:fadeIn .2s ease}
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
 .modal-card{background:#fff;border-radius:18px;padding:26px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 .modal-head h3{font-size:1.15rem;font-weight:800}
@@ -154,101 +166,8 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
 @media(max-width:720px){
   .row2{grid-template-columns:1fr}
   th:nth-child(4),td:nth-child(4){display:none}
+  .notif-panel{top:60px;right:8px;left:8px;width:auto}
 }
-/* Notification Bell */
-.notif-bell{
-  position:relative;
-  background:#f3f4f6;
-  border:none;
-  width:44px;height:44px;
-  border-radius:12px;
-  cursor:pointer;
-  font-size:1.2rem;
-  display:flex;align-items:center;justify-content:center;
-  transition:background .15s;
-}
-.notif-bell:hover{background:#e5e7eb}
-.notif-bell.has-unread{background:#eef2ff}
-.notif-dot{
-  position:absolute;
-  top:6px;right:6px;
-  width:10px;height:10px;
-  background:#ef4444;
-  border-radius:50%;
-  border:2px solid #fff;
-  animation:pulse 2s infinite;
-}
-.notif-count{
-  position:absolute;
-  top:-4px;right:-4px;
-  background:#ef4444;
-  color:#fff;
-  font-size:.62rem;
-  font-weight:800;
-  min-width:18px;height:18px;
-  padding:0 5px;
-  border-radius:10px;
-  border:2px solid #fff;
-  display:flex;align-items:center;justify-content:center;
-}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.65}}
-
-.notif-panel{
-  position:fixed;
-  top:72px;right:24px;
-  width:360px;
-  max-width:calc(100vw - 32px);
-  max-height:70vh;
-  background:#fff;
-  border-radius:16px;
-  box-shadow:0 20px 60px rgba(0,0,0,.25);
-  z-index:1001;
-  overflow:hidden;
-  display:flex;flex-direction:column;
-  animation:notifIn .2s ease;
-}
-@keyframes notifIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-.notif-head{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:14px 18px;
-  border-bottom:1px solid #e5e7eb;
-  flex-shrink:0;
-}
-.notif-head h4{font-size:.95rem;font-weight:800}
-.notif-mark-all{
-  font-size:.75rem;font-weight:700;color:#6366f1;
-  background:none;border:none;cursor:pointer;font-family:inherit;
-}
-.notif-mark-all:hover{text-decoration:underline}
-.notif-list{overflow-y:auto;flex:1}
-.notif-item{
-  display:flex;gap:12px;
-  padding:14px 18px;
-  border-bottom:1px solid #f1f5f9;
-  cursor:pointer;
-  transition:background .15s;
-}
-.notif-item:hover{background:#f9fafb}
-.notif-item.unread{background:#fefce8}
-.notif-item.unread:hover{background:#fef9c3}
-.notif-icon{
-  width:36px;height:36px;border-radius:10px;
-  background:#eef2ff;color:#4f46e5;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.1rem;flex-shrink:0;
-}
-.notif-icon.enquiry{background:#fef3c7;color:#92400e}
-.notif-icon.routed_lead{background:#dcfce7;color:#16a34a}
-.notif-icon.partner_reply{background:#fdf2f8;color:#db2777}
-.notif-icon.partner_inquiry{background:#dbeafe;color:#1d4ed8}
-.notif-icon.inquiry_reply{background:#fdf2f8;color:#db2777}
-.notif-body{flex:1;min-width:0}
-.notif-title{font-size:.88rem;font-weight:700;color:#1a1a2e;line-height:1.3}
-.notif-text{font-size:.78rem;color:#6b7280;margin-top:3px;line-height:1.4;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.notif-time{font-size:.7rem;color:#9ca3af;margin-top:4px}
-.notif-empty{padding:40px 20px;text-align:center;color:#9ca3af;font-size:.88rem}
-  
 </style>
 </head>
 <body>
@@ -256,11 +175,8 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
 <div class="container">
   <div class="header">
     <h1>⚙️ Admin <span class="badge-admin">ADMIN</span></h1>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button id="notifBell" class="notif-bell hidden" title="Notifications">
-        🔔
-        <span id="notifIndicator" class="hidden"></span>
-      </button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <button id="notifBell" class="notif-bell hidden" title="Notifications">🔔<span id="notifIndicator" class="hidden"></span></button>
       <a href="dashboard.html" class="btn btn-ghost">My Business</a>
       <a href="index.html" class="btn btn-ghost">Public Site</a>
       <button class="btn btn-danger" id="logoutBtn">Log Out</button>
@@ -273,11 +189,6 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
     <h2>🚫 Access Denied</h2>
     <p>Your account does not have admin privileges.</p>
     <div class="diag-box" id="diagBox"></div>
-    <p style="font-size:.82rem;color:#9ca3af">
-      If you should be admin, run the SQL fix in Supabase to set
-      <code style="background:#eef2ff;padding:2px 6px;border-radius:4px;color:#4f46e5">is_admin = true</code>
-      on your profile row.
-    </p>
     <a href="index.html" class="btn btn-primary" style="margin-top:20px">Back to site</a>
   </div>
 
@@ -303,22 +214,18 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
       </div>
 
       <div class="card">
-        <h2>
-          🔀 Lead Routing
-          <button class="btn btn-primary btn-sm" id="runRouterBtn">▶ Run Router Now</button>
-        </h2>
-        <p class="hint">Enquiries with no owner reply within the routing window auto-route to the best-matching agency. Runs every 15 minutes via pg_cron.</p>
+        <h2>🔀 Lead Routing <button class="btn btn-primary btn-sm" id="runRouterBtn">▶ Run Router Now</button></h2>
+        <p class="hint">Enquiries with no owner reply within the routing window auto-route to the best-matching agency.</p>
 
         <div class="stats-grid" style="margin-bottom:18px">
-          <div class="stat-card amber"><div class="num" id="routeAwaiting">0</div><div class="lbl">Awaiting Routing</div></div>
+          <div class="stat-card amber"><div class="num" id="routeAwaiting">0</div><div class="lbl">Awaiting</div></div>
           <div class="stat-card green"><div class="num" id="routeAssigned">0</div><div class="lbl">Routed</div></div>
-          <div class="stat-card alt"><div class="num" id="routeNoAgency">0</div><div class="lbl">No Matching Agency</div></div>
+          <div class="stat-card alt"><div class="num" id="routeNoAgency">0</div><div class="lbl">No Match</div></div>
         </div>
 
         <div style="display:flex;gap:10px;margin-bottom:12px;align-items:center;flex-wrap:wrap">
           <label style="font-size:.82rem;font-weight:700;color:#4b5563">Routing window:</label>
-          <input type="number" id="routingHours" value="4" min="1" max="72"
-                 style="width:80px;padding:7px 10px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:.85rem;text-align:center;font-family:inherit" />
+          <input type="number" id="routingHours" value="4" min="1" max="72" style="width:80px;padding:7px 10px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:.85rem;text-align:center;font-family:inherit" />
           <span style="font-size:.82rem;color:#6b7280">hours</span>
           <button class="btn btn-ghost btn-sm" id="saveHoursBtn">Save</button>
         </div>
@@ -326,15 +233,7 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
         <h3 style="font-size:.85rem;font-weight:800;color:#374151;margin:18px 0 10px">Recently Routed</h3>
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr>
-                <th>Business</th>
-                <th>Visitor</th>
-                <th>Agency</th>
-                <th>Routed</th>
-                <th></th>
-              </tr>
-            </thead>
+            <thead><tr><th>Business</th><th>Visitor</th><th>Agency</th><th>Routed</th><th></th></tr></thead>
             <tbody id="routedTable"></tbody>
           </table>
         </div>
@@ -344,16 +243,12 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
     <!-- AGENCIES -->
     <div class="tab-panel hidden" data-panel="agencies">
       <div class="card">
-        <h2>
-          Partner Agencies
-          <button class="btn btn-primary btn-sm" id="newAgencyBtn">+ New Agency</button>
-        </h2>
+        <h2>Partner Agencies <button class="btn btn-primary btn-sm" id="newAgencyBtn">+ New Agency</button></h2>
         <p class="hint">Agencies appear in the business dashboard's "Partners" tab and receive routed leads.</p>
 
         <div class="form-card hidden" id="agencyForm">
           <h3 id="agencyFormTitle">New Agency</h3>
           <input type="hidden" id="agencyId" />
-
           <div class="row2">
             <div class="form-group"><label>Agency Name *</label><input type="text" id="agName" placeholder="e.g. BSRC Marketing" /></div>
             <div class="form-group"><label>Contact Email *</label><input type="email" id="agEmail" placeholder="partner@example.com" /></div>
@@ -410,15 +305,7 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
 
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr>
-                <th>Agency</th>
-                <th>Territory</th>
-                <th style="text-align:center">Status</th>
-                <th style="text-align:right">Fee</th>
-                <th></th>
-              </tr>
-            </thead>
+            <thead><tr><th>Agency</th><th>Territory</th><th style="text-align:center">Status</th><th style="text-align:right">Fee</th><th></th></tr></thead>
             <tbody id="agenciesTable"></tbody>
           </table>
         </div>
@@ -430,26 +317,13 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
       <div class="card">
         <h2>Manage Businesses</h2>
         <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
-          <input type="text" id="searchBiz" placeholder="Search by name, email, industry..."
-                 style="flex:1;min-width:200px;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:.9rem;font-family:inherit" />
+          <input type="text" id="searchBiz" placeholder="Search by name, email, industry..." style="flex:1;min-width:200px;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:.9rem;font-family:inherit" />
           <button class="btn btn-ghost" id="refreshBizBtn">Refresh</button>
         </div>
-        <p class="hint">
-          Banning hides a business from the public directory and stops new enquiries from reaching them.
-          Requested deletions are flagged with a red badge — handle those first.
-        </p>
+        <p class="hint">Banning hides a business from the public directory. Deletion requests are flagged red.</p>
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr>
-                <th>Business</th>
-                <th>Industry / Tier</th>
-                <th>Contact</th>
-                <th style="text-align:center">Verified</th>
-                <th style="text-align:center">Rank</th>
-                <th></th>
-              </tr>
-            </thead>
+            <thead><tr><th>Business</th><th>Industry</th><th>Contact</th><th style="text-align:center">Verified</th><th style="text-align:center">Rank</th><th></th></tr></thead>
             <tbody id="bizTable"></tbody>
           </table>
         </div>
@@ -474,17 +348,14 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
     <!-- ADS -->
     <div class="tab-panel hidden" data-panel="ads">
       <div class="card">
-        <h2>
-          Sponsored Ads
-          <button class="btn btn-primary btn-sm" id="newAdBtn">+ New Ad</button>
-        </h2>
+        <h2>Sponsored Ads <button class="btn btn-primary btn-sm" id="newAdBtn">+ New Ad</button></h2>
         <p class="hint">Ads appear in the sidebar of the public site.</p>
 
         <div class="form-card hidden" id="adForm">
           <h3 id="adFormTitle">New Ad</h3>
           <input type="hidden" id="adId" />
           <div class="form-group"><label>Title *</label><input type="text" id="adTitle" placeholder="e.g. Promote Your Business" /></div>
-          <div class="form-group"><label>Body / Description</label><textarea id="adBody" placeholder="Short supporting text…"></textarea></div>
+          <div class="form-group"><label>Body</label><textarea id="adBody" placeholder="Short supporting text…"></textarea></div>
           <div class="form-group"><label>Image URL (optional)</label><input type="url" id="adImage" placeholder="https://…" /></div>
           <div class="row2">
             <div class="form-group"><label>CTA Button Text</label><input type="text" id="adCtaText" placeholder="Learn more" /></div>
@@ -494,7 +365,7 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
             <div class="form-group"><label>Sort Order</label><input type="number" id="adSort" value="0" /></div>
             <div class="form-group" style="display:flex;align-items:flex-end">
               <label style="display:flex;align-items:center;gap:8px;text-transform:none;font-size:.85rem;cursor:pointer;margin-bottom:10px">
-                <input type="checkbox" id="adActive" checked style="width:18px;height:18px;accent-color:#16a34a" /> Active (visible on site)
+                <input type="checkbox" id="adActive" checked style="width:18px;height:18px;accent-color:#16a34a" /> Active
               </label>
             </div>
           </div>
@@ -515,15 +386,7 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
 
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr>
-                <th>Ad</th>
-                <th>CTA</th>
-                <th style="text-align:center">Order</th>
-                <th style="text-align:center">Status</th>
-                <th></th>
-              </tr>
-            </thead>
+            <thead><tr><th>Ad</th><th>CTA</th><th style="text-align:center">Order</th><th style="text-align:center">Status</th><th></th></tr></thead>
             <tbody id="adsTable"></tbody>
           </table>
         </div>
@@ -556,7 +419,7 @@ input[type="checkbox"].verify-cb{width:18px;height:18px;cursor:pointer;accent-co
 <div class="toast" id="toast"></div>
 
 <script type="module">
-import { supabase } from './supabase-client.js?v=24';
+import { supabase } from './supabase-client.js?v=27';
 
 const $ = id => document.getElementById(id);
 let allBiz = [];
@@ -569,6 +432,9 @@ let selectedIndustries = new Set();
 let selectedCities = new Set();
 let selectedServices = new Set();
 let currentAgencyId = null;
+let currentUser = null;
+let notifPollTimer = null;
+let notifPanelOpen = false;
 
 function showToast(msg, type='info', d=3200){
   const t = $('toast');
@@ -579,7 +445,17 @@ function showToast(msg, type='info', d=3200){
 }
 function escapeHtml(s){ return s == null ? '' : String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function escapeAttr(s){ return s == null ? '' : String(s).replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+function getTimeAgo(iso){
+  const diff = Date.now() - new Date(iso).getTime();
+  const min = Math.floor(diff / 60000);
+  if(min < 1) return 'Just now';
+  if(min < 60) return `${min}m ago`;
+  const hr = Math.floor(min / 60);
+  if(hr < 24) return `${hr}h ago`;
+  return `${Math.floor(hr / 24)}d ago`;
+}
 
+// TABS
 function switchTab(tabName){
   const validTabs = ['overview','agencies','businesses','reviews','ads'];
   if(!validTabs.includes(tabName)) tabName = 'overview';
@@ -595,20 +471,131 @@ document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click
 window.addEventListener('DOMContentLoaded', () => switchTab(location.hash.replace('#','') || 'overview'));
 window.addEventListener('hashchange', () => switchTab(location.hash.replace('#','') || 'overview'));
 
+// =========================================================
+// NOTIFICATIONS
+// =========================================================
+async function initNotifications(){
+  const bell = document.getElementById('notifBell');
+  const indicator = document.getElementById('notifIndicator');
+  if(!bell || !indicator || !currentUser) return;
+  bell.classList.remove('hidden');
+  await refreshNotifIndicator();
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    if(session?.access_token && supabase.realtime?.setAuth){
+      supabase.realtime.setAuth(session.access_token);
+    }
+    supabase.channel('notif-admin-' + currentUser.id + '-' + Date.now())
+      .on('postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'notifications', filter: `user_id=eq.${currentUser.id}` },
+        payload => {
+          refreshNotifIndicator();
+          if(payload.new?.title) showToast('🔔 ' + payload.new.title, 'info', 4000);
+          if(notifPanelOpen) loadNotifPanel();
+        })
+      .subscribe();
+  } catch(e) { console.warn('Realtime failed:', e); }
+  if(notifPollTimer) clearInterval(notifPollTimer);
+  notifPollTimer = setInterval(refreshNotifIndicator, 30000);
+  bell.addEventListener('click', toggleNotifPanel);
+  document.addEventListener('click', (e) => {
+    const panel = document.getElementById('notifPanel');
+    if(panel && !panel.contains(e.target) && !bell.contains(e.target)) closeNotifPanel();
+  });
+}
+async function refreshNotifIndicator(){
+  if(!currentUser) return;
+  const indicator = document.getElementById('notifIndicator');
+  const bell = document.getElementById('notifBell');
+  if(!indicator || !bell) return;
+  const { count } = await supabase.from('notifications')
+    .select('*', { count: 'exact', head: true })
+    .eq('user_id', currentUser.id).eq('read', false);
+  const prev = parseInt(bell.dataset.lastCount || '0', 10);
+  const curr = count || 0;
+  if(curr > 0){
+    indicator.className = 'notif-count';
+    indicator.textContent = curr > 99 ? '99+' : curr;
+    indicator.classList.remove('hidden');
+    bell.classList.add('has-unread');
+    if(curr > prev && prev >= 0) showToast('🔔 You have ' + curr + ' new notification' + (curr > 1 ? 's' : ''), 'info', 4000);
+  } else {
+    indicator.classList.add('hidden');
+    bell.classList.remove('has-unread');
+  }
+  bell.dataset.lastCount = String(curr);
+}
+function toggleNotifPanel(){
+  if(notifPanelOpen){ closeNotifPanel(); return; }
+  openNotifPanel();
+}
+async function openNotifPanel(){
+  notifPanelOpen = true;
+  document.getElementById('notifPanel')?.remove();
+  const panel = document.createElement('div');
+  panel.id = 'notifPanel';
+  panel.className = 'notif-panel';
+  panel.innerHTML = `<div class="notif-head"><h4>Notifications</h4><button class="notif-mark-all" id="markAllReadBtn">Mark all read</button></div><div class="notif-list" id="notifListEl"><div class="notif-empty">Loading…</div></div>`;
+  document.body.appendChild(panel);
+  document.getElementById('markAllReadBtn').addEventListener('click', async (e) => {
+    e.stopPropagation();
+    await supabase.from('notifications').update({ read: true }).eq('user_id', currentUser.id).eq('read', false);
+    await loadNotifPanel();
+    await refreshNotifIndicator();
+  });
+  await loadNotifPanel();
+}
+function closeNotifPanel(){
+  notifPanelOpen = false;
+  document.getElementById('notifPanel')?.remove();
+}
+async function loadNotifPanel(){
+  const listEl = document.getElementById('notifListEl');
+  if(!listEl) return;
+  const { data: notifs } = await supabase.from('notifications')
+    .select('*').eq('user_id', currentUser.id)
+    .order('created_at', { ascending: false }).limit(20);
+  if(!notifs || !notifs.length){
+    listEl.innerHTML = '<div class="notif-empty">No notifications yet.</div>';
+    return;
+  }
+  listEl.innerHTML = notifs.map(n => {
+    const icon = { enquiry:'📩', routed_lead:'🎯', partner_reply:'🤝', partner_inquiry:'✉️', inquiry_reply:'💬' }[n.type] || '🔔';
+    return `<div class="notif-item ${n.read ? '' : 'unread'}" data-id="${n.id}" data-link="${escapeAttr(n.link || '')}">
+      <div class="notif-icon ${n.type}">${icon}</div>
+      <div class="notif-body">
+        <div class="notif-title">${escapeHtml(n.title)}</div>
+        ${n.body ? `<div class="notif-text">${escapeHtml(n.body)}</div>` : ''}
+        <div class="notif-time">${getTimeAgo(n.created_at)}</div>
+      </div>
+    </div>`;
+  }).join('');
+  listEl.querySelectorAll('.notif-item').forEach(el => {
+    el.addEventListener('click', async () => {
+      await supabase.from('notifications').update({ read: true }).eq('id', el.dataset.id);
+      await refreshNotifIndicator();
+      closeNotifPanel();
+      if(el.dataset.link) window.location.href = el.dataset.link;
+    });
+  });
+}
+
+// =========================================================
+// AUTH GATE
+// =========================================================
 async function bootAdmin(){
   const { data: { session } } = await supabase.auth.getSession();
-  const user = session?.user;
-  if(!user){ window.location.href = 'dashboard.html'; return; }
+  currentUser = session?.user;
+  if(!currentUser){ window.location.href = 'dashboard.html'; return; }
 
-  const { data: prof } = await supabase.from('profiles').select('id, is_admin').eq('id', user.id).maybeSingle();
+  const { data: prof } = await supabase.from('profiles').select('id, is_admin').eq('id', currentUser.id).maybeSingle();
   isAdmin = prof?.is_admin === true;
-
   $('loading').classList.add('hidden');
 
   if(!isAdmin){
     const rows = [];
-    rows.push(`Signed in as: <b>${escapeHtml(user.email || '')}</b>`);
-    rows.push(`User ID: ${user.id}`);
+    rows.push(`Signed in as: <b>${escapeHtml(currentUser.email || '')}</b>`);
+    rows.push(`User ID: ${currentUser.id}`);
     rows.push(`<b>is_admin</b>: <span class="fail">${prof?.is_admin ?? 'not found'}</span>`);
     $('diagBox').innerHTML = rows.join('<br>');
     $('accessDenied').classList.remove('hidden');
@@ -617,6 +604,7 @@ async function bootAdmin(){
 
   $('content').classList.remove('hidden');
   await loadAll();
+  await initNotifications();
 
   supabase.auth.onAuthStateChange((event) => {
     if(event === 'SIGNED_OUT') window.location.href = 'dashboard.html';
@@ -734,7 +722,9 @@ $('saveHoursBtn').addEventListener('click', async () => {
   await loadRouting();
 });
 
+// =========================================================
 // AGENCIES
+// =========================================================
 const INDUSTRIES_LIST = [
   'Construction & Renovation','Plumbing & Electrical','Painting & Finishing','Interior Design',
   'Cleaning Services','Moving & Logistics','Security Services','Solar & Energy',
@@ -761,29 +751,28 @@ function renderAgencies(){
     const industries = Array.isArray(ag.industries) && ag.industries.length ? ag.industries.join(', ') : 'All industries';
     const cities = Array.isArray(ag.cities) && ag.cities.length ? ag.cities.join(', ') : 'All cities';
     const statusCls = ag.status === 'active' ? 'active' : 'inactive';
-    return `
-      <tr data-id="${ag.id}">
-        <td>
-          <div class="biz-cell">
-            <div class="biz-mini-logo">${initial}</div>
-            <div>
-              <div class="biz-mini-name">${escapeHtml(ag.name)}</div>
-              <div class="biz-mini-slug">${escapeHtml(ag.contact_email)}</div>
-            </div>
+    return `<tr data-id="${ag.id}">
+      <td>
+        <div class="biz-cell">
+          <div class="biz-mini-logo">${initial}</div>
+          <div>
+            <div class="biz-mini-name">${escapeHtml(ag.name)}</div>
+            <div class="biz-mini-slug">${escapeHtml(ag.contact_email)}</div>
           </div>
-        </td>
-        <td style="font-size:.8rem;color:#6b7280;max-width:280px">
-          <div><b>Industry:</b> ${escapeHtml(industries)}</div>
-          <div><b>Cities:</b> ${escapeHtml(cities)}</div>
-        </td>
-        <td style="text-align:center"><span class="tag ${statusCls}">${ag.status}</span></td>
-        <td style="text-align:right;font-weight:700">${Number(ag.monthly_fee || 0).toLocaleString()}</td>
-        <td style="text-align:right;white-space:nowrap">
-          <button class="mini-btn view" data-action="users">Users</button>
-          <button class="mini-btn edit" data-action="edit">Edit</button>
-          <button class="mini-btn danger" data-action="delete">Delete</button>
-        </td>
-      </tr>`;
+        </div>
+      </td>
+      <td style="font-size:.8rem;color:#6b7280;max-width:280px">
+        <div><b>Industry:</b> ${escapeHtml(industries)}</div>
+        <div><b>Cities:</b> ${escapeHtml(cities)}</div>
+      </td>
+      <td style="text-align:center"><span class="tag ${statusCls}">${ag.status}</span></td>
+      <td style="text-align:right;font-weight:700">${Number(ag.monthly_fee || 0).toLocaleString()}</td>
+      <td style="text-align:right;white-space:nowrap">
+        <button class="mini-btn view" data-action="users">Users</button>
+        <button class="mini-btn edit" data-action="edit">Edit</button>
+        <button class="mini-btn danger" data-action="delete">Delete</button>
+      </td>
+    </tr>`;
   }).join('');
 
   tbody.querySelectorAll('tr').forEach(row => {
@@ -874,7 +863,6 @@ $('saveAgencyBtn').addEventListener('click', async () => {
   const contact_email = $('agEmail').value.trim();
   if(!name) return showToast('Agency name is required', 'error');
   if(!contact_email) return showToast('Contact email is required', 'error');
-
   const payload = {
     name, contact_email,
     contact_phone: $('agPhone').value.trim() || null,
@@ -892,13 +880,11 @@ $('saveAgencyBtn').addEventListener('click', async () => {
     notes: $('agNotes').value.trim() || null,
     updated_at: new Date().toISOString()
   };
-
   btn.disabled = true; btn.textContent = 'Saving…';
   let error;
   if(id){ ({ error } = await supabase.from('agencies').update(payload).eq('id', id)); }
   else { ({ error } = await supabase.from('agencies').insert(payload)); }
   btn.disabled = false; btn.textContent = '💾 Save Agency';
-
   if(error) return showToast('Save failed: ' + error.message, 'error');
   showToast(id ? '✅ Agency updated' : '✅ Agency created', 'success');
   closeAgencyForm();
@@ -906,7 +892,7 @@ $('saveAgencyBtn').addEventListener('click', async () => {
 });
 
 async function deleteAgency(agency){
-  if(!confirm(`Delete agency "${agency.name}"?\n\nThis won't delete businesses or enquiries — only the agency record.`)) return;
+  if(!confirm(`Delete agency "${agency.name}"?`)) return;
   const { error } = await supabase.from('agencies').delete().eq('id', agency.id);
   if(error) return showToast('Delete failed: ' + error.message, 'error');
   showToast('🗑 Agency deleted', 'success');
@@ -971,10 +957,7 @@ $('addUserBtn').addEventListener('click', async () => {
   }
   const profile = profiles[0];
   const { data: existing } = await supabase.from('agency_users').select('id').eq('agency_id', currentAgencyId).eq('user_id', profile.id).maybeSingle();
-  if(existing){
-    resultEl.innerHTML = `<span style="color:#f59e0b">That user is already linked to this agency.</span>`;
-    return;
-  }
+  if(existing){ resultEl.innerHTML = `<span style="color:#f59e0b">That user is already linked.</span>`; return; }
   const { error } = await supabase.from('agency_users').insert({ agency_id: currentAgencyId, user_id: profile.id, role: 'agent' });
   if(error){ resultEl.innerHTML = `<span style="color:#dc2626">Failed: ${escapeHtml(error.message)}</span>`; return; }
   resultEl.innerHTML = `<span style="color:#16a34a">✅ Linked <b>${escapeHtml(profile.business_name)}</b></span>`;
@@ -983,7 +966,9 @@ $('addUserBtn').addEventListener('click', async () => {
   showToast('User linked to agency', 'success');
 });
 
+// =========================================================
 // BUSINESSES
+// =========================================================
 async function loadBiz(){
   const { data, error } = await supabase.from('profiles').select('*').order('rank', { ascending: false }).order('created_at', { ascending: false });
   if(error){ showToast('Load failed: ' + error.message, 'error'); return; }
@@ -999,7 +984,6 @@ function renderBiz(list){
   }
   tbody.innerHTML = list.map(b => {
     const initial = (b.business_name || '?')[0].toUpperCase();
-    const tierClass = b.business_score >= 90 ? 'platinum' : b.business_score >= 75 ? 'gold' : b.business_score >= 60 ? 'silver' : b.business_score >= 40 ? 'bronze' : '';
     const badges = [];
     if(b.is_banned) badges.push('<span class="tag banned">BANNED</span>');
     if(b.deletion_requested_at) badges.push('<span class="tag warning">DELETE REQUESTED</span>');
@@ -1015,25 +999,16 @@ function renderBiz(list){
           </div>
         </div>
       </td>
-      <td>
-        <span class="tag">${escapeHtml(b.industry || '—')}</span>
-        ${tierClass ? `<span class="tag ${tierClass}">${b.business_score}</span>` : ''}
-      </td>
+      <td><span class="tag">${escapeHtml(b.industry || '—')}</span></td>
       <td style="font-size:.8rem;color:#6b7280">
         ${b.contact_email ? escapeHtml(b.contact_email) : ''}
         ${b.phone ? '<br>' + escapeHtml(b.phone) : ''}
       </td>
-      <td style="text-align:center">
-        <input type="checkbox" class="verify-cb" data-field="verified" ${b.verified?'checked':''} />
-      </td>
-      <td style="text-align:center">
-        <input type="number" class="rank-input" data-field="rank" value="${b.rank || 0}" />
-      </td>
+      <td style="text-align:center"><input type="checkbox" class="verify-cb" data-field="verified" ${b.verified?'checked':''} /></td>
+      <td style="text-align:center"><input type="number" class="rank-input" data-field="rank" value="${b.rank || 0}" /></td>
       <td style="text-align:right;white-space:nowrap">
         <a class="mini-btn view" href="profile.html?b=${encodeURIComponent(b.slug||'')}" target="_blank">View</a>
-        <button class="mini-btn ${b.is_banned ? 'toggle-on' : 'warn'}" data-field="ban">
-          ${b.is_banned ? 'Unban' : 'Ban'}
-        </button>
+        <button class="mini-btn ${b.is_banned ? 'toggle-on' : 'warn'}" data-field="ban">${b.is_banned ? 'Unban' : 'Ban'}</button>
       </td>
     </tr>`;
   }).join('');
@@ -1060,11 +1035,10 @@ function renderBiz(list){
 
     banBtn.addEventListener('click', async () => {
       const currentlyBanned = b.is_banned;
-      const action = currentlyBanned ? 'unban' : 'ban';
-      if(!confirm(`${currentlyBanned ? 'Unban' : 'Ban'} "${b.business_name}"?\n\n${currentlyBanned ? 'They will become visible in the public directory again.' : 'They will be hidden from the public directory and cannot receive new enquiries.'}`)) return;
+      if(!confirm(`${currentlyBanned ? 'Unban' : 'Ban'} "${b.business_name}"?`)) return;
       const { error } = await supabase.from('profiles').update({ is_banned: !currentlyBanned }).eq('id', id);
       if(error) return showToast('Failed: ' + error.message, 'error');
-      showToast(`Business ${action}ned`, 'success');
+      showToast(`Business ${currentlyBanned ? 'unbanned' : 'banned'}`, 'success');
       await loadBiz();
     });
   });
@@ -1078,16 +1052,16 @@ $('searchBiz').addEventListener('input', e => {
 
 $('refreshBizBtn').addEventListener('click', loadBiz);
 
+// =========================================================
 // REVIEWS
+// =========================================================
 async function loadReviews(){
   const { data, error } = await supabase.from('admin_reviews').select('*').order('created_at', { ascending: false }).limit(200);
   if(error){ console.warn('Reviews load error:', error.message); return; }
   allReviews = data || [];
-
   const needsMod = allReviews.filter(r => r.status === 'flagged').length;
   const badge = $('reviewsBadge');
   if(needsMod > 0){ badge.textContent = needsMod; badge.classList.remove('hidden'); } else badge.classList.add('hidden');
-
   renderReviews();
 }
 
@@ -1095,12 +1069,10 @@ function renderReviews(){
   const list = $('reviewsList');
   let filtered = allReviews;
   if(currentRevFilter !== 'all') filtered = allReviews.filter(r => r.status === currentRevFilter);
-
   if(!filtered.length){
     list.innerHTML = `<div class="empty-state">${allReviews.length ? 'No reviews with this status.' : 'No reviews yet.'}</div>`;
     return;
   }
-
   list.innerHTML = filtered.map(r => {
     const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
     const statusClass = r.status === 'hidden' ? 'hidden-review' : '';
@@ -1124,7 +1096,6 @@ function renderReviews(){
       </div>
     </div>`;
   }).join('');
-
   list.querySelectorAll('[data-rev-action]').forEach(btn => {
     btn.addEventListener('click', () => handleReviewAction(btn.dataset.revAction, btn.dataset.id));
   });
@@ -1157,7 +1128,9 @@ document.querySelectorAll('.rev-filter').forEach(btn => {
   });
 });
 
+// =========================================================
 // ADS
+// =========================================================
 async function loadAds(){
   const { data, error } = await supabase.from('site_ads').select('*').order('sort_order', { ascending: true }).order('created_at', { ascending: false });
   if(error){ console.warn(error); allAds = []; }
@@ -1292,154 +1265,6 @@ $('saveAdBtn').addEventListener('click', async () => {
   closeAdForm();
   await loadAds();
 });
-
-  // =========================================================
-// NOTIFICATIONS
-// =========================================================
-let notifChannel = null;
-let notifPanelOpen = false;
-
-async function initNotifications(){
-  const bell = document.getElementById('notifBell');
-  const indicator = document.getElementById('notifIndicator');
-  if(!bell || !indicator || !currentUser) return;
-
-  bell.classList.remove('hidden');
-
-  // Initial unread count
-  await refreshNotifIndicator();
-
-  // Realtime subscription — instant, no polling
-  notifChannel = supabase.channel('user-notifications-' + currentUser.id)
-    .on('postgres_changes',
-      { event: 'INSERT', schema: 'public', table: 'notifications', filter: `user_id=eq.${currentUser.id}` },
-      payload => {
-        refreshNotifIndicator();
-        const n = payload.new;
-        showToast('🔔 ' + n.title, 'info', 4000);
-        if(notifPanelOpen) loadNotifPanel();
-      })
-    .on('postgres_changes',
-      { event: 'UPDATE', schema: 'public', table: 'notifications', filter: `user_id=eq.${currentUser.id}` },
-      () => { refreshNotifIndicator(); if(notifPanelOpen) loadNotifPanel(); })
-    .subscribe();
-
-  // Click to open panel
-  bell.addEventListener('click', toggleNotifPanel);
-
-  // Click outside to close
-  document.addEventListener('click', (e) => {
-    const panel = document.getElementById('notifPanel');
-    if(panel && !panel.contains(e.target) && !bell.contains(e.target)){
-      closeNotifPanel();
-    }
-  });
-}
-
-async function refreshNotifIndicator(){
-  if(!currentUser) return;
-  const indicator = document.getElementById('notifIndicator');
-  const bell = document.getElementById('notifBell');
-  if(!indicator || !bell) return;
-
-  const { count } = await supabase.from('notifications')
-    .select('*', { count: 'exact', head: true })
-    .eq('user_id', currentUser.id)
-    .eq('read', false);
-
-  if(count && count > 0){
-    indicator.className = 'notif-count';
-    indicator.textContent = count > 99 ? '99+' : count;
-    indicator.classList.remove('hidden');
-    bell.classList.add('has-unread');
-  } else {
-    indicator.classList.add('hidden');
-    bell.classList.remove('has-unread');
-  }
-}
-
-function toggleNotifPanel(){
-  if(notifPanelOpen){ closeNotifPanel(); return; }
-  openNotifPanel();
-}
-
-async function openNotifPanel(){
-  notifPanelOpen = true;
-  const existing = document.getElementById('notifPanel');
-  if(existing) existing.remove();
-
-  const panel = document.createElement('div');
-  panel.id = 'notifPanel';
-  panel.className = 'notif-panel';
-  panel.innerHTML = `
-    <div class="notif-head">
-      <h4>Notifications</h4>
-      <button class="notif-mark-all" id="markAllReadBtn">Mark all read</button>
-    </div>
-    <div class="notif-list" id="notifListEl">
-      <div class="notif-empty">Loading…</div>
-    </div>
-  `;
-  document.body.appendChild(panel);
-
-  document.getElementById('markAllReadBtn').addEventListener('click', async (e) => {
-    e.stopPropagation();
-    await supabase.from('notifications').update({ read: true }).eq('user_id', currentUser.id).eq('read', false);
-    await loadNotifPanel();
-    await refreshNotifIndicator();
-  });
-
-  await loadNotifPanel();
-}
-
-function closeNotifPanel(){
-  notifPanelOpen = false;
-  const panel = document.getElementById('notifPanel');
-  if(panel) panel.remove();
-}
-
-async function loadNotifPanel(){
-  const listEl = document.getElementById('notifListEl');
-  if(!listEl) return;
-
-  const { data: notifs } = await supabase.from('notifications')
-    .select('*').eq('user_id', currentUser.id)
-    .order('created_at', { ascending: false }).limit(20);
-
-  if(!notifs || !notifs.length){
-    listEl.innerHTML = '<div class="notif-empty">No notifications yet.</div>';
-    return;
-  }
-
-  listEl.innerHTML = notifs.map(n => {
-    const icon = {
-      enquiry: '📩', routed_lead: '🎯', partner_reply: '🤝',
-      partner_inquiry: '✉️', inquiry_reply: '💬'
-    }[n.type] || '🔔';
-    return `
-      <div class="notif-item ${n.read ? '' : 'unread'}" data-id="${n.id}" data-link="${escapeAttr(n.link || '')}">
-        <div class="notif-icon ${n.type}">${icon}</div>
-        <div class="notif-body">
-          <div class="notif-title">${escapeHtml(n.title)}</div>
-          ${n.body ? `<div class="notif-text">${escapeHtml(n.body)}</div>` : ''}
-          <div class="notif-time">${getTimeAgo(n.created_at)}</div>
-        </div>
-      </div>`;
-  }).join('');
-
-  listEl.querySelectorAll('.notif-item').forEach(el => {
-    el.addEventListener('click', async () => {
-      const id = el.dataset.id;
-      const link = el.dataset.link;
-      await supabase.from('notifications').update({ read: true }).eq('id', id);
-      await refreshNotifIndicator();
-      closeNotifPanel();
-      if(link){
-        window.location.href = link;
-      }
-    });
-  });
-}
 
 bootAdmin();
 </script>
